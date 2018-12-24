@@ -5,7 +5,14 @@ import { CountryDropdown } from 'react-country-region-selector';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { messages: [], text: '', country: '', type: 'general' }; // <- set up react state
+    this.state = { 
+      messages: [], 
+      text: '', 
+      country: '', 
+      type: 'general',
+      textareaFontSize: '2',
+      formValid: false
+    };
   }
   componentWillMount(){
     /* Create reference to messages in Firebase Database */
@@ -46,20 +53,48 @@ class App extends Component {
     this.setState({ country: val });
   }
   textareaChange(e) {
-    this.setState({ text: e.target.value });
+    let length = e.target.value.length,
+      fontSize = this.state.textareaFontSize,
+      formValid = this.state.formValid;
+
+    if (e.target.value.trim().length > 0){
+      formValid = true
+    } else{
+      formValid = false
+    }
+
+    if(length>120){
+      fontSize = 1;
+    } else if (length>90){
+      fontSize = 1.25;
+    } else if (length>60){
+      fontSize = 1.5;
+    } else if (length>30){
+      fontSize = 1.75;
+    } else {
+      fontSize = 2;
+    }
+
+    this.setState({
+      text: e.target.value,
+      textareaFontSize: fontSize,
+      formValid: formValid
+    });
   }
 
   render() {
     const { country } = this.state;
 
     return (
-      <div>
+      <div className="feedContainer">
         <form onSubmit={this.addMessage.bind(this)}>
           <textarea 
-            className="new-superstitions" 
+            className="new-superstition"
+            style={{fontSize: this.state.textareaFontSize + 'rem'}}
             type="text" 
             onChange={this.textareaChange.bind(this)}
-            placeholder="Write your superstition here" 
+            placeholder="What's your superstition about, is it personal, where is it from?"
+            rows="6"
             value={this.state.text} />
           
           <div>
@@ -68,21 +103,26 @@ class App extends Component {
               type="radio" 
               value="general" 
               name="type" 
-              checked={this.state.type=="general"}/>
+              checked={this.state.type==="general"}/>
             General
             
             <input 
               onChange={this.selectType.bind(this)} 
               type="radio" 
               value="personal" 
-              checked={this.state.type=="personal"}
+              checked={this.state.type==="personal"}
               name="type"/>
             Personal
           </div>
 
           <CountryDropdown onChange={(val) => this.selectCountry(val)} value={country}/>
-
-          <button type="submit">add</button>
+          
+          <button 
+            disabled={! this.state.formValid}
+            type="submit"
+            className="add-btn">
+            ADD
+          </button>
         </form>
 
         <div className="feed">
@@ -90,7 +130,7 @@ class App extends Component {
             { /* Render the list of superstitions */
               this.state.messages.map( message => <li key={message.id}>
                 {message.text} 
-                <br/>
+                <hr/>
                 type: {message.type}, origin: {message.country}
               </li> )
             }

@@ -9,10 +9,19 @@ body {
   background-color: #457eca;
   color: #3a3f2a;
 }
-form{
+.feedContainer{
   width: 80%;
   max-width: 45rem;
   margin: 5rem auto;
+}
+form{
+  border: 2px solid pink;
+}
+.add-btn{
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  display: block;
+  border: none;
 }
 ul{
   list-style-type: none;
@@ -23,8 +32,11 @@ li{
   padding: 1rem;
   background: #fff;
 }
-.new-superstitions{
+.new-superstition{
   width: 100%;
+  height: 130px;
   border: none;
   font-size: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
 }
