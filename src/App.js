@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import fire from './fire';
 
-import JavascriptTimeAgo from 'javascript-time-ago'
-import TimeAgo from 'react-time-ago/no-tooltip'
-import en from 'javascript-time-ago/locale/en'
-
 import Form from './Form.js'
+import Superstition from './Superstition.js'
 
-JavascriptTimeAgo.locale(en)
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +12,7 @@ class App extends Component {
       messages: [], 
     };
   }
-  componentWillMount(){
+  componentWillMount() {
     /* Create reference to messages in Firebase Database */
     let messagesRef = fire.database().ref('messages').orderByKey().limitToLast(100);
     messagesRef.on('child_added', snapshot => {
@@ -35,12 +31,6 @@ class App extends Component {
     })
   }
 
-  upVote(e) {
-    console.log("clicking up: ", this.message.voteCount);
-    let count = !!this.message.voteCount
-    this.setState({ voteCount: count+1 });
-  }
-
   render() {
     return (
       <div className="feedContainer">
@@ -51,33 +41,7 @@ class App extends Component {
           <ul>
             { /* Render the list of superstitions */
               this.state.messages.map( message => 
-              <li key={message.id}>
-                {message.text} 
-                <hr/>
-                type: {message.type}
-
-                {message.country &&
-                  <span>
-                    origin:&nbsp;
-                    {message.country}
-                  </span>
-                }
-                
-                {message.timestamp && 
-                  <span>posted on:&nbsp;
-                    <TimeAgo>
-                      {message.timestamp}
-                    </TimeAgo>
-                  </span>
-                }
-
-                <span 
-                  className="upvotes"
-                  onClick={this.upVote.bind(this)}>
-                  count: -{message.voteCount}-
-                  up
-                </span>
-              </li> )
+                <Superstition item={message} key={message.id} />)
             }
           </ul>
         </div>

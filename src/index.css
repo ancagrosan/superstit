@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #457eca;
+  background-color: #0D47A1;
   color: #3a3f2a;
 }
 .feedContainer{
@@ -14,15 +14,24 @@ body {
   max-width: 45rem;
   margin: 5rem auto;
 }
-form{
-  border: 2px solid pink;
-}
 .add-btn{
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+  margin: 1rem auto 0;
   display: block;
   border: none;
+  background-color: #0D47A1;
+  color: #FFF;
+  font-weight: bold;
+  border-radius: 50px;
 }
+.add-btn:disabled{
+  background-color: #82B1FF;
+}
+form{
+  background-color: #90CAF9;
+  padding: 1rem;
+}
+
 ul{
   list-style-type: none;
   padding: 0;
@@ -39,4 +48,17 @@ li{
   font-size: 1rem;
   padding: 1rem;
   box-sizing: border-box;
+}
+.upvotes{
+  float: right;
+}
+.triangle-up{
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 15px 15px 15px;
+  border-color: transparent transparent #007bff transparent;
+}
+.small{
+  font-size: 0.875rem;
 }

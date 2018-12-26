@@ -6,17 +6,15 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-          text: '', 
-          country: '', 
-          type: 'general',
-          textareaFontSize: '2',
-          formValid: false
+            text: '', 
+            country: '', 
+            type: 'general',
+            textareaFontSize: '2',
+            formValid: false
         };
-      }
-
+    }
     addMessage(e){
         e.preventDefault();
-
         const timestamp = Date.now();
         
         fire.database().ref('messages').push({
@@ -33,7 +31,6 @@ class Form extends Component {
             timestamp: timestamp
         });    
     }
-
     selectType(e){
         this.setState({ type: e.target.value });
     }
@@ -45,9 +42,9 @@ class Form extends Component {
             fontSize = this.state.textareaFontSize,
             formValid = this.state.formValid;
 
-        if (e.target.value.trim().length > 0){
+        if (e.target.value.trim().length > 0 && e.target.value.trim().length < 500){
             formValid = true
-        } else{
+        } else {
             formValid = false
         }
 
