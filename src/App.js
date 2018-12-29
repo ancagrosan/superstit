@@ -33,17 +33,30 @@ class App extends Component {
 
   render() {
     return (
-      <div className="feedContainer">
+      <div className="container">
+        <div className="nav">
+          <h1><span className="word">Superstitious</span> Network</h1>
+          <div className="social">
+            <a href="#">
+              <img src="/images/facebook.svg" alt="facebook"/>
+            </a>
+            <a href="#">
+              <img src="/images/twitter.svg" alt="twitter"/>
+            </a>
+          </div>
+        </div>
+        <div className="feedContainer">
 
-        <Form/>
+          <Form/>
 
-        <div className="feed">
-          <ul>
-            { /* Render the list of superstitions */
-              this.state.messages.map( message => 
-                <Superstition item={message} key={message.id} />)
-            }
-          </ul>
+          <div className="feed">
+            <ul>
+              { /* Render the list of superstitions */
+                this.state.messages.map( message => 
+                  <Superstition item={message} key={message.id} />)
+              }
+            </ul>
+          </div>
         </div>
       </div>
     );

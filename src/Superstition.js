@@ -33,30 +33,41 @@ class Superstition extends Component {
 
         return (
             <li key={message.id}>
-                {message.text}
+                <div className="supertition-text">
+                    {message.text}
+                </div>
                 
                 <hr/>
-                <div className="small">
-                    type: {message.type}
-
-                    {message.country &&
-                        <span>
-                            origin:&nbsp;
-                            {message.country}
-                        </span>
-                    }
-
+                <div className="info">
+                
                     {message.timestamp && 
-                        <span>posted on:&nbsp;
+                        <span>
+                            <img src="/images/baseline-access_time-24px.svg" alt="posted"/>
                             <TimeAgo>
                                 {message.timestamp}
                             </TimeAgo>
                         </span>
                     }
 
-                    <span 
-                        className="upvotes">
-                        <span onClick={this.upVote.bind(this)} className="triangle-up"></span>
+                    {message.type &&
+                        <span>
+                            &nbsp;|&nbsp;
+                            {message.type}
+                        </span>
+                    }
+
+                    {message.country &&
+                        <span>
+                            &nbsp;|&nbsp;
+                            <img src="/images/baseline-location_on-24px.svg" alt="location"/>
+                            {message.country}
+                        </span>
+                    }
+
+                    <span className="upvotes">
+                        <span onClick={this.upVote.bind(this)}>
+                            <img src="/images/baseline-thumb_up-24px.svg" alt="upvote"/>
+                        </span>
                         {this.state.voteCount}
                     </span>
                 </div>

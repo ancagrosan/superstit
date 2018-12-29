@@ -80,22 +80,26 @@ class Form extends Component {
                     rows="6"
                     value={this.state.text} />
                 
-                <div>
-                    <input 
-                        onChange={this.selectType.bind(this)} 
-                        type="radio" 
-                        value="general" 
-                        name="type" 
-                        checked={this.state.type==="general"}/>
-                    General
+                <div className="radio-select">
+                    <label>
+                        <input 
+                            onChange={this.selectType.bind(this)} 
+                            type="radio" 
+                            value="general" 
+                            name="type" 
+                            checked={this.state.type==="general"}/>
+                        <span>General</span>
+                    </label>
                     
-                    <input 
-                        onChange={this.selectType.bind(this)} 
-                        type="radio" 
-                        value="personal" 
-                        checked={this.state.type==="personal"}
-                        name="type"/>
-                    Personal
+                    <label>
+                        <input 
+                            onChange={this.selectType.bind(this)} 
+                            type="radio" 
+                            value="personal" 
+                            checked={this.state.type==="personal"}
+                            name="type"/>
+                        <span>Personal</span>
+                    </label>
                 </div>
 
                 <CountryDropdown onChange={(val) => this.selectCountry(val)} value={country}/>
