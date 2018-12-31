@@ -80,29 +80,36 @@ class Form extends Component {
                     rows="6"
                     value={this.state.text} />
                 
-                <div className="radio-select">
-                    <label>
+                <div className="options-container">
+                    <div className="type-select">
+                        
                         <input 
                             onChange={this.selectType.bind(this)} 
                             type="radio" 
                             value="general" 
                             name="type" 
+                            id="type-general"
+                            className='form-radio'
                             checked={this.state.type==="general"}/>
-                        <span>General</span>
-                    </label>
-                    
-                    <label>
+                        <label htmlFor="type-general">General</label>
+                        
                         <input 
                             onChange={this.selectType.bind(this)} 
                             type="radio" 
                             value="personal" 
-                            checked={this.state.type==="personal"}
-                            name="type"/>
-                        <span>Personal</span>
-                    </label>
-                </div>
+                            name="type"
+                            id="type-personal"
+                            className='form-radio'
+                            checked={this.state.type==="personal"}/>
+                        <label htmlFor="type-personal">Personal</label>
+                        
+                    </div>
 
-                <CountryDropdown onChange={(val) => this.selectCountry(val)} value={country}/>
+                    <div className="country-select">
+                        <label>Origin:</label>
+                        <CountryDropdown onChange={(val) => this.selectCountry(val)} value={country}/>
+                    </div>
+                </div>
                 
                 <button 
                     disabled={! this.state.formValid}

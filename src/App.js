@@ -37,10 +37,10 @@ class App extends Component {
         <div className="nav">
           <h1><span className="word">Superstitious</span> Network</h1>
           <div className="social">
-            <a href="#">
+            <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank">
               <img src="/images/facebook.svg" alt="facebook"/>
             </a>
-            <a href="#">
+            <a href="https://twitter.com/superstitiousnw" target="_blank">
               <img src="/images/twitter.svg" alt="twitter"/>
             </a>
           </div>

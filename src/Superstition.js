@@ -41,8 +41,8 @@ class Superstition extends Component {
                 <div className="info">
                 
                     {message.timestamp && 
-                        <span>
-                            <img src="/images/baseline-access_time-24px.svg" alt="posted"/>
+                        <span className="mr1">
+                            <img src="/images/baseline-access_time-24px.svg" alt="posted" title="posted"/>
                             <TimeAgo>
                                 {message.timestamp}
                             </TimeAgo>
@@ -50,23 +50,27 @@ class Superstition extends Component {
                     }
 
                     {message.type &&
-                        <span>
-                            &nbsp;|&nbsp;
+                        <span className="mr1">
+                            {message.type === 'personal'
+                                ? 
+                                <img src="/images/baseline-person-24px.svg" alt="type" title="type"/>
+                                :
+                                <img src="/images/baseline-group_add-24px.svg" alt="type" title="type"/>
+                            }
                             {message.type}
                         </span>
                     }
 
                     {message.country &&
-                        <span>
-                            &nbsp;|&nbsp;
-                            <img src="/images/baseline-location_on-24px.svg" alt="location"/>
+                        <span className="mr1">
+                            <img src="/images/baseline-location_on-24px.svg" alt="location" title="location"/>
                             {message.country}
                         </span>
                     }
 
                     <span className="upvotes">
                         <span onClick={this.upVote.bind(this)}>
-                            <img src="/images/baseline-thumb_up-24px.svg" alt="upvote"/>
+                            <img src="/images/baseline-thumb_up-24px.svg" alt="upvote" title="I believe!"/>
                         </span>
                         {this.state.voteCount}
                     </span>
