@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import fire from './fire';
+import Cookies from 'universal-cookie';
 
 import Form from './Form.js'
 import Superstition from './Superstition.js'
 
+const cookies = new Cookies();
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
       messages: [], 
+      userLikes: []
     };
   }
   componentWillMount() {
@@ -26,9 +29,26 @@ class App extends Component {
         voteCount: snapshot.val().voteCount,
         id: snapshot.key
       };
-      
+
       this.setState({ messages: [message].concat(this.state.messages) });
-    })
+    });
+
+    // set sn cookie if not already there
+    if (!cookies.get('superstitiousNw')) {
+      cookies.set('superstitiousNw', [], {path: '/' });
+    } else {
+      this.setState({userLikes: cookies.get('superstitiousNw')});
+    }
+  }
+
+  isLiked(id){
+    return this.state.userLikes.indexOf(id) > -1;
+  }
+
+  updateLikes(id){
+    let likedIds = [ ...this.state.userLikes, id ];
+    this.setState({userLikes: likedIds});
+    cookies.set('superstitiousNw', likedIds, {path: '/' });
   }
 
   render() {
@@ -53,7 +73,13 @@ class App extends Component {
             <ul>
               { /* Render the list of superstitions */
                 this.state.messages.map( message => 
-                  <Superstition item={message} key={message.id} />)
+                  <Superstition 
+                    item={message} 
+                    key={message.id} 
+                    isLiked={this.isLiked(message.id)} 
+                    updateLikes={this.updateLikes.bind(this)}
+                  />
+                )
               }
             </ul>
           </div>

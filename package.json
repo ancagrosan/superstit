@@ -8,7 +8,8 @@
     "react-country-region-selector": "^1.4.3",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.1",
-    "react-time-ago": "^3.0.4"
+    "react-time-ago": "^3.0.4",
+    "universal-cookie": "^3.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
