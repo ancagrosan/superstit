@@ -209,6 +209,7 @@ label{
 
 
 .sn-icons{
+  display: none;
   position: fixed;
   bottom: 1rem;
   right: 1rem;
