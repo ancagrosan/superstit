@@ -1,3 +1,13 @@
+:root {
+  --main-color: #3a3f2a;
+  --dark-blue: #143569;
+  --yellow: #ffe277;
+  --pink: #ea3de5;
+  --pink-light: #ff77ff;
+  --light-gray: #f1f1f1;
+}
+
+
 body {
   margin: 0;
   padding: 0;
@@ -6,8 +16,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #143569;
-  color: #3a3f2a;
+  background-color: var(--dark-blue);
+  color: var(--main-color);
   font-size: 18px;
 }
 .nav{
@@ -18,16 +28,31 @@ body {
 }
 h1{
   font: 300 2.25rem/0.85 'Roboto', sans-serif;
-  color: #ffe277;
+  color: var(--yellow);
+  margin-bottom: 1rem;
 }
-h1 .word{
+h1 span{
   font-weight: 500;
+}
+h2{
+  color: white;
+  font: 500 1rem/1.25 "Open Sans", sans-serif;
+  margin-bottom: 1rem;
+}
+.social i{
+  color: var(--pink);
+  margin-right: 1rem;
+  transition-duration: 3s;
+}
+.social i:hover{
+  color: var(--pink-light);
+  zoom: 110%;
 }
 hr{
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #f1f1f1;
+  border-top: 1px solid var(--light-gray);
   margin: 0;
   padding: 0; 
 }
@@ -40,9 +65,9 @@ hr{
   padding: 0.5rem 2rem;
   margin: 1rem auto 0;
   display: block;
-  border: none;
-  background-color: #143569;
-  color: #FFF;
+  background-color: transparent;
+  border: 2px solid var(--pink);
+  color: var(--pink);
   font-weight: bold;
   border-radius: 50px;
   font-size: 1rem;
@@ -51,12 +76,15 @@ hr{
 .add-btn:focus{
   outline: none;
 }
-.add-btn:disabled{
-  background-color: #485e97;
+.add-btn:hover:not(:disabled){
+  background-color: var(--pink);
+  color: var(--yellow);
+}
+.add-btn:disabled:hover{
   cursor: default;
 }
 form{
-  background-color: #ffe277;
+  background-color: var(--yellow);
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 0.25rem;
@@ -79,6 +107,8 @@ li:last-of-type{
 }
 .supertition-text, .info{
   padding: 1rem;
+  line-height: 1.5rem;
+  position: relative;
 }
 .new-superstition{
   width: 100%;
@@ -92,8 +122,8 @@ li:last-of-type{
 }
 .new-superstition:focus{
   outline: none;
-  border-color: #143569;
-  box-shadow: 0 0 0 2px #143569;
+  border-color: var(--pink);
+  box-shadow: 0 0 0 2px var(--pink);
 }
 .options-container{
   display: flex;
@@ -109,22 +139,34 @@ select:focus{
   outline: none;
 }
 .upvotes{
-  float: right;
+  position: absolute;
+  right: 1rem;
+  width: 3rem;
+}
+.upvotes i{
+  color: var(--pink);
+}
+.empty-heart{
+  transition-duration: 3s;
+}
+.empty-heart:hover i{
+  color: var(--pink-light);
+  zoom: 110%;
+  cursor: pointer;
 }
 .info{
   font: 300 0.875rem/1.7 'Open Sans', sans-serif;
 }
-.info img{
-  height: 1.25rem;
+.info i{
+  font-size: 1rem;
   margin-right: 0.5rem;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 .info-box{
   margin-right: 1rem;
   min-width: 7rem;
   display: inline-block;
 }
-
 
 /* radio buttons */
 .form-radio{
@@ -133,7 +175,7 @@ select:focus{
   appearance: none;
   display: inline-block;
   position: relative;
-  background-color: #f1f1f1;
+  background-color: var(--light-gray);
   height: 1.875rem;
   width: 1.875rem;
   border: 0;
@@ -149,20 +191,60 @@ select:focus{
   font: 0.75rem/1 'Open Sans', sans-serif;
   left: 11px;
   top: 7px;
+  color: var(--pink);
   content: '\02143';
   transform: rotate(40deg);
 }
 .form-radio:hover{
-  background-color: #f1f1f1;
+  background-color: var(--light-gray);
 }
 .form-radio:checked{
-  background-color: #f1f1f1;
+  background-color: var(--light-gray);
 }
 label{
   font: 300 1rem/1 'Open Sans', sans-serif;
   cursor: pointer;
   margin-right: 0.5rem;
 } 
+
+
+.sn-icons{
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: #000;
+  opacity: 0.2;
+}
+.slow-spin {
+  -webkit-animation: fa-spin 6s infinite linear;
+  animation: fa-spin 6s infinite linear;
+}
+.slower-spin {
+  -webkit-animation: fa-spin 10s infinite linear;
+  animation: fa-spin 10s infinite linear;
+}
+.sn-icons i:nth-of-type(1){
+  position: absolute;
+  bottom: 2.2rem;
+  right: 7rem;
+  font-size: 2.5rem;
+}
+.sn-icons i:nth-of-type(2){
+  position: absolute;
+  bottom: 4.5rem;
+  right: 4rem;
+  font-size: 2.5rem;
+}
+.sn-icons i:nth-of-type(3){
+  position: absolute;
+  right: 4rem;
+}
+.sn-icons i:nth-of-type(4){
+  position: absolute;
+  bottom: 4.5rem;
+  right: 1.5rem;
+}
 
 
 /* media queries */

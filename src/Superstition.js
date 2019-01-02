@@ -49,7 +49,7 @@ class Superstition extends Component {
                 
                     {message.timestamp && 
                         <span className="info-box">
-                            <img src="/images/baseline-access_time-24px.svg" alt="posted" title="posted"/>
+                            <i className="far fa-clock"></i>
                             <TimeAgo>
                                 {message.timestamp}
                             </TimeAgo>
@@ -60,9 +60,9 @@ class Superstition extends Component {
                         <span className="info-box">
                             {message.type === 'personal'
                                 ? 
-                                <img src="/images/baseline-person-24px.svg" alt="type" title="type"/>
+                                <i className="fas fa-user"></i>
                                 :
-                                <img src="/images/baseline-group_add-24px.svg" alt="type" title="type"/>
+                                <i className="fas fa-users"></i>
                             }
                             {message.type}
                         </span>
@@ -70,7 +70,7 @@ class Superstition extends Component {
 
                     {message.country &&
                         <span className="info-box">
-                            <img src="/images/baseline-location_on-24px.svg" alt="location" title="location"/>
+                            <i className="fas fa-map-marker-alt"></i>
                             {message.country}
                         </span>
                     }
@@ -78,10 +78,10 @@ class Superstition extends Component {
                     
                     <span className="upvotes">
                         {isLiked ? (
-                            <span>LIKED</span>
+                            <i className="fas fa-heart"></i>
                         ) : (
-                            <span onClick={this.upVote.bind(this)}>
-                                <img src="/images/baseline-thumb_up-24px.svg" alt="upvote" title="I believe!"/>
+                            <span className="empty-heart" onClick={this.upVote.bind(this)}>
+                                <i className="far fa-heart"></i>
                             </span>
                         )}
                         {this.state.voteCount}

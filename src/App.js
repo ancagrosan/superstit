@@ -55,13 +55,16 @@ class App extends Component {
     return (
       <div className="container">
         <div className="nav">
-          <h1><span className="word">Superstitious</span> Network</h1>
+          <h1><span>Superstitious</span> Network</h1>
+          <h2>
+            The place where anyone can join and share their irrational beliefs, like home.
+          </h2>
           <div className="social">
-            <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank">
-              <img src="/images/facebook.svg" alt="facebook"/>
+            <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>
+              <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="https://twitter.com/superstitiousnw" target="_blank">
-              <img src="/images/twitter.svg" alt="twitter"/>
+            <a href="https://twitter.com/superstitiousnw" target="_blank" rel='noreferrer noopener'>
+              <i className="fab fa-twitter"></i>
             </a>
           </div>
         </div>
@@ -83,6 +86,14 @@ class App extends Component {
               }
             </ul>
           </div>
+        </div>
+
+        <div className="sn-icons">
+          <i className="fas fa-spin slower-spin fa-cat"></i>
+          <i className="fas fa-spin slow-spin fa-cross"></i>
+          <i className="fas fa-spin slower-spin fa-cloud-moon"></i>
+          <i className="fas fa-spin slower-spin fa-bolt"></i>
+          <i className="fas fa-spin fa-eye"></i>
         </div>
       </div>
     );
