@@ -66,7 +66,11 @@ class App extends Component {
             <a href="https://twitter.com/superstitiousnw" target="_blank" rel='noreferrer noopener'>
               <i className="fab fa-twitter"></i>
             </a>
+            {/* <a href="mailto:contact@superstitious.network">
+              <i class="fas fa-envelope"></i>
+            </a> */}
           </div>
+          <div className="copy">&copy; 2019</div>
         </div>
         <div className="feedContainer">
 

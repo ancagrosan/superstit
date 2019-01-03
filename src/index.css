@@ -26,6 +26,11 @@ body {
   margin: 1rem;
   width: 15rem;
 }
+.copy{
+  color: #FFF;
+  font: 500 0.75rem/1 "Open Sans", sans-serif;
+  margin-top: 1rem;
+}
 h1{
   font: 300 2.25rem/0.85 'Roboto', sans-serif;
   color: var(--yellow);
@@ -42,11 +47,11 @@ h2{
 .social i{
   color: var(--pink);
   margin-right: 1rem;
-  transition: all 2s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 .social i:hover{
   color: var(--pink-light);
-  transform: scale(1.2,1.2)
+  transform: scale(1.2,1.2);
 }
 hr{
   display: block;
@@ -146,11 +151,11 @@ select:focus{
   color: var(--pink);
 }
 .empty-heart{
-  transition-duration: 3s;
+  transition: all 0.1s ease-in-out;
 }
 .empty-heart:hover i{
   color: var(--pink-light);
-  zoom: 110%;
+  transform: scale(1.2,1.2);
   cursor: pointer;
 }
 .info{
@@ -184,6 +189,7 @@ select:focus{
   margin-top: 0;
   outline: none;
   vertical-align: middle;
+  transition: all 0.1s ease-in-out;
 }
 .form-radio:checked::before{
   position: absolute;
@@ -196,6 +202,7 @@ select:focus{
 }
 .form-radio:hover{
   background-color: var(--light-gray);
+  transform: scale(1.2,1.2);
 }
 .form-radio:checked{
   background-color: var(--light-gray);
@@ -264,6 +271,9 @@ label{
   }
   .options-container{
     display: block;
+  }
+  .country-select{
+    margin: 1rem 0;
   }
   .info-box{
     margin-right: 1rem;
