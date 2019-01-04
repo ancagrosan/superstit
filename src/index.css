@@ -213,6 +213,24 @@ label{
   margin-right: 0.5rem;
 } 
 
+/* popularity highlights */
+.highlight{
+  border-radius: 3px;
+  color: #000;
+}
+.highlight hr{
+  border-top: 1px solid #000;
+}
+.popular{
+  background-color: #ffe277
+}
+.very-popular{
+  background-color: #cab047
+}
+.pretty-popular{
+  background-color: #ffffa8
+}
+
 
 .sn-icons{
   display: none;

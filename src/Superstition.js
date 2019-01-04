@@ -39,7 +39,15 @@ class Superstition extends Component {
         let isLiked = this.props.isLiked;
 
         return (
-            <li key={message.id}>
+            <li 
+                key={message.id}
+                className={ 
+                        this.state.voteCount >= 9 ? "highlight very-popular" : 
+                        this.state.voteCount >= 7 ? "highlight popular" : 
+                        this.state.voteCount >= 5 ? "highlight pretty-popular" : ""
+                    }
+                >
+            
                 <div className="supertition-text">
                     {message.text}
                 </div>

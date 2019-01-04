@@ -1,6 +1,11 @@
 {
   "rules": {
     ".read": true,
-    ".write": true
+    ".write": true,
+    "messages": {
+      "$message_id": {
+        ".write": "!data.exists() && newData.exists()"
+      }
+    }
   }
 }
