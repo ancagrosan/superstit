@@ -78,7 +78,7 @@ class App extends Component {
 
   loadMoreItems(){
     // know when to stop
-    if (!referenceToOldestKey) {
+    if (this.state.messages.length && !referenceToOldestKey) {
       this.setState({reachedEnd: true, isLoading: false});
       return;
     }
