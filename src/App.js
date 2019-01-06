@@ -6,20 +6,43 @@ import Form from './Form.js'
 import Superstition from './Superstition.js'
 
 const cookies = new Cookies();
+const IPP = 20;
+let referenceToOldestKey = "";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = { 
       messages: [], 
-      userLikes: []
+      userLikes: [],
+      page: 1,
+      isLoading: true,
+      reachedEnd: false
     };
   }
   componentWillMount() {
-    /* Create reference to messages in Firebase Database */
-    let messagesRef = fire.database().ref('messages').orderByKey().limitToLast(100);
+    // first page load
+    fire.database().ref("messages").orderByKey().limitToLast(IPP).once("value").then((snapshot) => {
+      
+      // change to reverse chronological order (latest first)
+      let arrayOfKeys = Object.keys(snapshot.val()).sort().reverse();
+      
+      // transform to array
+      let results = arrayOfKeys
+         .map((key) => ({
+           ...snapshot.val()[key],
+           id: key
+         }));
+      
+      // store reference
+      referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+
+      this.setState({ messages: results });
+    });
+
+    // listen to new messages
+    let messagesRef = fire.database().ref('messages').orderByKey();
     messagesRef.on('child_added', snapshot => {
-      /* Update React state when message is added at Firebase Database */
 
       let message = {
         text: snapshot.val().text,
@@ -30,7 +53,10 @@ class App extends Component {
         id: snapshot.key
       };
 
-      this.setState({ messages: [message].concat(this.state.messages) });
+      this.setState({ 
+        messages: [message].concat(this.state.messages),
+        isLoading: false
+      });
     });
 
     // set sn cookie if not already there
@@ -39,6 +65,47 @@ class App extends Component {
     } else {
       this.setState({userLikes: cookies.get('superstitiousNw')});
     }
+  }
+
+  componentDidMount() {
+    // add listener on scroll
+    this.refs.iScroll.addEventListener("scroll", () => {
+      if (this.refs.iScroll.scrollTop + this.refs.iScroll.clientHeight >=this.refs.iScroll.scrollHeight){
+        this.loadMoreItems();
+      }
+    });
+  }
+
+  loadMoreItems(){
+    // know when to stop
+    if (!referenceToOldestKey) {
+      this.setState({reachedEnd: true, isLoading: false});
+      return;
+    }
+
+    fire.database()
+      .ref("messages")
+      .orderByKey()
+      .endAt(referenceToOldestKey)
+      .limitToLast(IPP)
+      .once("value")
+      .then((snapshot) => {
+        
+        let arrayOfKeys = Object.keys(snapshot.val()).sort().reverse().slice(1);
+        
+        let results = arrayOfKeys
+          .map((key) => ({
+            ...snapshot.val()[key],
+            id: key
+          }));
+        
+        referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+        this.setState({ 
+          messages: this.state.messages.concat(results),
+          isLoading: false,
+          reachedEnd: arrayOfKeys.length > 0 ? false : true
+        });
+      });
   }
 
   isLiked(id){
@@ -51,9 +118,12 @@ class App extends Component {
     cookies.set('superstitiousNw', likedIds, {path: '/' });
   }
 
-  render() {
+  render() {    
     return (
-      <div className="container">
+      <div 
+        className="container"
+        ref="iScroll"
+      >
         <div className="nav">
           <h1><span>Superstitious</span> Network</h1>
           <h2>
@@ -89,6 +159,16 @@ class App extends Component {
                 )
               }
             </ul>
+            { this.state.isLoading &&
+              <div className="loading-info">
+                <i className="fas fa-spin fa-cat"></i> Loading 
+              </div>
+            }
+            { this.state.reachedEnd &&
+              <div className="loading-info">
+                <i className="fas fa-cat"></i> That's that.
+              </div>
+            }
           </div>
         </div>
 
