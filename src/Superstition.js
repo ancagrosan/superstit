@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import fire from './fire';
-// import Cookies from 'universal-cookie';
 
 import JavascriptTimeAgo from 'javascript-time-ago'
 import TimeAgo from 'react-time-ago/no-tooltip'

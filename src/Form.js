@@ -10,7 +10,8 @@ class Form extends Component {
             country: '', 
             type: 'general',
             textareaFontSize: '2',
-            formValid: false
+            formValid: false,
+            isFormVisible: false
         };
     }
     addMessage(e){
@@ -66,58 +67,71 @@ class Form extends Component {
             formValid: formValid
         });
     }
+    displayForm(){
+        // on mobile, we don't show the add superstition form from the beginning
+        this.setState({isFormVisible: true});
+    }
     render() {
         const { country } = this.state;
 
         return (
-            <form onSubmit={this.addMessage.bind(this)}>
-                <textarea 
-                    className="new-superstition"
-                    style={{fontSize: this.state.textareaFontSize + 'rem'}}
-                    type="text" 
-                    onChange={this.textareaChange.bind(this)}
-                    placeholder="What's your superstition about, is it personal, where is it from?"
-                    rows="6"
-                    value={this.state.text} />
-                
-                <div className="options-container">
-                    <div className="type-select">
-                        
-                        <input 
-                            onChange={this.selectType.bind(this)} 
-                            type="radio" 
-                            value="general" 
-                            name="type" 
-                            id="type-general"
-                            className='form-radio'
-                            checked={this.state.type==="general"}/>
-                        <label htmlFor="type-general">General</label>
-                        
-                        <input 
-                            onChange={this.selectType.bind(this)} 
-                            type="radio" 
-                            value="personal" 
-                            name="type"
-                            id="type-personal"
-                            className='form-radio'
-                            checked={this.state.type==="personal"}/>
-                        <label htmlFor="type-personal">Personal</label>
-                        
-                    </div>
-
-                    <div className="country-select">
-                        <label>Origin:</label>
-                        <CountryDropdown onChange={(val) => this.selectCountry(val)} value={country}/>
-                    </div>
+            <div>
+                <div 
+                    onClick={this.displayForm.bind(this)}
+                    className={"add-yours " + (this.state.isFormVisible ? 'hide' : '')}>
+                    ADD YOURS
                 </div>
-                
-                <button 
-                    disabled={! this.state.formValid}
-                    type="submit"
-                    className="add-btn">
-                    ADD
-                </button>
-            </form>
+                <form 
+                    onSubmit={this.addMessage.bind(this)} 
+                    className={this.state.isFormVisible ? "display-form" : ""}>
+                    <textarea 
+                        className="new-superstition"
+                        style={{fontSize: this.state.textareaFontSize + 'rem'}}
+                        type="text" 
+                        onChange={this.textareaChange.bind(this)}
+                        placeholder="What's your superstition about, is it personal, where is it from?"
+                        rows="6"
+                        value={this.state.text} />
+                    
+                    <div className="options-container">
+                        <div className="type-select">
+                            
+                            <input 
+                                onChange={this.selectType.bind(this)} 
+                                type="radio" 
+                                value="general" 
+                                name="type" 
+                                id="type-general"
+                                className='form-radio'
+                                checked={this.state.type==="general"}/>
+                            <label htmlFor="type-general">General</label>
+                            
+                            <input 
+                                onChange={this.selectType.bind(this)} 
+                                type="radio" 
+                                value="personal" 
+                                name="type"
+                                id="type-personal"
+                                className='form-radio'
+                                checked={this.state.type==="personal"}/>
+                            <label htmlFor="type-personal">Personal</label>
+                            
+                        </div>
+
+                        <div className="country-select">
+                            <label>Origin:</label>
+                            <CountryDropdown onChange={(val) => this.selectCountry(val)} value={country}/>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        disabled={! this.state.formValid}
+                        type="submit"
+                        className="add-btn">
+                        ADD
+                    </button>
+                </form>
+            </div>
         );
     }
 }
