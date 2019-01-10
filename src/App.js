@@ -140,7 +140,7 @@ class App extends Component {
               <i class="fas fa-envelope"></i>
             </a>
           </div>
-          <div className="copy">&copy; 2019</div>
+          <div className="copy">&copy; 2019, Transylvania</div>
         </div>
         <div className="feedContainer">
 
