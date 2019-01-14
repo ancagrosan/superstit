@@ -148,8 +148,8 @@ class Home extends Component {
 
             <Form/>
 
-            <div className="feed">
-              <ul>
+            <div>
+              <ul className="superstition-list">
                 { /* Render the list of superstitions */
                   this.state.messages.map( message => 
                     <Superstition 

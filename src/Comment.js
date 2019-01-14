@@ -12,12 +12,12 @@ class Comment extends Component {
 
     return (
         <li key={comment.id}>
-            <span className="comment-text">
-                {comment.text} 
-            </span>
-            <TimeAgo className="info comment-date">
+            <TimeAgo className="info">
                 {comment.timestamp}
             </TimeAgo>
+            <div className="comment-text">
+                {comment.text} 
+            </div>
         </li>
 
     );

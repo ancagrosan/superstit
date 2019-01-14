@@ -53,8 +53,8 @@ class Superstition extends Component {
             formValid: formValid
         });
     }
-    openComments(e){
-        this.setState({showComments: true});
+    toggleCommentsSection(e){
+        this.setState({showComments: !this.state.showComments});
     }
     addComment(e){
         e.preventDefault();
@@ -78,11 +78,11 @@ class Superstition extends Component {
         return (
             <li 
                 key={message.id}
-                className={ "highlight " + 
+                className={ 
                         (
-                            this.state.voteCount >= 9 ? "very-popular" : 
-                            this.state.voteCount >= 7 ? "popular" : 
-                            this.state.voteCount >= 5 ? "pretty-popular" : ""
+                            this.state.voteCount >= 9 ? "highlight very-popular" : 
+                            this.state.voteCount >= 7 ? "highlight popular" : 
+                            this.state.voteCount >= 5 ? "highlight pretty-popular" : ""
                         )
                     }
                 >
@@ -122,7 +122,7 @@ class Superstition extends Component {
                 </div>
                 
                 <hr/>
-                <div className="info">
+                <div className="relative info">
                 
                     {message.timestamp && 
                         <span className="info-box">
@@ -153,7 +153,7 @@ class Superstition extends Component {
                     }
 
                     <span className="comments-icon">
-                        <i className="far fa-comment" onClick={this.openComments.bind(this)}></i>
+                        <i className="far fa-comment" onClick={this.toggleCommentsSection.bind(this)}></i>
                         {this.state.comments && 
                             <span>{Object.keys(this.state.comments).length}</span>
                         }
