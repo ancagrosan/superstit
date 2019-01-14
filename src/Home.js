@@ -16,6 +16,7 @@ class Home extends Component {
     this.state = { 
       messages: [], 
       userLikes: [],
+      userComments: [],
       page: 1,
       isLoading: true,
       reachedEnd: false
@@ -63,9 +64,23 @@ class Home extends Component {
 
     // set sn cookie if not already there
     if (!cookies.get('superstitiousNw')) {
-      cookies.set('superstitiousNw', [], {path: '/' });
+      cookies.set('superstitiousNw', {userLikes: [], userComments: []}, {path: '/' });
+
     } else {
-      this.setState({userLikes: cookies.get('superstitiousNw')});
+      let cookie = cookies.get('superstitiousNw');
+
+      // since initially we could only have a list of likes set on the cookie, 
+      // check if there's something in that list, and move it to userLikes if there is
+      if (cookie.constructor === Array && !cookie.length){
+        let likedSuperstitions = cookies.get('superstitiousNw');
+        cookies.set('superstitiousNw', {userLikes: likedSuperstitions, userComments: []}, {path: '/' });
+
+      } else {
+        this.setState({
+          userLikes: cookies.get('superstitiousNw')['userLikes'],
+          userComments: cookies.get('superstitiousNw')['userComments']
+        });
+      }
     }
   }
 
@@ -110,14 +125,32 @@ class Home extends Component {
       });
   }
 
-  isLiked(id){
+  userLiked(id){
     return this.state.userLikes.indexOf(id) > -1;
+  }
+  userCommented(id){
+    return this.state.userComments.indexOf(id) > -1;
   }
 
   updateLikes(id){
     let likedIds = [ ...this.state.userLikes, id ];
     this.setState({userLikes: likedIds});
-    cookies.set('superstitiousNw', likedIds, {path: '/' });
+    let userData = {
+      userLikes: likedIds,
+      userComments: this.state.userComments
+    }
+    
+    cookies.set('superstitiousNw', userData, {path: '/' });
+  }
+  updateComments(id){
+    let commentedIds = [ ...this.state.userComments, id ]
+    this.setState({userComments: commentedIds})
+    let userData = {
+      userLikes: this.state.userLikes,
+      userComments: commentedIds
+    }
+    
+    cookies.set('superstitiousNw', userData, {path: '/' });
   }
 
   render() {
@@ -155,8 +188,10 @@ class Home extends Component {
                     <Superstition 
                       item={message} 
                       key={message.id} 
-                      isLiked={this.isLiked(message.id)} 
+                      userLiked={this.userLiked(message.id)} 
+                      userCommented={this.userCommented(message.id)}
                       updateLikes={this.updateLikes.bind(this)}
+                      updateComments={this.updateComments.bind(this)}
                     />
                   )
                 }

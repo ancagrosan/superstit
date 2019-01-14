@@ -60,6 +60,8 @@ class Superstition extends Component {
         e.preventDefault();
         const timestamp = Date.now();
 
+        this.props.updateComments(this.props.item.id);
+
         fire.database().ref('messages/' + this.props.item.id + '/comments').push({
             text: this.state.commentText,
             timestamp: timestamp
@@ -73,7 +75,8 @@ class Superstition extends Component {
 
     render() {
         let message = this.props.item;
-        let isLiked = this.props.isLiked;
+        let userLiked = this.props.userLiked;
+        let userCommented = this.props.userCommented;
 
         return (
             <li 
@@ -153,14 +156,18 @@ class Superstition extends Component {
                     }
 
                     <span className="comments-icon">
-                        <i className="far fa-comment" onClick={this.toggleCommentsSection.bind(this)}></i>
+                        <i 
+                            className={"fa-comment " + (userCommented ? 'fas' : 'far')}
+                            onClick={this.toggleCommentsSection.bind(this)}>
+                        </i>
+                        
                         {this.state.comments && 
                             <span>{Object.keys(this.state.comments).length}</span>
                         }
                     </span>
                     
                     <span className="upvotes">
-                        {isLiked ? (
+                        {userLiked ? (
                             <i className="fas fa-heart"></i>
                         ) : (
                             <span className="empty-heart" onClick={this.upVote.bind(this)}>
