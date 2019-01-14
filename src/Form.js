@@ -83,7 +83,7 @@ class Form extends Component {
                 </div>
                 <form 
                     onSubmit={this.addMessage.bind(this)} 
-                    className={this.state.isFormVisible ? "display-form" : ""}>
+                    className={"add-new-sup-form " + (this.state.isFormVisible ? "display-form" : "")}>
                     <textarea 
                         className="new-superstition"
                         style={{fontSize: this.state.textareaFontSize + 'rem'}}

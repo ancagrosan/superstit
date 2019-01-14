@@ -45,13 +45,13 @@ class Home extends Component {
     // listen to new messages
     let messagesRef = fire.database().ref('messages').orderByKey();
     messagesRef.on('child_added', snapshot => {
-
       let message = {
         text: snapshot.val().text,
         type: snapshot.val().type,
         country: snapshot.val().country,
         timestamp: snapshot.val().timestamp,
         voteCount: snapshot.val().voteCount,
+        comments: snapshot.val().comments,
         id: snapshot.key
       };
 
@@ -70,7 +70,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    // add listener on scroll
+    // add listener on scroll event
     this.refs.iScroll.addEventListener("scroll", () => {
       if (this.refs.iScroll.scrollTop + this.refs.iScroll.clientHeight >=this.refs.iScroll.scrollHeight){
         this.loadMoreItems();

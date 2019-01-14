@@ -20,6 +20,9 @@ body {
   color: var(--main-color);
   font-size: 18px;
 }
+button:focus, textarea:focus, select:focus{
+  outline: none;
+}
 .container{
   height: 100vh;
   min-height: 700px;
@@ -102,9 +105,6 @@ hr{
   font-size: 1rem;
   cursor: pointer;
 }
-.add-btn:focus{
-  outline: none;
-}
 .add-btn:hover:not(:disabled){
   background-color: var(--pink);
   color: var(--yellow);
@@ -112,7 +112,7 @@ hr{
 .add-btn:disabled:hover{
   cursor: default;
 }
-form{
+.add-new-sup-form{
   background-color: var(--yellow);
   padding: 1rem;
   margin-bottom: 1rem;
@@ -134,9 +134,61 @@ li:last-of-type{
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
-.supertition-text, .info{
+.supertition-text, .info, .comments{
   padding: 1rem;
   line-height: 1.5rem;
+}
+/* comments */
+.comments{
+  display: none;
+  transition: all 0.5s ease-in-out;
+}
+.comments.open{
+  display: block;
+  transition: all 0.5s ease-in-out;
+  margin-bottom: 2rem;
+}
+.comments form{
+  position: relative;
+}
+.comments textarea{
+  width: 100%;
+  resize: none;
+  border-color: var(--pink);
+  box-shadow: 0 0 0 2px var(--pink);
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 0.5rem;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  transition: all 0.1s ease-in-out;
+}
+.comments textarea:focus{
+  border-color: var(--pink-light);
+  box-shadow: 0 0 0 2px var(--pink-light);
+}
+.comment-list li:not(:last-child){
+  border-bottom: 1px solid;
+}
+.comment-list li .comment-date{
+
+}
+.add-comment-btn{
+  position: absolute;
+  bottom: -22px;
+  right: 15px;
+  background: var(--pink);
+  color: white;
+  font: 700 0.75rem/1 "Open Sans", sans-serif;
+  padding: 0.5rem 1rem;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: none;
+}
+
+
+.info{
   position: relative;
 }
 .new-superstition{
@@ -150,7 +202,6 @@ li:last-of-type{
   resize: none;
 }
 .new-superstition:focus{
-  outline: none;
   border-color: var(--pink);
   box-shadow: 0 0 0 2px var(--pink);
 }
@@ -164,21 +215,23 @@ select{
   height: 2.25rem;
   font: 300 1rem/1.7 'Open Sans', sans-serif;
 }
-select:focus{
-  outline: none;
+.comments-icon{
+  position: absolute;
+  right: 6rem;
+  width: 3rem;
 }
 .upvotes{
   position: absolute;
   right: 1rem;
   width: 3rem;
 }
-.upvotes i{
+.upvotes i, .comments-icon i{
   color: var(--pink);
 }
 .empty-heart{
   transition: all 0.1s ease-in-out;
 }
-.empty-heart:hover i{
+.empty-heart:hover i, .comments-icon:hover i{
   color: var(--pink-light);
   transform: scale(1.2,1.2);
   cursor: pointer;
@@ -250,7 +303,7 @@ label{
   background-color: #ffe277
 }
 .very-popular{
-  background-color: #cab047
+  background-color: #ead370
 }
 .pretty-popular{
   background-color: #ffffa8
