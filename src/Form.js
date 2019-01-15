@@ -14,7 +14,7 @@ class Form extends Component {
             isFormVisible: false
         };
     }
-    addMessage(e){
+    addSuperstition(e){
         e.preventDefault();
         const timestamp = Date.now();
         
@@ -29,7 +29,8 @@ class Form extends Component {
             text: '',
             country: '',
             type: 'general',
-            timestamp: timestamp
+            timestamp: timestamp,
+            formValid: false,
         });    
     }
     selectType(e){
@@ -82,10 +83,10 @@ class Form extends Component {
                     ADD YOURS
                 </div>
                 <form 
-                    onSubmit={this.addMessage.bind(this)} 
-                    className={this.state.isFormVisible ? "display-form" : ""}>
+                    onSubmit={this.addSuperstition.bind(this)} 
+                    className={"add-superstition-form " + (this.state.isFormVisible ? "display-form" : "")}>
                     <textarea 
-                        className="new-superstition"
+                        className="new-superstition-text"
                         style={{fontSize: this.state.textareaFontSize + 'rem'}}
                         type="text" 
                         onChange={this.textareaChange.bind(this)}
@@ -127,7 +128,7 @@ class Form extends Component {
                     <button 
                         disabled={! this.state.formValid}
                         type="submit"
-                        className="add-btn">
+                        className="submit-superstition-btn">
                         ADD
                     </button>
                 </form>

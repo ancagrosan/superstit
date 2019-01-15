@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 
 import fire from './fire';
 import Cookies from 'universal-cookie';
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 
 import Form from './Form.js'
 import Superstition from './Superstition.js'
+
+JavascriptTimeAgo.locale(en)
 
 const cookies = new Cookies();
 const IPP = 20;
@@ -16,6 +20,7 @@ class Home extends Component {
     this.state = { 
       messages: [], 
       userLikes: [],
+      userComments: [],
       page: 1,
       isLoading: true,
       reachedEnd: false
@@ -45,13 +50,13 @@ class Home extends Component {
     // listen to new messages
     let messagesRef = fire.database().ref('messages').orderByKey();
     messagesRef.on('child_added', snapshot => {
-
       let message = {
         text: snapshot.val().text,
         type: snapshot.val().type,
         country: snapshot.val().country,
         timestamp: snapshot.val().timestamp,
         voteCount: snapshot.val().voteCount,
+        comments: snapshot.val().comments,
         id: snapshot.key
       };
 
@@ -63,14 +68,31 @@ class Home extends Component {
 
     // set sn cookie if not already there
     if (!cookies.get('superstitiousNw')) {
-      cookies.set('superstitiousNw', [], {path: '/' });
+      cookies.set('superstitiousNw', {userLikes: [], userComments: []}, {path: '/' });
+
     } else {
-      this.setState({userLikes: cookies.get('superstitiousNw')});
+      let cookie = cookies.get('superstitiousNw');
+
+      // since initially we could only have a list of likes set on the cookie, 
+      // check if there's something in that list, and move it to userLikes if there is
+      if (cookie.constructor === Array && cookie.length > 0){
+
+        let likedSuperstitions = cookies.get('superstitiousNw');
+        cookies.set('superstitiousNw', {userLikes: likedSuperstitions, userComments: []}, {path: '/' });
+
+        this.setState({userLikes: likedSuperstitions, userComments: []});
+
+      } else {
+        this.setState({
+          userLikes: cookies.get('superstitiousNw')['userLikes'],
+          userComments: cookies.get('superstitiousNw')['userComments']
+        });
+      }
     }
   }
 
   componentDidMount() {
-    // add listener on scroll
+    // add listener on scroll event
     this.refs.iScroll.addEventListener("scroll", () => {
       if (this.refs.iScroll.scrollTop + this.refs.iScroll.clientHeight >=this.refs.iScroll.scrollHeight){
         this.loadMoreItems();
@@ -110,14 +132,36 @@ class Home extends Component {
       });
   }
 
-  isLiked(id){
+  userLiked(id){
     return this.state.userLikes.indexOf(id) > -1;
+  }
+  userCommented(id){
+    return this.state.userComments.indexOf(id) > -1;
   }
 
   updateLikes(id){
     let likedIds = [ ...this.state.userLikes, id ];
     this.setState({userLikes: likedIds});
-    cookies.set('superstitiousNw', likedIds, {path: '/' });
+
+    let cookieData = cookies.get('superstitiousNw') || {};
+    let newCookieData = {
+      ...cookieData,
+      userLiked: likedIds
+    };
+    
+    cookies.set('superstitiousNw', newCookieData, {path: '/' });
+  }
+  updateComments(id){
+    let commentedIds = [ ...this.state.userComments, id ]
+    this.setState({userComments: commentedIds})
+
+    let cookieData = cookies.get('superstitiousNw') || {};
+    let newCookieData = {
+      ...cookieData,
+      userComments: commentedIds
+    };
+    
+    cookies.set('superstitiousNw', newCookieData, {path: '/' });
   }
 
   render() {
@@ -148,15 +192,17 @@ class Home extends Component {
 
             <Form/>
 
-            <div className="feed">
-              <ul>
+            <div>
+              <ul className="superstition-list">
                 { /* Render the list of superstitions */
                   this.state.messages.map( message => 
                     <Superstition 
                       item={message} 
                       key={message.id} 
-                      isLiked={this.isLiked(message.id)} 
+                      userLiked={this.userLiked(message.id)} 
+                      userCommented={this.userCommented(message.id)}
                       updateLikes={this.updateLikes.bind(this)}
+                      updateComments={this.updateComments.bind(this)}
                     />
                   )
                 }
