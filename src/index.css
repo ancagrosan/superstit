@@ -436,4 +436,11 @@ label{
     height: 0;
     transition: all 0.1s ease-out;
   }
+  .add-comment-btn{
+    width: calc(100% + 4px);
+    left: -2px;
+    right: 0;
+    bottom: -33px;
+    padding: 1rem;
+  }
 }
