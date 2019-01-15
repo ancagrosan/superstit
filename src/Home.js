@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 
 import fire from './fire';
 import Cookies from 'universal-cookie';
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 
 import Form from './Form.js'
 import Superstition from './Superstition.js'
+
+JavascriptTimeAgo.locale(en)
 
 const cookies = new Cookies();
 const IPP = 20;
@@ -71,9 +75,12 @@ class Home extends Component {
 
       // since initially we could only have a list of likes set on the cookie, 
       // check if there's something in that list, and move it to userLikes if there is
-      if (cookie.constructor === Array && !cookie.length){
+      if (cookie.constructor === Array && cookie.length > 0){
+
         let likedSuperstitions = cookies.get('superstitiousNw');
         cookies.set('superstitiousNw', {userLikes: likedSuperstitions, userComments: []}, {path: '/' });
+
+        this.setState({userLikes: likedSuperstitions, userComments: []});
 
       } else {
         this.setState({
@@ -135,22 +142,26 @@ class Home extends Component {
   updateLikes(id){
     let likedIds = [ ...this.state.userLikes, id ];
     this.setState({userLikes: likedIds});
-    let userData = {
-      userLikes: likedIds,
-      userComments: this.state.userComments
-    }
+
+    let cookieData = cookies.get('superstitiousNw') || {};
+    let newCookieData = {
+      ...cookieData,
+      userLiked: likedIds
+    };
     
-    cookies.set('superstitiousNw', userData, {path: '/' });
+    cookies.set('superstitiousNw', newCookieData, {path: '/' });
   }
   updateComments(id){
     let commentedIds = [ ...this.state.userComments, id ]
     this.setState({userComments: commentedIds})
-    let userData = {
-      userLikes: this.state.userLikes,
+
+    let cookieData = cookies.get('superstitiousNw') || {};
+    let newCookieData = {
+      ...cookieData,
       userComments: commentedIds
-    }
+    };
     
-    cookies.set('superstitiousNw', userData, {path: '/' });
+    cookies.set('superstitiousNw', newCookieData, {path: '/' });
   }
 
   render() {

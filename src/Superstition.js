@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import fire from './fire';
-
-import JavascriptTimeAgo from 'javascript-time-ago'
 import TimeAgo from 'react-time-ago/no-tooltip'
-import en from 'javascript-time-ago/locale/en'
 
 import Comment from './Comment.js';
-
-JavascriptTimeAgo.locale(en)
 
 class Superstition extends Component {
     constructor(props) {
@@ -69,7 +64,8 @@ class Superstition extends Component {
 
         this.setState({
             commentText: '',
-            timestamp: timestamp
+            timestamp: timestamp,
+            formValid: false
         });    
     }
 
@@ -89,44 +85,8 @@ class Superstition extends Component {
                         )
                     }
                 >
-            
-                <div className="supertition-text">
-                    {message.text}
-                </div>
-
-                <div className={"comments " + (this.state.showComments ? "open" : "")}>
-                    {this.state.comments &&
-                        <ul className="comment-list">                        
-                            {Object.keys(this.state.comments).map(key => 
-                                <Comment 
-                                    item={this.state.comments[key]} 
-                                    key={key} 
-                                />
-                            )}
-                        </ul>
-                    }
-                    
-                    <form onSubmit={this.addComment.bind(this)} >
-                        <textarea 
-                            className="new-comment"
-                            type="text" 
-                            onChange={this.textareaChange.bind(this)}
-                            placeholder="got something to add?"
-                            rows="3"
-                            value={this.state.commentText} />
-
-                        <button 
-                            disabled={! this.state.formValid}
-                            type="submit"
-                            className="add-comment-btn">
-                            COMMENT
-                        </button>                 
-                    </form>
-                </div>
                 
-                <hr/>
-                <div className="relative info">
-                
+                <div className="meta-info info">
                     {message.timestamp && 
                         <span className="info-box">
                             <i className="far fa-clock"></i>
@@ -154,18 +114,44 @@ class Superstition extends Component {
                             {message.country}
                         </span>
                     }
+                </div>
 
-                    <span className="comments-icon">
-                        <i 
-                            className={"fa-comment " + (userCommented ? 'fas' : 'far')}
-                            onClick={this.toggleCommentsSection.bind(this)}>
-                        </i>
-                        
-                        {this.state.comments && 
-                            <span>{Object.keys(this.state.comments).length}</span>
-                        }
-                    </span>
+                <div className="superstition-text">
+                    {message.text}
+                </div>
+
+                <div className={"comments " + (this.state.showComments ? "open" : "")}>
+                    {this.state.comments &&
+                        <ul className="comment-list">                        
+                            {Object.keys(this.state.comments).map(key => 
+                                <Comment 
+                                    item={this.state.comments[key]} 
+                                    key={key} 
+                                />
+                            )}
+                        </ul>
+                    }
                     
+                    <form onSubmit={this.addComment.bind(this)} >
+                        <textarea 
+                            className={"new-comment " + (this.state.formValid ? 'has-input' : '')}
+                            type="text" 
+                            onChange={this.textareaChange.bind(this)}
+                            placeholder="got something to add?"
+                            rows="3"
+                            value={this.state.commentText} />
+
+                        <button 
+                            disabled={! this.state.formValid}
+                            type="submit"
+                            className="add-comment-btn">
+                            COMMENT
+                        </button>                 
+                    </form>
+                </div>
+                
+                <hr/>
+                <div className="actions">                    
                     <span className="upvotes">
                         {userLiked ? (
                             <i className="fas fa-heart"></i>
@@ -174,7 +160,18 @@ class Superstition extends Component {
                                 <i className="far fa-heart"></i>
                             </span>
                         )}
-                        {this.state.voteCount}
+                        <span className="count">{this.state.voteCount}</span>
+                    </span>
+
+                    <span className="comments-icon">
+                        <i 
+                            className={"fa-comment " + (userCommented ? 'fas' : 'far')}
+                            onClick={this.toggleCommentsSection.bind(this)}>
+                        </i>
+                        
+                        {this.state.comments &&
+                            <span className="count">{Object.keys(this.state.comments).length}</span>
+                        }
                     </span>
                 </div>
             </li>        
