@@ -90,9 +90,9 @@ class Superstition extends Component {
                     {message.timestamp && 
                         <span className="info-box">
                             <i className="far fa-clock"></i>
-                            <TimeAgo>
-                                {message.timestamp}
-                            </TimeAgo>
+                            <a href={'/superstition/' + message.id}>
+                                <TimeAgo>{message.timestamp}</TimeAgo>
+                            </a>
                         </span>
                     }
 

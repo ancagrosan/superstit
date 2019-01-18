@@ -5,8 +5,9 @@ import Cookies from 'universal-cookie';
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 
-import Form from './Form.js'
-import Superstition from './Superstition.js'
+import Sidebar from './Sidebar'
+import Form from './Form'
+import Superstition from './Superstition'
 
 JavascriptTimeAgo.locale(en)
 
@@ -170,24 +171,7 @@ class Home extends Component {
           className="container"
           ref="iScroll"
         >
-          <div className="nav">
-            <h1><span>Superstitious</span> Network</h1>
-            <h2>
-              The invisible network that holds our world together.
-            </h2>
-            <div className="social">
-              <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="https://twitter.com/superstitiousnw" target="_blank" rel='noreferrer noopener'>
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="mailto:contact@superstitious.network">
-                <i className="fas fa-envelope"></i>
-              </a>
-            </div>
-            <div className="copy">&copy; 2019, Transylvania</div>
-          </div>
+          <Sidebar/>
           <div className="feedContainer">
 
             <Form/>
