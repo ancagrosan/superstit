@@ -4,9 +4,9 @@ class Sidebar extends Component {
     render() {
         return (
             <div className="nav">
-                <h1><span>Superstitious</span> Network</h1>
+                <h1><a className="logo" href="/"><span>Superstitious</span> Network</a></h1>
                 <h2>
-                The invisible network that holds our world together.
+                    The invisible network that holds our world together.
                 </h2>
                 <div className="social">
                 <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>

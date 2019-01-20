@@ -30,8 +30,7 @@ class Home extends Component {
 
   componentWillMount() {
     // first page load
-    fire.database().ref("messages").orderByKey().limitToLast(IPP).once("value").then((snapshot) => {
-      
+    fire.database().ref("messages").orderByKey().limitToLast(IPP).once("value").then((snapshot) => {      
       // change to reverse chronological order (latest first)
       let arrayOfKeys = Object.keys(snapshot.val()).sort().reverse();
       
@@ -48,25 +47,6 @@ class Home extends Component {
       this.setState({ messages: results });
     });
 
-    // listen to new messages
-    let messagesRef = fire.database().ref('messages').orderByKey();
-    messagesRef.on('child_added', snapshot => {
-      let message = {
-        text: snapshot.val().text,
-        type: snapshot.val().type,
-        country: snapshot.val().country,
-        timestamp: snapshot.val().timestamp,
-        voteCount: snapshot.val().voteCount,
-        comments: snapshot.val().comments,
-        id: snapshot.key
-      };
-
-      this.setState({ 
-        messages: [message].concat(this.state.messages),
-        isLoading: false
-      });
-    });
-
     // set sn cookie if not already there
     if (!cookies.get('superstitiousNw')) {
       cookies.set('superstitiousNw', {userLikes: [], userComments: []}, {path: '/' });
@@ -77,7 +57,6 @@ class Home extends Component {
       // since initially we could only have a list of likes set on the cookie, 
       // check if there's something in that list, and move it to userLikes if there is
       if (cookie.constructor === Array && cookie.length > 0){
-
         let likedSuperstitions = cookies.get('superstitiousNw');
         cookies.set('superstitiousNw', {userLikes: likedSuperstitions, userComments: []}, {path: '/' });
 

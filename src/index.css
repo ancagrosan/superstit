@@ -29,6 +29,16 @@ body {
 
 .relative{ position: relative }
 
+.logo{
+  color: var(--yellow);
+  text-decoration: none;
+}
+.logo:hover{
+  transition: all 0.5s ease-in-out;
+  text-decoration: underline;
+  color: #ead370;
+}
+
 button:focus, textarea:focus, select:focus{
   outline: none;
 }
