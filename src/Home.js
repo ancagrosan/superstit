@@ -134,10 +134,10 @@ class Home extends Component {
   }
 
   userLiked(id){
-    return this.state.userLikes.indexOf(id) > -1;
+    return this.state.userLikes && this.state.userLikes.indexOf(id) > -1;
   }
   userCommented(id){
-    return this.state.userComments.indexOf(id) > -1;
+    return this.state.userComments && this.state.userComments.indexOf(id) > -1;
   }
 
   updateLikes(id){
