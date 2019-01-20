@@ -2,27 +2,39 @@ import React, { Component } from 'react';
 import fire from './fire';
 import TimeAgo from 'react-time-ago/no-tooltip'
 
-import Comment from './Comment.js';
+import Comment from './Comment';
 
 class Superstition extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            comments: this.props.item.comments || [],
+            message: this.props.item,
+            comments: this.props.item.comments || {},
             voteCount: this.props.item.voteCount || 0,
             commentText: '',
             formValid: false,
-            showComments: false
+            showComments: this.props.showComments
         };
     }
     componentWillMount() {
-        let message = fire.database().ref('messages/' + this.props.item.id);
-        message.on('value', snapshot => {
-            this.setState({
-                comments: snapshot.val().comments,
-                voteCount: snapshot.val().voteCount
+        
+        // If the message isn't fully loaded (we only have the id), load the message
+        if (!this.state.message.timestamp) {
+            let messageRef = fire.database().ref('messages/' + this.props.item.id);
+            messageRef.once('value', snapshot => {
+                let value = snapshot.val();
+
+                this.setState({
+                    message: {
+                        ...value,
+                        id: this.props.item.id
+                    },
+                    comments: value.comments,
+                    voteCount: value.voteCount
+                });
             });
-        });
+        }
     }
     upVote(e) {
         // update likes count
@@ -34,6 +46,7 @@ class Superstition extends Component {
             .ref('messages/' + this.props.item.id)
             .update({voteCount: newVoteCount});
     }
+
     textareaChange(e) {
         let formValid = this.state.formValid;
 
@@ -48,35 +61,42 @@ class Superstition extends Component {
             formValid: formValid
         });
     }
+
     toggleCommentsSection(e){
         this.setState({showComments: !this.state.showComments});
     }
+
     addComment(e){
         e.preventDefault();
-        const timestamp = Date.now();
-
         this.props.updateComments(this.props.item.id);
 
         fire.database().ref('messages/' + this.props.item.id + '/comments').push({
             text: this.state.commentText,
-            timestamp: timestamp
+            timestamp: Date.now()
         });
 
+        // Reset comment form
         this.setState({
             commentText: '',
-            timestamp: timestamp,
             formValid: false
         });    
     }
 
     render() {
-        let message = this.props.item;
+        let message = this.state.message;
         let userLiked = this.props.userLiked;
         let userCommented = this.props.userCommented;
 
+        if (!message.timestamp) {
+            return (
+                <div className="loading-info">
+                    <i className="fas fa-spin fa-cat"></i> Loading 
+                </div>
+            );
+        }
+
         return (
             <li 
-                key={message.id}
                 className={ 
                         (
                             this.state.voteCount >= 9 ? "highlight very-popular" : 
@@ -90,9 +110,9 @@ class Superstition extends Component {
                     {message.timestamp && 
                         <span className="info-box">
                             <i className="far fa-clock"></i>
-                            <TimeAgo>
-                                {message.timestamp}
-                            </TimeAgo>
+                            <a href={'/superstition/' + message.id}>
+                                <TimeAgo>{message.timestamp}</TimeAgo>
+                            </a>
                         </span>
                     }
 

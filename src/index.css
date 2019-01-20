@@ -29,12 +29,21 @@ body {
 
 .relative{ position: relative }
 
+.logo{
+  color: var(--yellow);
+  text-decoration: none;
+}
+.logo:hover{
+  transition: all 0.5s ease-in-out;
+  text-decoration: underline;
+  color: #ead370;
+}
+
 button:focus, textarea:focus, select:focus{
   outline: none;
 }
 .container{
   height: 100vh;
-  min-height: 700px;
   overflow: auto;
 }
 .nav{
@@ -308,6 +317,9 @@ label{
   margin-right: 1rem;
   min-width: 7rem;
   display: inline-block;
+}
+.info-box a{
+  color: var(--blue-gray);
 }
 
 /* popularity highlights */

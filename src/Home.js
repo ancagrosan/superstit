@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 
 import fire from './fire';
-import Cookies from 'universal-cookie';
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 
-import Form from './Form.js'
-import Superstition from './Superstition.js'
+import Sidebar from './Sidebar'
+import Form from './Form'
+import Superstition from './Superstition'
+
+import { getCookieData, setCookieData } from './utils/cookie';
 
 JavascriptTimeAgo.locale(en)
 
-const cookies = new Cookies();
 const IPP = 20;
 let referenceToOldestKey = "";
 
@@ -29,8 +30,7 @@ class Home extends Component {
 
   componentWillMount() {
     // first page load
-    fire.database().ref("messages").orderByKey().limitToLast(IPP).once("value").then((snapshot) => {
-      
+    fire.database().ref("messages").orderByKey().limitToLast(IPP).once("value").then((snapshot) => {      
       // change to reverse chronological order (latest first)
       let arrayOfKeys = Object.keys(snapshot.val()).sort().reverse();
       
@@ -47,48 +47,8 @@ class Home extends Component {
       this.setState({ messages: results });
     });
 
-    // listen to new messages
-    let messagesRef = fire.database().ref('messages').orderByKey();
-    messagesRef.on('child_added', snapshot => {
-      let message = {
-        text: snapshot.val().text,
-        type: snapshot.val().type,
-        country: snapshot.val().country,
-        timestamp: snapshot.val().timestamp,
-        voteCount: snapshot.val().voteCount,
-        comments: snapshot.val().comments,
-        id: snapshot.key
-      };
-
-      this.setState({ 
-        messages: [message].concat(this.state.messages),
-        isLoading: false
-      });
-    });
-
-    // set sn cookie if not already there
-    if (!cookies.get('superstitiousNw')) {
-      cookies.set('superstitiousNw', {userLikes: [], userComments: []}, {path: '/' });
-
-    } else {
-      let cookie = cookies.get('superstitiousNw');
-
-      // since initially we could only have a list of likes set on the cookie, 
-      // check if there's something in that list, and move it to userLikes if there is
-      if (cookie.constructor === Array && cookie.length > 0){
-
-        let likedSuperstitions = cookies.get('superstitiousNw');
-        cookies.set('superstitiousNw', {userLikes: likedSuperstitions, userComments: []}, {path: '/' });
-
-        this.setState({userLikes: likedSuperstitions, userComments: []});
-
-      } else {
-        this.setState({
-          userLikes: cookies.get('superstitiousNw')['userLikes'],
-          userComments: cookies.get('superstitiousNw')['userComments']
-        });
-      }
-    }
+    let cookieData = getCookieData();
+    this.setState(cookieData);
   }
 
   componentDidMount() {
@@ -143,25 +103,26 @@ class Home extends Component {
     let likedIds = [ ...this.state.userLikes, id ];
     this.setState({userLikes: likedIds});
 
-    let cookieData = cookies.get('superstitiousNw') || {};
+    let cookieData = getCookieData();
     let newCookieData = {
       ...cookieData,
       userLiked: likedIds
     };
-    
-    cookies.set('superstitiousNw', newCookieData, {path: '/' });
+
+    setCookieData(newCookieData);
   }
+
   updateComments(id){
     let commentedIds = [ ...this.state.userComments, id ]
     this.setState({userComments: commentedIds})
 
-    let cookieData = cookies.get('superstitiousNw') || {};
+    let cookieData = getCookieData();
     let newCookieData = {
       ...cookieData,
       userComments: commentedIds
     };
     
-    cookies.set('superstitiousNw', newCookieData, {path: '/' });
+    setCookieData(newCookieData);
   }
 
   render() {
@@ -170,24 +131,7 @@ class Home extends Component {
           className="container"
           ref="iScroll"
         >
-          <div className="nav">
-            <h1><span>Superstitious</span> Network</h1>
-            <h2>
-              The invisible network that holds our world together.
-            </h2>
-            <div className="social">
-              <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="https://twitter.com/superstitiousnw" target="_blank" rel='noreferrer noopener'>
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="mailto:contact@superstitious.network">
-                <i className="fas fa-envelope"></i>
-              </a>
-            </div>
-            <div className="copy">&copy; 2019, Transylvania</div>
-          </div>
+          <Sidebar/>
           <div className="feedContainer">
 
             <Form/>
