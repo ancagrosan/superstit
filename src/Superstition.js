@@ -92,7 +92,7 @@ class Superstition extends Component {
                 <div className="loading-info">
                     <i className="fas fa-spin fa-cat"></i> Loading 
                 </div>
-            ) 
+            );
         }
 
         return (

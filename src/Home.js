@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import fire from './fire';
-import Cookies from 'universal-cookie';
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 
@@ -9,9 +8,10 @@ import Sidebar from './Sidebar'
 import Form from './Form'
 import Superstition from './Superstition'
 
+import { getCookieData, setCookieData } from './utils/cookie';
+
 JavascriptTimeAgo.locale(en)
 
-const cookies = new Cookies();
 const IPP = 20;
 let referenceToOldestKey = "";
 
@@ -47,28 +47,8 @@ class Home extends Component {
       this.setState({ messages: results });
     });
 
-    // set sn cookie if not already there
-    if (!cookies.get('superstitiousNw')) {
-      cookies.set('superstitiousNw', {userLikes: [], userComments: []}, {path: '/' });
-
-    } else {
-      let cookie = cookies.get('superstitiousNw');
-
-      // since initially we could only have a list of likes set on the cookie, 
-      // check if there's something in that list, and move it to userLikes if there is
-      if (cookie.constructor === Array && cookie.length > 0){
-        let likedSuperstitions = cookies.get('superstitiousNw');
-        cookies.set('superstitiousNw', {userLikes: likedSuperstitions, userComments: []}, {path: '/' });
-
-        this.setState({userLikes: likedSuperstitions, userComments: []});
-
-      } else {
-        this.setState({
-          userLikes: cookies.get('superstitiousNw')['userLikes'],
-          userComments: cookies.get('superstitiousNw')['userComments']
-        });
-      }
-    }
+    let cookieData = getCookieData();
+    this.setState(cookieData);
   }
 
   componentDidMount() {
@@ -123,25 +103,26 @@ class Home extends Component {
     let likedIds = [ ...this.state.userLikes, id ];
     this.setState({userLikes: likedIds});
 
-    let cookieData = cookies.get('superstitiousNw') || {};
+    let cookieData = getCookieData();
     let newCookieData = {
       ...cookieData,
       userLiked: likedIds
     };
-    
-    cookies.set('superstitiousNw', newCookieData, {path: '/' });
+
+    setCookieData(newCookieData);
   }
+
   updateComments(id){
     let commentedIds = [ ...this.state.userComments, id ]
     this.setState({userComments: commentedIds})
 
-    let cookieData = cookies.get('superstitiousNw') || {};
+    let cookieData = getCookieData();
     let newCookieData = {
       ...cookieData,
       userComments: commentedIds
     };
     
-    cookies.set('superstitiousNw', newCookieData, {path: '/' });
+    setCookieData(newCookieData);
   }
 
   render() {

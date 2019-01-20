@@ -44,7 +44,6 @@ button:focus, textarea:focus, select:focus{
 }
 .container{
   height: 100vh;
-  min-height: 700px;
   overflow: auto;
 }
 .nav{
@@ -318,6 +317,9 @@ label{
   margin-right: 1rem;
   min-width: 7rem;
   display: inline-block;
+}
+.info-box a{
+  color: var(--blue-gray);
 }
 
 /* popularity highlights */
