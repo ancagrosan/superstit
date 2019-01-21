@@ -18,23 +18,19 @@ class Superstition extends Component {
         };
     }
     componentWillMount() {
-        
-        // If the message isn't fully loaded (we only have the id), load the message
-        if (!this.state.message.timestamp) {
-            let messageRef = fire.database().ref('messages/' + this.props.item.id);
-            messageRef.once('value', snapshot => {
-                let value = snapshot.val();
+        let messageRef = fire.database().ref('messages/' + this.props.item.id);
+        messageRef.on('value', snapshot => {
+            let value = snapshot.val();
 
-                this.setState({
-                    message: {
-                        ...value,
-                        id: this.props.item.id
-                    },
-                    comments: value.comments,
-                    voteCount: value.voteCount
-                });
+            this.setState({
+                message: {
+                    ...value,
+                    id: this.props.item.id
+                },
+                comments: value.comments,
+                voteCount: value.voteCount
             });
-        }
+        });
     }
     upVote(e) {
         // update likes count
@@ -86,7 +82,7 @@ class Superstition extends Component {
         let message = this.state.message;
         let userLiked = this.props.userLiked;
         let userCommented = this.props.userCommented;
-
+        
         if (!message.timestamp) {
             return (
                 <div className="loading-info">
