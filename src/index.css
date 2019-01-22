@@ -4,7 +4,10 @@
   --blue: #28497e;
   --lighter-blue: #435d8e;
   --blue-gray: #6c7fa2;
+  --link-blue: #1B95E0;
   --yellow: #ffe277;
+  --yellow-darker: #ead370;
+  --yellow-lighter: #fff1bc;
   --pink: #ea3de5;
   --pink-light: #ff77ff;
   --red: #ee726e;
@@ -36,7 +39,7 @@ body {
 .logo:hover{
   transition: all 0.5s ease-in-out;
   text-decoration: underline;
-  color: #ead370;
+  color: var(--yellow-darker);
 }
 
 button:focus, textarea:focus, select:focus{
@@ -85,7 +88,7 @@ hr{
   border: 0;
   border-top: 1px solid var(--blue-gray);
   margin: 0;
-  padding: 0; 
+  padding: 0;
 }
 .feedContainer{
   max-width: 45rem;
@@ -175,7 +178,7 @@ select{
   width: 1.875rem;
   border: 0;
   border-radius: 50%;
-  cursor: pointer;     
+  cursor: pointer;
   margin-right: 0.5rem;
   margin-top: 0;
   outline: none;
@@ -202,7 +205,7 @@ label{
   font: 300 1rem/1 'Open Sans', sans-serif;
   cursor: pointer;
   margin-right: 0.5rem;
-} 
+}
 
 /* feed */
 .superstition-list{
@@ -224,6 +227,20 @@ label{
   line-height: 1.5rem;
   font: 400 0.875rem/1.5 'Open Sans', sans-serif;
   color: var(--blue-gray);
+}
+
+/* superstition page */
+.superstition-page .superstition-list li{
+  background: var(--yellow-lighter);
+}
+.superstition-page .superstition-list li .superstition-text {
+  padding: 2rem 1rem;
+}
+.superstition-page .superstition-list li .comments{
+  margin-top: 1rem;
+}
+.superstition-page .superstition-list li hr{
+  border-top: 1px solid var(--yellow-darker);
 }
 
 /* comments */
@@ -321,6 +338,9 @@ label{
 .info-box a{
   color: var(--blue-gray);
 }
+.info-box a:hover{
+  color: var(--link-blue);
+}
 
 /* popularity highlights */
 .highlight{
@@ -328,13 +348,13 @@ label{
   color: #000;
 }
 .popular{
-  background-color: #ffe277
+  background-color: var(--yellow);
 }
 .very-popular{
-  background-color: #ead370
+  background-color: var(--yellow-darker);
 }
 .pretty-popular{
-  background-color: #ffffa8
+  background-color: var(--yellow-lighter);
 }
 
 /* not found page */

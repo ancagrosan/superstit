@@ -49,14 +49,15 @@ class SuperstitionPage extends Component {
             id: this.props.params.id
         };
         return (
-            <div className="container">
+            <div className="container superstition-page">
                 <Sidebar/>
                 <div className="feedContainer">
                     <ul className="superstition-list">
-                        <Superstition 
-                            item={item} 
+                        <Superstition
+                            item={item}
+                            standalone={true}
                             showComments={true}
-                            userLiked={this.userLiked(item.id)} 
+                            userLiked={this.userLiked(item.id)}
                             userCommented={this.userCommented(item.id)}
                             updateLikes={this.updateLikes.bind(this)}
                             updateComments={this.updateComments.bind(this)}/>

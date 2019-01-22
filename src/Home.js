@@ -18,8 +18,8 @@ let referenceToOldestKey = "";
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      messages: [], 
+    this.state = {
+      messages: [],
       userLikes: [],
       userComments: [],
       page: 1,
@@ -30,17 +30,17 @@ class Home extends Component {
 
   componentWillMount() {
     // first page load
-    fire.database().ref("messages").orderByKey().limitToLast(IPP).once("value").then((snapshot) => {      
+    fire.database().ref("messages").orderByKey().limitToLast(IPP).once("value").then((snapshot) => {
       // change to reverse chronological order (latest first)
       let arrayOfKeys = Object.keys(snapshot.val()).sort().reverse();
-      
+
       // transform to array
       let results = arrayOfKeys
          .map((key) => ({
            ...snapshot.val()[key],
            id: key
          }));
-      
+
       // store reference
       referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
 
@@ -74,17 +74,17 @@ class Home extends Component {
       .limitToLast(IPP)
       .once("value")
       .then((snapshot) => {
-        
+
         let arrayOfKeys = Object.keys(snapshot.val()).sort().reverse().slice(1);
-        
+
         let results = arrayOfKeys
           .map((key) => ({
             ...snapshot.val()[key],
             id: key
           }));
-        
+
         referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
-        this.setState({ 
+        this.setState({
           messages: this.state.messages.concat(results),
           isLoading: false,
           reachedEnd: arrayOfKeys.length > 0 ? false : true
@@ -121,13 +121,13 @@ class Home extends Component {
       ...cookieData,
       userComments: commentedIds
     };
-    
+
     setCookieData(newCookieData);
   }
 
   render() {
     return (
-        <div 
+        <div
           className="container"
           ref="iScroll"
         >
@@ -139,11 +139,11 @@ class Home extends Component {
             <div>
               <ul className="superstition-list">
                 { /* Render the list of superstitions */
-                  this.state.messages.map( message => 
-                    <Superstition 
-                      item={message} 
-                      key={message.id} 
-                      userLiked={this.userLiked(message.id)} 
+                  this.state.messages.map( message =>
+                    <Superstition
+                      item={message}
+                      key={message.id}
+                      userLiked={this.userLiked(message.id)}
                       userCommented={this.userCommented(message.id)}
                       updateLikes={this.updateLikes.bind(this)}
                       updateComments={this.updateComments.bind(this)}
@@ -153,7 +153,7 @@ class Home extends Component {
               </ul>
               { this.state.isLoading &&
                 <div className="loading-info">
-                  <i className="fas fa-spin fa-cat"></i> Loading 
+                  <i className="fas fa-spin fa-cat"></i> Loading
                 </div>
               }
               { this.state.reachedEnd &&

@@ -11,10 +11,9 @@ class Comment extends Component {
                 {comment.timestamp}
             </TimeAgo>
             <div className="comment-text">
-                {comment.text} 
+                {comment.text}
             </div>
         </li>
-
     );
   }
 }

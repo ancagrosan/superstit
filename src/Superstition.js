@@ -14,6 +14,7 @@ class Superstition extends Component {
             voteCount: this.props.item.voteCount || 0,
             commentText: '',
             formValid: false,
+            standalone: this.props.standalone,
             showComments: this.props.showComments
         };
     }
@@ -38,7 +39,7 @@ class Superstition extends Component {
 
         this.props.updateLikes(this.props.item.id);
 
-        return fire.database() 
+        return fire.database()
             .ref('messages/' + this.props.item.id)
             .update({voteCount: newVoteCount});
     }
@@ -75,47 +76,52 @@ class Superstition extends Component {
         this.setState({
             commentText: '',
             formValid: false
-        });    
+        });
     }
 
     render() {
         let message = this.state.message;
         let userLiked = this.props.userLiked;
         let userCommented = this.props.userCommented;
-        
+
         if (!message.timestamp) {
             return (
                 <div className="loading-info">
-                    <i className="fas fa-spin fa-cat"></i> Loading 
+                    <i className="fas fa-spin fa-cat"></i> Loading
                 </div>
             );
         }
 
+        let supLink;
+        if (this.state.standalone) {
+            supLink = <TimeAgo>{message.timestamp}</TimeAgo>;
+        } else {
+            supLink = <a href={'/superstition/' + message.id}><TimeAgo>{message.timestamp}</TimeAgo></a>
+        }
+
         return (
-            <li 
-                className={ 
+            <li
+                className={
                         (
-                            this.state.voteCount >= 9 ? "highlight very-popular" : 
-                            this.state.voteCount >= 7 ? "highlight popular" : 
+                            this.state.voteCount >= 9 ? "highlight very-popular" :
+                            this.state.voteCount >= 7 ? "highlight popular" :
                             this.state.voteCount >= 5 ? "highlight pretty-popular" : ""
                         )
                     }
                 >
-                
+
                 <div className="meta-info info">
-                    {message.timestamp && 
+                    {message.timestamp &&
                         <span className="info-box">
                             <i className="far fa-clock"></i>
-                            <a href={'/superstition/' + message.id}>
-                                <TimeAgo>{message.timestamp}</TimeAgo>
-                            </a>
+                            {supLink}
                         </span>
                     }
 
                     {message.type &&
                         <span className="info-box">
                             {message.type === 'personal'
-                                ? 
+                                ?
                                 <i className="fas fa-user"></i>
                                 :
                                 <i className="fas fa-users"></i>
@@ -138,36 +144,36 @@ class Superstition extends Component {
 
                 <div className={"comments " + (this.state.showComments ? "open" : "")}>
                     {this.state.comments &&
-                        <ul className="comment-list">                        
-                            {Object.keys(this.state.comments).map(key => 
-                                <Comment 
-                                    item={this.state.comments[key]} 
-                                    key={key} 
+                        <ul className="comment-list">
+                            {Object.keys(this.state.comments).map(key =>
+                                <Comment
+                                    item={this.state.comments[key]}
+                                    key={key}
                                 />
                             )}
                         </ul>
                     }
-                    
+
                     <form onSubmit={this.addComment.bind(this)} >
-                        <textarea 
+                        <textarea
                             className={"new-comment " + (this.state.formValid ? 'has-input' : '')}
-                            type="text" 
+                            type="text"
                             onChange={this.textareaChange.bind(this)}
                             placeholder="got something to add?"
                             rows="3"
                             value={this.state.commentText} />
 
-                        <button 
+                        <button
                             disabled={! this.state.formValid}
                             type="submit"
                             className="add-comment-btn">
                             COMMENT
-                        </button>                 
+                        </button>
                     </form>
                 </div>
-                
+
                 <hr/>
-                <div className="actions">                    
+                <div className="actions">
                     <span className="upvotes">
                         {userLiked ? (
                             <i className="fas fa-heart"></i>
@@ -180,17 +186,17 @@ class Superstition extends Component {
                     </span>
 
                     <span className="comments-icon">
-                        <i 
+                        <i
                             className={"fa-comment " + (userCommented ? 'fas' : 'far')}
                             onClick={this.toggleCommentsSection.bind(this)}>
                         </i>
-                        
+
                         {this.state.comments &&
                             <span className="count">{Object.keys(this.state.comments).length}</span>
                         }
                     </span>
                 </div>
-            </li>        
+            </li>
         );
     }
 }
