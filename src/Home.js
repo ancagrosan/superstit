@@ -106,7 +106,7 @@ class Home extends Component {
     let cookieData = getCookieData();
     let newCookieData = {
       ...cookieData,
-      userLiked: likedIds
+      userLikes: likedIds
     };
 
     setCookieData(newCookieData);
