@@ -125,6 +125,13 @@ class Home extends Component {
     setCookieData(newCookieData);
   }
 
+  // when a user adds a new item, add it to the stack
+  userSubmittedItem(message) {
+    this.setState({
+      messages: [message].concat(this.state.messages)
+    });
+  }
+
   render() {
     return (
         <div
@@ -134,7 +141,7 @@ class Home extends Component {
           <Sidebar/>
           <div className="feedContainer">
 
-            <Form/>
+            <Form userSubmittedItem={this.userSubmittedItem.bind(this)}/>
 
             <div>
               <ul className="superstition-list">
