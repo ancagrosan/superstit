@@ -242,6 +242,21 @@ label{
 .superstition-page .superstition-list li hr{
   border-top: 1px solid var(--yellow-darker);
 }
+.sup-nav a i{
+  color: var(--red);
+  font-size: 2rem;
+  transition: all 0.1s ease-in-out;
+}
+.sup-nav a:hover i{
+  color: var(--red-dark);
+  transform: scale(1.2,1.2);
+}
+.sup-nav a .fa-long-arrow-alt-left{
+  float: left;
+}
+.sup-nav a .fa-long-arrow-alt-right{
+  float: right;
+}
 
 /* comments */
 .comments{

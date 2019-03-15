@@ -26,8 +26,6 @@ class Form extends Component {
         fire.database().ref('messages').push(newSup).then((snapshot) => {
             this.props.userSubmittedItem({
                 ...newSup,
-                comments: [],
-                voteCount: 0,
                 id: snapshot.key
             });
         });

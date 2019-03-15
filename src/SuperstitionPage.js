@@ -1,14 +1,42 @@
 import React, { Component } from 'react';
 
+import fire from './fire';
 import Sidebar from './Sidebar'
 import Superstition from './Superstition';
 
 import { getCookieData, setCookieData } from './utils/cookie';
 
 class SuperstitionPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            nextId: '',
+            prevId: '',
+            userLikes: [],
+            userComments: []
+        };
+    }
     componentWillMount() {
         let cookieData = getCookieData();
         this.setState(cookieData);
+
+        let currentSupId = this.props.params.id;
+        let ref = fire.database().ref("messages").orderByKey();
+
+        // get the next/prev superstitions
+        ref.endAt(currentSupId).limitToLast(2).once("value").then((snapshot) => {
+            let nextId = Object.keys(snapshot.val()).find((id) => {
+                return id !== currentSupId;
+            });
+            this.setState({nextId: nextId});
+        });
+
+        ref.startAt(currentSupId).limitToFirst(2).once("value").then((snapshot) => {
+            let prevId = Object.keys(snapshot.val()).find((id) => {
+                return id !== currentSupId;
+            });
+            this.setState({prevId: prevId});
+        });
     }
 
     userLiked(id){
@@ -62,6 +90,14 @@ class SuperstitionPage extends Component {
                             updateLikes={this.updateLikes.bind(this)}
                             updateComments={this.updateComments.bind(this)}/>
                     </ul>
+                    <nav className="sup-nav">
+                        {this.state.prevId &&
+                            <a href={'/superstition/' + this.state.prevId}><i className="fas fa-long-arrow-alt-left"></i></a>
+                        }
+                        {this.state.nextId &&
+                            <a href={'/superstition/' + this.state.nextId}><i className="fas fa-long-arrow-alt-right"></i></a>
+                        }
+                    </nav>
                 </div>
             </div>
         );
