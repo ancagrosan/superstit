@@ -25,10 +25,20 @@ class SuperstitionPage extends Component {
 
         // get the next/prev superstitions
         ref.endAt(currentSupId).limitToLast(2).once("value").then((snapshot) => {
-            let nextId = Object.keys(snapshot.val()).find((id) => {
-                return id !== currentSupId;
+            Object.keys(snapshot.val()).forEach((id) => {
+
+                // while we're here, update the page title
+                if (id === currentSupId) {
+                    const supText = snapshot.val()[currentSupId].text;
+
+                    document.title = supText.length > 30
+                        ? supText.substring(0,30)+ '... | The Superstitious Network'
+                        : supText + '... | The Superstitious Network';
+
+                } else {
+                    this.setState({nextId: id});
+                }
             });
-            this.setState({nextId: nextId});
         });
 
         ref.startAt(currentSupId).limitToFirst(2).once("value").then((snapshot) => {
