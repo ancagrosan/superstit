@@ -1,21 +1,15 @@
-:root {
-  --main-color: #3a3f2a;
-  --dark-blue: #143569;
-  --blue: #28497e;
-  --lighter-blue: #435d8e;
-  --blue-gray: #6c7fa2;
-  --link-blue: #1B95E0;
-  --yellow: #ffe277;
-  --yellow-darker: #ead370;
-  --yellow-lighter: #fff1bc;
-  --pink: #ea3de5;
-  --pink-light: #ff77ff;
-  --red: #ee726e;
-  --red-dark: #b74243;
-  --red-light: #ffa39c;
-  --light-gray: #f1f1f1;
-  --gray: #cbcbcb;
-}
+// color vars
+$main-color: #3a3f2a;
+$dark-blue: #143569;
+$blue-gray: #6c7fa2;
+$link-blue: #1B95E0;
+$yellow: #ffe277;
+$yellow-darker: #ead370;
+$yellow-lighter: #fff1bc;
+$red: #ee726e;
+$red-dark: #b74243;
+$light-gray: #f1f1f1;
+$gray: #cbcbcb;
 
 body {
   margin: 0;
@@ -25,21 +19,21 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--dark-blue);
-  color: var(--main-color);
+  background-color: $dark-blue;
+  color: $main-color;
   font-size: 18px;
 }
 
 .relative{ position: relative }
 
 .logo{
-  color: var(--yellow);
+  color: $yellow;
   text-decoration: none;
-}
-.logo:hover{
-  transition: all 0.5s ease-in-out;
-  text-decoration: underline;
-  color: var(--yellow-darker);
+  &:hover{
+    transition: all 0.5s ease-in-out;
+    text-decoration: underline;
+    color: $yellow-darker;
+  }
 }
 
 button:focus, textarea:focus, select:focus{
@@ -62,11 +56,11 @@ button:focus, textarea:focus, select:focus{
 }
 h1{
   font: 300 2.25rem/0.85 'Roboto', sans-serif;
-  color: var(--yellow);
+  color: $yellow;
   margin-bottom: 1rem;
-}
-h1 span{
-  font-weight: 500;
+  span{
+    font-weight: 500;
+  }
 }
 h2{
   color: white;
@@ -74,19 +68,19 @@ h2{
   margin-bottom: 1rem;
 }
 .social i{
-  color: var(--red);
+  color: $red;
   margin-right: 1rem;
   transition: all 0.1s ease-in-out;
-}
-.social i:hover{
-  color: var(--red-dark);
-  transform: scale(1.2,1.2);
+  &:hover{
+    color: $red-dark;
+    transform: scale(1.2,1.2);
+  }
 }
 hr{
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid var(--blue-gray);
+  border-top: 1px solid $blue-gray;
   margin: 0;
   padding: 0;
 }
@@ -99,9 +93,9 @@ hr{
   text-align: center;
   font: 500 1rem/1 "Open Sans", sans-serif;
   margin-top: 2rem;
-}
-.loading-info i{
-  margin-right: 0.5rem;
+  i{
+    margin-right: 0.5rem;
+  }
 }
 .add-yours{
   display: none;
@@ -111,13 +105,13 @@ hr{
   padding: 0.75rem 2rem;
   margin: 2rem auto 0;
   border-radius: 50px;
-  color: var(--yellow);
-  background: var(--red);
+  color: $yellow;
+  background: $red;
 }
 
 /* add new superstition form */
 .add-superstition-form{
-  background-color: var(--yellow);
+  background-color: $yellow;
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 0.25rem;
@@ -131,10 +125,10 @@ hr{
   box-sizing: border-box;
   border-radius: 0.25rem;
   resize: none;
-}
-.new-superstition-text:focus{
-  border-color: var(--red);
-  box-shadow: 0 0 0 2px var(--red);
+  &:focus{
+    border-color: $red;
+    box-shadow: 0 0 0 2px $red;
+  }
 }
 .options-container{
   display: flex;
@@ -151,19 +145,19 @@ select{
   padding: 0.75rem 2.5rem;
   margin: 1rem auto 0;
   display: block;
-  background-color: var(--red);
+  background-color: $red;
   border: none;
-  color: var(--yellow);
+  color: $yellow;
   font-weight: bold;
   border-radius: 50px;
   font-size: 1rem;
   cursor: pointer;
-}
-.submit-superstition-btn:hover:not(:disabled){
-  background-color: var(--red-dark);
-}
-.submit-superstition-btn:disabled:hover{
-  cursor: default;
+  &:hover:not(:disabled){
+    background-color: $red-dark;
+  }
+  &:disabled:hover{
+    cursor: default;
+  }
 }
 
 /* radio buttons */
@@ -173,7 +167,7 @@ select{
   appearance: none;
   display: inline-block;
   position: relative;
-  background-color: var(--light-gray);
+  background-color: $light-gray;
   height: 1.875rem;
   width: 1.875rem;
   border: 0;
@@ -184,22 +178,22 @@ select{
   outline: none;
   vertical-align: middle;
   transition: all 0.1s ease-in-out;
-}
-.form-radio:checked::before{
-  position: absolute;
-  font: 0.75rem/1 'Open Sans', sans-serif;
-  left: 11px;
-  top: 7px;
-  color: var(--red);
-  content: '\02143';
-  transform: rotate(40deg);
-}
-.form-radio:hover{
-  background-color: var(--light-gray);
-  transform: scale(1.2,1.2);
-}
-.form-radio:checked{
-  background-color: var(--light-gray);
+  &:hover{
+    background-color: $light-gray;
+    transform: scale(1.2,1.2);
+  }
+  &:checked{
+    background-color: $light-gray;
+    &:before{
+      position: absolute;
+      font: 0.75rem/1 'Open Sans', sans-serif;
+      left: 11px;
+      top: 7px;
+      color: $red;
+      content: '\02143';
+      transform: rotate(40deg);
+    }
+  }
 }
 label{
   font: 300 1rem/1 'Open Sans', sans-serif;
@@ -211,13 +205,13 @@ label{
 .superstition-list{
   list-style-type: none;
   padding: 0;
-}
-.superstition-list li{
-  margin-bottom: 1rem;
-  border-radius: 0.25rem;
-}
-.superstition-list > li:not(.highlight){
-  background: #FFF;
+  li{
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+  }
+  & > li:not(.highlight){
+    background: #FFF;
+  }
 }
 .superstition-text{
   padding: 1rem;
@@ -231,80 +225,82 @@ label{
 
 /* superstition page */
 .superstition-page .superstition-list li{
-  background: var(--yellow-lighter);
-}
-.superstition-page .superstition-list li .superstition-text {
-  padding: 2rem 1rem;
-}
-.superstition-page .superstition-list li .comments{
-  margin-top: 1rem;
-}
-.superstition-page .superstition-list li hr{
-  border-top: 1px solid var(--yellow-darker);
+  background: $yellow-lighter;
+  .superstition-text {
+    padding: 2rem 1rem;
+  }
+  .comments{
+    margin-top: 1rem;
+  }
+  hr{
+    border-top: 1px solid $yellow-darker;
+  }
 }
 .sup-nav{
   display: flex;
   justify-content: space-between;
-}
-.sup-nav a:only-child {
-  margin-left: auto;
-}
-.sup-nav a i{
-  color: var(--red);
-  font-size: 2rem;
-  transition: all 0.1s ease-in-out;
-}
-.sup-nav a:hover i{
-  color: var(--red-dark);
-  transform: scale(1.2,1.2);
+  a{
+    &:only-child {
+      margin-left: auto;
+    }
+    i{
+      color: $red;
+      font-size: 2rem;
+      transition: all 0.1s ease-in-out;
+    }
+    &:hover i{
+      color: $red-dark;
+      transform: scale(1.2,1.2);
+    }
+  }
 }
 
 /* comments */
 .comments{
   display: none;
   transition: all 0.5s ease-in-out;
-}
-.comments.open{
-  display: block;
-  transition: all 0.5s ease-in-out;
-  margin-bottom: 3rem;
-}
-.comments form{
-  position: relative;
-  margin: 1rem;
-}
-.comments textarea{
-  width: 100%;
-  resize: none;
-  border-color: var(--gray);
-  box-shadow: 0 0 0 2px var(--gray);
-  border-radius: 10px;
-  font-size: 1rem;
-  padding: 0.5rem;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  transition: all 0.1s ease-in-out;
-}
-.comments textarea.has-input{
-  border-color: var(--red);
-  box-shadow: 0 0 0 2px var(--red);
+  &.open{
+    display: block;
+    transition: all 0.5s ease-in-out;
+    margin-bottom: 3rem;
+  }
+  form{
+    position: relative;
+    margin: 1rem;
+  }
+  textarea{
+    width: 100%;
+    resize: none;
+    border-color: $gray;
+    box-shadow: 0 0 0 2px $gray;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 0.5rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    transition: all 0.1s ease-in-out;
+    &.has-input{
+      border-color: $red;
+      box-shadow: 0 0 0 2px $red;
+    }
+  }
 }
 .comment-list{
   list-style-type: none;
   padding: 0;
-}
-.comment-list li{
-  margin-bottom: 1rem;
-}
-.comment-list li .comment-text{
-  padding: 0 1rem;
+  li{
+    margin-bottom: 1rem;
+    .comment-text{
+      padding: 0 1rem;
+    }
+  }
 }
 .add-comment-btn{
   position: absolute;
   bottom: -25px;
   right: 15px;
-  background: var(--red);
+  background: $red;
   color: white;
   font: 700 0.75rem/1 "Open Sans", sans-serif;
   padding: 0.5rem 1rem;
@@ -312,32 +308,32 @@ label{
   border-bottom-right-radius: 10px;
   border: none;
   cursor: pointer;
-}
-.add-comment-btn:disabled{
-  background: var(--gray);
-  cursor: initial;
+  &:disabled{
+    background: $gray;
+    cursor: initial;
+  }
 }
 .actions{
   padding: 0.5rem 1rem;
-}
-.actions .count{
-  font: 400 0.875rem/1.5 'Open Sans', sans-serif;
-  vertical-align: bottom;
-  color: var(--blue-gray);
+  .count{
+    font: 400 0.875rem/1.5 'Open Sans', sans-serif;
+    vertical-align: bottom;
+    color: $blue-gray;
+  }
 }
 .comments-icon, .upvotes{
   width: 4rem;
   display: inline-block;
 }
 .upvotes i, .comments-icon i{
-  color: var(--red);
+  color: $red;
   margin-right: 0.5rem;
 }
 .empty-heart{
   transition: all 0.1s ease-in-out;
 }
 .empty-heart:hover i, .comments-icon:hover i{
-  color: var(--red-dark);
+  color: $red-dark;
   transform: scale(1.2,1.2);
   cursor: pointer;
 }
@@ -350,12 +346,12 @@ label{
   margin-right: 1rem;
   min-width: 7rem;
   display: inline-block;
-}
-.info-box a{
-  color: var(--blue-gray);
-}
-.info-box a:hover{
-  color: var(--link-blue);
+  a{
+    color: $blue-gray;
+    &:hover{
+      color: $link-blue;
+    }
+  }
 }
 
 /* popularity highlights */
@@ -364,13 +360,13 @@ label{
   color: #000;
 }
 .popular{
-  background-color: var(--yellow);
+  background-color: $yellow;
 }
 .very-popular{
-  background-color: var(--yellow-darker);
+  background-color: $yellow-darker;
 }
 .pretty-popular{
-  background-color: var(--yellow-lighter);
+  background-color: $yellow-lighter;
 }
 
 /* not found page */
@@ -381,18 +377,18 @@ label{
   justify-content: center;
   min-height: 100vh;
   text-align: center;
-}
-.not-found a{
-  color: #FFF;
-}
-.not-found i:hover{
-  color: #000;
-  transform: scale(1.2,1.2);
-}
-.not-found i{
-  font-size: 3rem;
-  margin: 2rem 0;
-  transition: all 0.1s ease-in-out;
+  a{
+    color: #FFF;
+  }
+  i{
+    font-size: 3rem;
+    margin: 2rem 0;
+    transition: all 0.1s ease-in-out;
+    &:hover{
+      color: #000;
+      transform: scale(1.2,1.2);
+    }
+  }
 }
 
 .sn-icons{
@@ -434,7 +430,6 @@ label{
   right: 1.5rem;
 }
 
-
 /* media queries */
 @media (max-width: 767px) {
   .nav{
@@ -465,26 +460,26 @@ label{
     height: 0;
     opacity: 0;
     display: none;
-  }
-  .add-superstition-form.display-form{
-    display: block;
-    height: 100%;
-    opacity: 1;
-    transition: all 1s ease-out;
+    &.display-form{
+      display: block;
+      height: 100%;
+      opacity: 1;
+      transition: all 1s ease-out;
+    }
+    &:not(.display-form) textarea{
+      height: 0;
+    }
   }
   .submit-superstition-btn{
     margin: 2rem auto 1rem;
   }
-  .add-superstition-form:not(.display-form) textarea{
-    height: 0;
-  }
   .add-yours{
     display: block;
-  }
-  .add-yours.hide{
-    opacity: 0;
-    height: 0;
-    transition: all 0.1s ease-out;
+    &.hide{
+      opacity: 0;
+      height: 0;
+      transition: all 0.1s ease-out;
+    }
   }
   .add-comment-btn{
     width: calc(100% + 4px);

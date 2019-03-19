@@ -33,7 +33,7 @@ class SuperstitionPage extends Component {
 
                     document.title = supText.length > 30
                         ? supText.substring(0,30)+ '... | The Superstitious Network'
-                        : supText + '... | The Superstitious Network';
+                        : supText + ' | The Superstitious Network';
 
                 } else {
                     this.setState({nextId: id});

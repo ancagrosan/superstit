@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.7.1",
+    "node-sass": "^4.11.0",
     "react": "^16.7.0",
     "react-country-region-selector": "^1.4.3",
     "react-dom": "^16.7.0",
