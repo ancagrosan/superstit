@@ -58,7 +58,19 @@ class SuperstitionPage extends Component {
     }
 
     updateLikes(id){
-        let likedIds = [ ...this.state.userLikes, id ];
+        const isLiked = !!this.state.userLikes.find((value) => {
+            return value === id;
+        });
+        let likedIds = [];
+
+        if (isLiked){
+            likedIds = this.state.userLikes.filter((value) => {
+            return value !== id;
+        });
+        } else {
+            likedIds = [ ...this.state.userLikes, id ];
+        }
+
         this.setState({userLikes: likedIds});
 
         let cookieData = getCookieData();

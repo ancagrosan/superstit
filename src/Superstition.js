@@ -33,11 +33,14 @@ class Superstition extends Component {
             });
         });
     }
-    upVote(e) {
-        // update likes count
-        let newVoteCount = this.state.voteCount ? this.state.voteCount + 1 : 1;
-
+    toggleVote(e) {
+        // update likes list
         this.props.updateLikes(this.props.item.id);
+
+        // update likes count
+        let newVoteCount = this.props.userLiked
+            ? (this.state.voteCount - 1)
+            : (this.state.voteCount ? this.state.voteCount + 1 : 1)
 
         return fire.database()
             .ref('messages/' + this.props.item.id)
@@ -175,13 +178,9 @@ class Superstition extends Component {
                 <hr/>
                 <div className="actions">
                     <span className="upvotes">
-                        {userLiked ? (
-                            <i className="fas fa-heart"></i>
-                        ) : (
-                            <span className="empty-heart" onClick={this.upVote.bind(this)}>
-                                <i className="far fa-heart"></i>
-                            </span>
-                        )}
+                        <span className="empty-heart" onClick={this.toggleVote.bind(this)}>
+                            <i className={(userLiked ? 'fas' : 'far') + " fa-heart"}></i>
+                        </span>
                         <span className="count">{this.state.voteCount}</span>
                     </span>
 
