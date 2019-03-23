@@ -4,6 +4,7 @@ import fire from './fire';
 import Sidebar from './Sidebar'
 import Superstition from './Superstition';
 
+import { addOrRemoveFromArray } from './utils/general';
 import { getCookieData, setCookieData } from './utils/cookie';
 
 class SuperstitionPage extends Component {
@@ -58,19 +59,7 @@ class SuperstitionPage extends Component {
     }
 
     updateLikes(id){
-        const isLiked = !!this.state.userLikes.find((value) => {
-            return value === id;
-        });
-        let likedIds = [];
-
-        if (isLiked){
-            likedIds = this.state.userLikes.filter((value) => {
-            return value !== id;
-        });
-        } else {
-            likedIds = [ ...this.state.userLikes, id ];
-        }
-
+        let likedIds = addOrRemoveFromArray(this.state.userLikes, id);
         this.setState({userLikes: likedIds});
 
         let cookieData = getCookieData();
