@@ -15,9 +15,11 @@ class Superstition extends Component {
             commentText: '',
             formValid: false,
             standalone: this.props.standalone,
-            showComments: this.props.showComments
+            showComments: this.props.showComments,
+            popularityCount: 0
         };
     }
+
     componentWillMount() {
         let messageRef = fire.database().ref('messages/' + this.props.item.id);
         messageRef.on('value', snapshot => {
@@ -33,7 +35,12 @@ class Superstition extends Component {
             });
         });
     }
-    toggleVote(e) {
+
+    componentDidMount() {
+        this.setState({popularityCount: this.state.voteCount + Object.keys(this.state.comments).length});
+    }
+
+    toggleVote() {
         // update likes list
         this.props.updateLikes(this.props.item.id);
 
@@ -62,7 +69,7 @@ class Superstition extends Component {
         });
     }
 
-    toggleCommentsSection(e){
+    toggleCommentsSection(){
         this.setState({showComments: !this.state.showComments});
     }
 
@@ -106,9 +113,9 @@ class Superstition extends Component {
             <li
                 className={
                         (
-                            this.state.voteCount >= 9 ? "highlight very-popular" :
-                            this.state.voteCount >= 7 ? "highlight popular" :
-                            this.state.voteCount >= 5 ? "highlight pretty-popular" : ""
+                            this.state.popularityCount >= 9 ? "highlight very-popular" :
+                            this.state.popularityCount >= 7 ? "highlight popular" :
+                            this.state.popularityCount >= 5 ? "highlight pretty-popular" : ""
                         )
                     }
                 >
