@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
 import fire from './fire';
 import TimeAgo from 'react-time-ago/no-tooltip'
+import { Link } from 'react-router-dom';
 
 import Comment from './Comment';
 
 class Superstition extends Component {
     constructor(props) {
         super(props);
+        const item = this.props.item;
 
         this.state = {
-            message: this.props.item,
-            comments: this.props.item.comments || {},
-            voteCount: this.props.item.voteCount || 0,
+            message: item,
+            comments: item.comments || {},
+            voteCount: item.voteCount || 0,
             commentText: '',
             formValid: false,
-            standalone: this.props.standalone,
-            showComments: this.props.showComments
+            standalone: item.standalone,
+            showComments: item.showComments,
+            popularityCount: 0
         };
     }
+
     componentWillMount() {
         let messageRef = fire.database().ref('messages/' + this.props.item.id);
         messageRef.on('value', snapshot => {
@@ -33,7 +37,13 @@ class Superstition extends Component {
             });
         });
     }
-    toggleVote(e) {
+
+    componentDidMount() {
+        const comments = this.state.comments ? Object.keys(this.state.comments).length : 0;
+        this.setState({popularityCount: this.state.voteCount + comments});
+    }
+
+    toggleVote() {
         // update likes list
         this.props.updateLikes(this.props.item.id);
 
@@ -62,7 +72,7 @@ class Superstition extends Component {
         });
     }
 
-    toggleCommentsSection(e){
+    toggleCommentsSection(){
         this.setState({showComments: !this.state.showComments});
     }
 
@@ -99,16 +109,16 @@ class Superstition extends Component {
         if (this.state.standalone) {
             supLink = <TimeAgo>{message.timestamp}</TimeAgo>;
         } else {
-            supLink = <a href={'/superstition/' + message.id}><TimeAgo>{message.timestamp}</TimeAgo></a>
+            supLink = <Link to={'/superstition/' + message.id}><TimeAgo>{message.timestamp}</TimeAgo></Link>
         }
 
         return (
             <li
                 className={
                         (
-                            this.state.voteCount >= 9 ? "highlight very-popular" :
-                            this.state.voteCount >= 7 ? "highlight popular" :
-                            this.state.voteCount >= 5 ? "highlight pretty-popular" : ""
+                            this.state.popularityCount >= 9 ? "highlight very-popular" :
+                            this.state.popularityCount >= 7 ? "highlight popular" :
+                            this.state.popularityCount >= 5 ? "highlight pretty-popular" : ""
                         )
                     }
                 >
@@ -136,7 +146,7 @@ class Superstition extends Component {
                     {message.country &&
                         <span className="info-box">
                             <i className="fas fa-map-marker-alt"></i>
-                            {message.country}
+                            <Link to={{pathname: '/from/' + encodeURIComponent(message.country)}}>{message.country}</Link>
                         </span>
                     }
                 </div>

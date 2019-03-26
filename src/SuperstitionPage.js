@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import fire from './fire';
 import Sidebar from './Sidebar'
-import Superstition from './Superstition';
-
-import { addOrRemoveFromArray } from './utils/general';
-import { getCookieData, setCookieData } from './utils/cookie';
+import List from './List';
 
 class SuperstitionPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             nextId: '',
-            prevId: '',
-            userLikes: [],
-            userComments: []
+            prevId: ''
         };
     }
     componentWillMount() {
-        let cookieData = getCookieData();
-        this.setState(cookieData);
-
         let currentSupId = this.props.params.id;
         let ref = fire.database().ref("messages").orderByKey();
 
@@ -50,63 +43,23 @@ class SuperstitionPage extends Component {
         });
     }
 
-    userLiked(id){
-        return this.state.userLikes && this.state.userLikes.indexOf(id) > -1;
-    }
-
-    userCommented(id){
-        return this.state.userComments && this.state.userComments.indexOf(id) > -1;
-    }
-
-    updateLikes(id){
-        let likedIds = addOrRemoveFromArray(this.state.userLikes, id);
-        this.setState({userLikes: likedIds});
-
-        let cookieData = getCookieData();
-        let newCookieData = {
-            ...cookieData,
-            userLiked: likedIds
-        };
-        setCookieData(newCookieData);
-    }
-
-    updateComments(id){
-        let commentedIds = [ ...this.state.userComments, id ]
-        this.setState({userComments: commentedIds})
-
-        let cookieData = getCookieData();
-        let newCookieData = {
-            ...cookieData,
-            userComments: commentedIds
-        };
-
-        setCookieData(newCookieData);
-    }
-
     render() {
         let item = {
-            id: this.props.params.id
+            id: this.props.params.id,
+            standalone: true,
+            showComments: true
         };
         return (
             <div className="container superstition-page">
                 <Sidebar/>
                 <div className="feedContainer">
-                    <ul className="superstition-list">
-                        <Superstition
-                            item={item}
-                            standalone={true}
-                            showComments={true}
-                            userLiked={this.userLiked(item.id)}
-                            userCommented={this.userCommented(item.id)}
-                            updateLikes={this.updateLikes.bind(this)}
-                            updateComments={this.updateComments.bind(this)}/>
-                    </ul>
+                    <List items={[item]}/>
                     <nav className="sup-nav">
                         {this.state.prevId &&
-                            <a href={'/superstition/' + this.state.prevId}><i className="fas fa-long-arrow-alt-left"></i></a>
+                            <Link to={'/superstition/' + this.state.prevId}><i className="fas fa-long-arrow-alt-left"></i></Link>
                         }
                         {this.state.nextId &&
-                            <a href={'/superstition/' + this.state.nextId}><i className="fas fa-long-arrow-alt-right"></i></a>
+                            <Link to={'/superstition/' + this.state.prevId}><i className="fas fa-long-arrow-alt-right"></i></Link>
                         }
                     </nav>
                 </div>
