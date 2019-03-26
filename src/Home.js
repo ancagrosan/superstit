@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 
 import fire from './fire';
-import JavascriptTimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
+import JavascriptTimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
 
-import Sidebar from './Sidebar'
-import Form from './Form'
-import Superstition from './Superstition'
-
-import { addOrRemoveFromArray } from './utils/general';
-import { getCookieData, setCookieData } from './utils/cookie';
+import Sidebar from './Sidebar';
+import Form from './Form';
+import List from './List';
 
 JavascriptTimeAgo.locale(en)
 
@@ -21,8 +18,6 @@ class Home extends Component {
     super(props);
     this.state = {
       messages: [],
-      userLikes: [],
-      userComments: [],
       page: 1,
       isLoading: true,
       reachedEnd: false
@@ -47,9 +42,6 @@ class Home extends Component {
 
       this.setState({ messages: results });
     });
-
-    let cookieData = getCookieData();
-    this.setState(cookieData);
   }
 
   componentDidMount() {
@@ -93,39 +85,6 @@ class Home extends Component {
       });
   }
 
-  userLiked(id){
-    return this.state.userLikes && this.state.userLikes.indexOf(id) > -1;
-  }
-  userCommented(id){
-    return this.state.userComments && this.state.userComments.indexOf(id) > -1;
-  }
-
-  updateLikes(id){
-    let likedIds = addOrRemoveFromArray(this.state.userLikes, id);
-    this.setState({userLikes: likedIds});
-
-    let cookieData = getCookieData();
-    let newCookieData = {
-      ...cookieData,
-      userLikes: likedIds
-    };
-
-    setCookieData(newCookieData);
-  }
-
-  updateComments(id){
-    let commentedIds = [ ...this.state.userComments, id ]
-    this.setState({userComments: commentedIds})
-
-    let cookieData = getCookieData();
-    let newCookieData = {
-      ...cookieData,
-      userComments: commentedIds
-    };
-
-    setCookieData(newCookieData);
-  }
-
   // when a user adds a new item, add it to the stack
   userSubmittedItem(message) {
     this.setState({
@@ -145,20 +104,9 @@ class Home extends Component {
             <Form userSubmittedItem={this.userSubmittedItem.bind(this)}/>
 
             <div>
-              <ul className="superstition-list">
-                { /* Render the list of superstitions */
-                  this.state.messages.map( message =>
-                    <Superstition
-                      item={message}
-                      key={message.id}
-                      userLiked={this.userLiked(message.id)}
-                      userCommented={this.userCommented(message.id)}
-                      updateLikes={this.updateLikes.bind(this)}
-                      updateComments={this.updateComments.bind(this)}
-                    />
-                  )
-                }
-              </ul>
+
+              <List items={this.state.messages}/>
+
               { this.state.isLoading &&
                 <div className="loading-info">
                   <i className="fas fa-spin fa-cat"></i> Loading

@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import fire from './fire';
 import TimeAgo from 'react-time-ago/no-tooltip'
+import { Link } from 'react-router-dom';
 
 import Comment from './Comment';
 
 class Superstition extends Component {
     constructor(props) {
         super(props);
+        const item = this.props.item;
 
         this.state = {
-            message: this.props.item,
-            comments: this.props.item.comments || {},
-            voteCount: this.props.item.voteCount || 0,
+            message: item,
+            comments: item.comments || {},
+            voteCount: item.voteCount || 0,
             commentText: '',
             formValid: false,
-            standalone: this.props.standalone,
-            showComments: this.props.showComments,
+            standalone: item.standalone,
+            showComments: item.showComments,
             popularityCount: 0
         };
     }
@@ -37,7 +39,8 @@ class Superstition extends Component {
     }
 
     componentDidMount() {
-        this.setState({popularityCount: this.state.voteCount + Object.keys(this.state.comments).length});
+        const comments = this.state.comments ? Object.keys(this.state.comments).length : 0;
+        this.setState({popularityCount: this.state.voteCount + comments});
     }
 
     toggleVote() {
@@ -143,7 +146,7 @@ class Superstition extends Component {
                     {message.country &&
                         <span className="info-box">
                             <i className="fas fa-map-marker-alt"></i>
-                            {message.country}
+                            <Link to={{pathname: '/from/' + encodeURIComponent(message.country)}}>{message.country}</Link>
                         </span>
                     }
                 </div>
