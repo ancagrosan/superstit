@@ -109,7 +109,7 @@ class Superstition extends Component {
         if (this.state.standalone) {
             supLink = <TimeAgo>{message.timestamp}</TimeAgo>;
         } else {
-            supLink = <a href={'/superstition/' + message.id}><TimeAgo>{message.timestamp}</TimeAgo></a>
+            supLink = <Link to={'/superstition/' + message.id}><TimeAgo>{message.timestamp}</TimeAgo></Link>
         }
 
         return (

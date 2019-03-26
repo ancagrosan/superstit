@@ -31,7 +31,7 @@ class MapPage extends Component {
             <div className="container">
                 <Sidebar/>
                 <div className="feedContainer">
-					<div>listing superstitions from {this.state.country}</div>
+					<h2>News from {this.state.country}:</h2>
 
 					<div>
 						<List items={this.state.messages}/>

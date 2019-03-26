@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import fire from './fire';
 import Sidebar from './Sidebar'
@@ -55,10 +56,10 @@ class SuperstitionPage extends Component {
                     <List items={[item]}/>
                     <nav className="sup-nav">
                         {this.state.prevId &&
-                            <a href={'/superstition/' + this.state.prevId}><i className="fas fa-long-arrow-alt-left"></i></a>
+                            <Link to={'/superstition/' + this.state.prevId}><i className="fas fa-long-arrow-alt-left"></i></Link>
                         }
                         {this.state.nextId &&
-                            <a href={'/superstition/' + this.state.nextId}><i className="fas fa-long-arrow-alt-right"></i></a>
+                            <Link to={'/superstition/' + this.state.prevId}><i className="fas fa-long-arrow-alt-right"></i></Link>
                         }
                     </nav>
                 </div>
