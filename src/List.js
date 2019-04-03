@@ -15,17 +15,17 @@ class List extends Component {
 	  }
 
 	componentWillMount() {
-	    let cookieData = getCookieData();
+		let cookieData = getCookieData();
 		this.setState(cookieData);
 	}
     updateLikes(id){
-        let likedIds = addOrRemoveFromArray(this.state.userLikes, id);
+		let likedIds = addOrRemoveFromArray(this.state.userLikes, id);
         this.setState({userLikes: likedIds});
 
         let cookieData = getCookieData();
         let newCookieData = {
             ...cookieData,
-            userLiked: likedIds
+            userLikes: likedIds
         };
         setCookieData(newCookieData);
     }

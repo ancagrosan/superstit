@@ -9,6 +9,7 @@ class MapPage extends Component {
         super(props);
         this.state = {
 			country: this.props.params.country,
+			isLoading: true,
 			messages: []
 		};
 	}
@@ -20,35 +21,40 @@ class MapPage extends Component {
 
 		ref.orderByChild('country').equalTo(country).on("child_added",(snapshot) => {
 			let message = {...snapshot.val(), id: snapshot.key};
-			messages.push(message)
-			this.setState({messages: messages})
+
+			messages.push(message);
+			this.setState({
+				messages: messages,
+				isLoading: false
+			})
 		});
 	}
 
     render() {
+		let sortedMessages = [...this.state.messages];
+		sortedMessages.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-        return (
-            <div className="container">
-                <Sidebar/>
-                <div className="feedContainer">
-					<h2>News from {this.state.country}:</h2>
+		let content = <div className="loading-info">
+			<i className="fas fa-spin fa-cat"></i> Loading
+		</div>;
 
-					<div>
-						<List items={this.state.messages}/>
-						{ this.state.isLoading &&
-							<div className="loading-info">
-							<i className="fas fa-spin fa-cat"></i> Loading
-							</div>
-						}
-						{ this.state.reachedEnd &&
-							<div className="loading-info">
-							<i className="fas fa-cat"></i> That's that.
-							</div>
-						}
-					</div>
-                </div>
-            </div>
-        );
+		if (!this.state.isLoading) {
+			content = <div className="feedContainer">
+				<div>
+					<h2>We have {sortedMessages.length}
+						&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {this.state.country}!
+					</h2>
+					<List items={sortedMessages}/>
+				</div>
+			</div>;
+		}
+
+		return (
+			<div className="container">
+				<Sidebar/>
+				{content}
+			</div>
+		);
     }
 }
 

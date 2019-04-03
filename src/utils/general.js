@@ -7,8 +7,8 @@ let addOrRemoveFromArray = function(arr, id){
 
 	if (isLiked){
 		likedIds = arr.filter((value) => {
-		return value !== id;
-	});
+			return value !== id;
+		});
 	} else {
 		likedIds = [ ...arr, id ];
 	}

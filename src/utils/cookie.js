@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
+let cookies = new Cookies();
 
 let getCookieData = function() {
     let cookie = cookies.get('superstitiousNw');
@@ -11,17 +11,17 @@ let getCookieData = function() {
         cookie = cookies.get('superstitiousNw');
     }
 
-    // since initially we could only have a list of likes set on the cookie, 
+    // since initially we could only have a list of likes set on the cookie,
     // check if there's something in that list, and move it to userLikes if there is
     if (cookie.constructor === Array && cookie.length > 0){
         let likedSuperstitions = cookies.get('superstitiousNw');
-        cookies.set('superstitiousNw', 
-            { userLikes: likedSuperstitions, userComments: [] }, 
+        cookies.set('superstitiousNw',
+            { userLikes: likedSuperstitions, userComments: [] },
             { path: '/' }
         );
 
         return {
-            userLikes: likedSuperstitions, 
+            userLikes: likedSuperstitions,
             userComments: []
         };
 
