@@ -39,14 +39,14 @@ class MapPage extends Component {
 		</div>;
 
 		if (!this.state.isLoading) {
-			content = <div className="feedContainer">
+			content = <main className="feedContainer">
 				<div>
 					<h2>We have {sortedMessages.length}
 						&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {this.state.country}!
 					</h2>
 					<List items={sortedMessages}/>
 				</div>
-			</div>;
+			</main>;
 		}
 
 		return (

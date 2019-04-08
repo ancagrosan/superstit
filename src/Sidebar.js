@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Sidebar extends Component {
     render() {
         return (
-            <div className="nav">
+            <header className="nav">
                 <h1><a className="logo" href="/"><span>Superstitious</span> Network</a></h1>
                 <h2>
                     The invisible network that holds our world together.
@@ -20,7 +20,7 @@ class Sidebar extends Component {
                 </a>
                 </div>
                 <div className="copy">&copy; 2019, Transylvania</div>
-          </div>
+          </header>
         );
     }
 }

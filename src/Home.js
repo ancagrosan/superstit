@@ -99,7 +99,7 @@ class Home extends Component {
           ref="iScroll"
         >
           <Sidebar/>
-          <div className="feedContainer">
+          <main className="feedContainer">
 
             <Form userSubmittedItem={this.userSubmittedItem.bind(this)}/>
 
@@ -118,7 +118,7 @@ class Home extends Component {
                 </div>
               }
             </div>
-          </div>
+          </main>
         </div>
     );
   }
