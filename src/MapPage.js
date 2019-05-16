@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import fire from './fire';
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar';
 import List from './List';
+import MapView from './MapView';
 
 class MapPage extends Component {
     constructor(props) {
@@ -10,16 +11,33 @@ class MapPage extends Component {
         this.state = {
 			country: this.props.params.country,
 			isLoading: true,
-			messages: []
+			messages: [],
+			countPerCountry: {}
 		};
 	}
 
 	componentWillMount(){
 		const country = this.state.country;
-		let ref = fire.database().ref().child('messages');
-		let messages = [];
+		let countryOrderedSups = fire.database().ref().child('messages').orderByChild('country');
 
-		ref.orderByChild('country').equalTo(country).on("child_added",(snapshot) => {
+		// prepare the superstition count per country object
+		countryOrderedSups.on("child_added", (snapshot) => {
+			let countryName = snapshot.val().country;
+			let countPerCountry = {...this.state.countPerCountry};
+
+			// not all superstitions are tagged to a country
+			if (countryName) {
+				countPerCountry[countryName] = (countPerCountry[countryName] || 0) + 1;
+				this.setState({
+					countPerCountry: countPerCountry
+				});
+			}
+		});
+
+		// get the superstitions for current country
+		// TODO CHECK WITH ONCE VALUE
+		countryOrderedSups.equalTo(country).on("child_added", (snapshot) => {
+			let messages = [...this.state.messages];
 			let message = {...snapshot.val(), id: snapshot.key};
 
 			messages.push(message);
@@ -41,6 +59,9 @@ class MapPage extends Component {
 		if (!this.state.isLoading) {
 			content = <main className="feedContainer">
 				<div>
+					<div id="map-container">
+						<MapView country={this.state.country} countPerCountry={this.state.countPerCountry}/>
+					</div>
 					<h2>We have {sortedMessages.length}
 						&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {this.state.country}!
 					</h2>

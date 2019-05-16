@@ -489,3 +489,26 @@ label{
     padding: 1rem;
   }
 }
+
+// map stuff
+#map-container{
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding: 0;
+  padding-bottom: 100%;
+}
+.world-map{
+  position: absolute;
+  height: 100%;
+  width: 140%;
+  left: 0;
+  top: 0;
+}
+path:hover{
+  stroke: $red-dark !important;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  fill: $red-dark !important;
+  cursor: pointer;
+}
