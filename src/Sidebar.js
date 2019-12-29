@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Sidebar extends Component {
-    render() {
-        return (
-            <header className="nav">
-                <h1><a className="logo" href="/"><span>Superstitious</span> Network</a></h1>
-                <h2>
-                    The invisible network that holds our world together.
+const Sidebar = () => {
+    return (
+        <header className="nav">
+            <h1><a className="logo" href="/"><span>Superstitious</span> Network</a></h1>
+            <h2>
+                The invisible network that holds our world together.
                 </h2>
-                <div className="social">
+            <div className="social">
                 <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>
                     <i className="fab fa-facebook-f"></i>
                 </a>
@@ -18,11 +17,10 @@ class Sidebar extends Component {
                 <a href="mailto:contact@superstitious.network">
                     <i className="fas fa-envelope"></i>
                 </a>
-                </div>
-                <div className="copy">&copy; 2019, Transylvania</div>
-          </header>
-        );
-    }
+            </div>
+            <div className="copy">&copy; 2019, Transylvania</div>
+        </header>
+    );
 }
 
 export default Sidebar;

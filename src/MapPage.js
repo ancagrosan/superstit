@@ -1,61 +1,56 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import fire from './fire';
 import Sidebar from './Sidebar'
 import List from './List';
 
-class MapPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-			country: this.props.params.country,
-			isLoading: true,
-			messages: []
-		};
-	}
+const MapPage = (props) => {
+	const country = props.params.country;
+	const [isLoading, setIsLoading] = useState(true);
+	const [messages, setMessages] = useState([]);
 
-	componentWillMount(){
-		const country = this.state.country;
+	useEffect(() => {
 		let ref = fire.database().ref().child('messages');
-		let messages = [];
+		let incomingMessages = [];
 
-		ref.orderByChild('country').equalTo(country).on("child_added",(snapshot) => {
-			let message = {...snapshot.val(), id: snapshot.key};
+		ref.orderByChild('country').equalTo(country).on("child_added", (snapshot) => {
+			let message = { ...snapshot.val(), id: snapshot.key };
+			incomingMessages.push(message);
 
-			messages.push(message);
-			this.setState({
-				messages: messages,
-				isLoading: false
-			})
+			setMessages([...incomingMessages]);
+			setIsLoading(false);
 		});
-	}
+	}, []);
 
-    render() {
-		let sortedMessages = [...this.state.messages];
-		sortedMessages.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+	let sortedMessages = [...messages];
+	sortedMessages.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-		let content = <div className="loading-info">
+	let content = (
+		<div className="loading-info">
 			<i className="fas fa-spin fa-cat"></i> Loading
-		</div>;
+		</div>
+	);
 
-		if (!this.state.isLoading) {
-			content = <main className="feedContainer">
+	if (!isLoading) {
+		content = (
+			<main className="feedContainer">
 				<div>
 					<h2>We have {sortedMessages.length}
-						&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {this.state.country}!
-					</h2>
-					<List items={sortedMessages}/>
+						&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {country}!
+						</h2>
+					<List items={sortedMessages} />
 				</div>
-			</main>;
-		}
-
-		return (
-			<div className="container">
-				<Sidebar/>
-				{content}
-			</div>
+			</main>
 		);
-    }
+	}
+
+	return (
+		<div className="container">
+			<Sidebar />
+			{content}
+		</div>
+	);
+
 }
 
 export default MapPage;

@@ -1,73 +1,70 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Superstition from './Superstition';
 
 import { addOrRemoveFromArray } from './utils/general';
 import { getCookieData, setCookieData } from './utils/cookie';
 
-class List extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-		  userLikes: [],
-		  userComments: [],
-		};
-	  }
+const List = (props) => {
+	const [userLikes, setUserLikes] = useState([]);
+	const [userComments, setUserComments] = useState([]);
 
-	componentWillMount() {
+	// get cookie data on first render
+	useEffect(() => {
 		let cookieData = getCookieData();
-		this.setState(cookieData);
+		setUserLikes(cookieData.userLikes);
+		setUserComments(cookieData.userComments);
+	}, []);
+
+	const updateLikes = (id) => {
+		let likedIds = addOrRemoveFromArray(userLikes, id);
+		setUserLikes(likedIds);
+
+		let cookieData = getCookieData();
+		let newCookieData = {
+			...cookieData,
+			userLikes: likedIds
+		};
+		setCookieData(newCookieData);
 	}
-    updateLikes(id){
-		let likedIds = addOrRemoveFromArray(this.state.userLikes, id);
-        this.setState({userLikes: likedIds});
 
-        let cookieData = getCookieData();
-        let newCookieData = {
-            ...cookieData,
-            userLikes: likedIds
-        };
-        setCookieData(newCookieData);
-    }
+	const updateComments = (id) => {
+		let commentedIds = [...userComments, id];
+		setUserComments(commentedIds);
 
-    updateComments(id){
-        let commentedIds = [ ...this.state.userComments, id ]
-        this.setState({userComments: commentedIds})
+		let cookieData = getCookieData();
+		let newCookieData = {
+			...cookieData,
+			userComments: commentedIds
+		};
 
-        let cookieData = getCookieData();
-        let newCookieData = {
-            ...cookieData,
-            userComments: commentedIds
-        };
-
-        setCookieData(newCookieData);
-    }
-
-	userLiked(id){
-        return this.state.userLikes && this.state.userLikes.indexOf(id) > -1;
-    }
-
-    userCommented(id){
-        return this.state.userComments && this.state.userComments.indexOf(id) > -1;
+		setCookieData(newCookieData);
 	}
-	render() {
-		return (
-			<ul className="superstition-list">
+
+	const userLiked = (id) => {
+		return userLikes && userLikes.indexOf(id) > -1;
+	}
+
+	const userCommented = (id) => {
+		return userComments && userComments.indexOf(id) > -1;
+	}
+
+	return (
+		<ul className="superstition-list">
 			{ /* Render the list of superstitions */
-			  this.props.items.map( message =>
-				<Superstition
-				  item={message}
-				  key={message.id}
-				  userLiked={this.userLiked(message.id)}
-				  userCommented={this.userCommented(message.id)}
-				  updateLikes={this.updateLikes.bind(this)}
-				  updateComments={this.updateComments.bind(this)}
-				/>
-			  )
+				props.items.map(message =>
+					<Superstition
+						item={message}
+						key={message.id}
+						userLiked={userLiked(message.id)}
+						userCommented={userCommented(message.id)}
+						updateLikes={updateLikes}
+						updateComments={updateComments}
+					/>
+				)
 			}
-		  </ul>
-		);
-	}
+		</ul>
+	);
 }
 
 export default List;
