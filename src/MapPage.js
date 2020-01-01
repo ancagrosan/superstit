@@ -1,26 +1,46 @@
 import React, { useState, useEffect } from 'react';
 
 import fire from './fire';
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar';
 import List from './List';
+import MapView from './MapView';
 
 const MapPage = (props) => {
 	const country = props.params.country;
-	const [isLoading, setIsLoading] = useState(true);
+
 	const [messages, setMessages] = useState([]);
+	const [countPerCountry, setCountPerCountry] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		let ref = fire.database().ref().child('messages');
+		setMessages([]);
+		let countryOrderedSups = fire.database().ref().child('messages').orderByChild('country');
 		let incomingMessages = [];
+		let incomingCountryData = {};
 
-		ref.orderByChild('country').equalTo(country).on("child_added", (snapshot) => {
+		// prepare the superstition count per country object
+		countryOrderedSups.on("child_added", (snapshot) => {
+			let countryName = snapshot.val().country;
 			let message = { ...snapshot.val(), id: snapshot.key };
-			incomingMessages.push(message);
 
-			setMessages([...incomingMessages]);
+			// get the superstitions for current country
+			if (countryName === country) {
+				incomingMessages.push(message);
+				setMessages([...incomingMessages]);
+			}
+
+			// not all superstitions are tagged to a country
+			if (countryName) {
+				incomingCountryData = {
+					...incomingCountryData,
+					[countryName]: (incomingCountryData[countryName] || 0) + 1
+				};
+			}
+
+			setCountPerCountry({ ...incomingCountryData });
 			setIsLoading(false);
 		});
-	}, []);
+	}, [country]);
 
 	let sortedMessages = [...messages];
 	sortedMessages.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
@@ -34,12 +54,26 @@ const MapPage = (props) => {
 	if (!isLoading) {
 		content = (
 			<main className="feedContainer">
-				<div>
-					<h2>We have {sortedMessages.length}
-						&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {country}!
-						</h2>
-					<List items={sortedMessages} />
+				<div id="map-container">
+					<MapView country={country} countPerCountry={countPerCountry} />
 				</div>
+				<h2>
+					{sortedMessages.length
+						?
+						<span>
+							We have {sortedMessages.length}
+							&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {country}!
+						</span>
+						:
+						<span>
+							Unfortunately there are no superstitions from {country} 😞
+							<br />
+							Please add some if you know any!
+					</span>
+					}
+
+				</h2>
+				<List items={sortedMessages} />
 			</main>
 		);
 	}
