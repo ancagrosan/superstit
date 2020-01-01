@@ -1,144 +1,134 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import fire from './fire';
 import { CountryDropdown } from 'react-country-region-selector';
 
-class Form extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            text: '',
-            country: '',
-            type: 'general',
-            textareaFontSize: '2',
-            formValid: false,
-            isFormVisible: false
-        };
-    }
-    addSuperstition(e){
+const Form = (props) => {
+    const [text, setText] = useState('');
+    const [country, setCountry] = useState('');
+    const [type, setType] = useState('general');
+    const [textareaFontSize, setTextareaFontSize] = useState(2);
+    const [formValid, setFormValid] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(false);
+
+    const addSuperstition = (e) => {
         e.preventDefault();
         let newSup = {
-            text: this.state.text,
-            type: this.state.type,
-            country: this.state.country,
+            text: text,
+            type: type,
+            country: country,
             timestamp: Date.now()
         };
 
         fire.database().ref('messages').push(newSup).then((snapshot) => {
-            this.props.userSubmittedItem({
+            props.userSubmittedItem({
                 ...newSup,
                 id: snapshot.key
             });
         });
 
-        this.setState({
-            text: '',
-            country: '',
-            type: 'general',
-            formValid: false,
-        });
+        setText('');
+        setCountry('');
+        setType('general');
+        setFormValid(false);
     }
-    selectType(e){
-        this.setState({ type: e.target.value });
-    }
-    selectCountry (val) {
-        this.setState({ country: val });
-    }
-    textareaChange(e) {
-        let length = e.target.value.length,
-            fontSize = this.state.textareaFontSize,
-            formValid = this.state.formValid;
 
-        if (e.target.value.trim().length > 0 && e.target.value.trim().length < 500){
-            formValid = true
+    const selectType = (e) => {
+        setType(e.target.value);
+    }
+
+    const selectCountry = (val) => {
+        setCountry(val);
+    }
+
+    const textareaChange = (e) => {
+        let length = e.target.value.length;
+        let fontSize = textareaFontSize;
+
+        if (e.target.value.trim().length > 0 && e.target.value.trim().length < 500) {
+            setFormValid(true);
         } else {
-            formValid = false
+            setFormValid(false);
         }
 
-        if(length>120){
+        if (length > 150) {
             fontSize = 1;
-        } else if (length>90){
+        } else if (length > 110) {
             fontSize = 1.25;
-        } else if (length>60){
+        } else if (length > 75) {
             fontSize = 1.5;
-        } else if (length>30){
+        } else if (length > 30) {
             fontSize = 1.75;
         } else {
             fontSize = 2;
         }
 
-        this.setState({
-            text: e.target.value,
-            textareaFontSize: fontSize,
-            formValid: formValid
-        });
+        setText(e.target.value);
+        setTextareaFontSize(fontSize);
     }
-    displayForm(){
+
+    const displayForm = () => {
         // on mobile, we don't show the add superstition form from the beginning
-        this.setState({isFormVisible: true});
+        setIsFormVisible(true);
     }
-    render() {
-        const { country } = this.state;
 
-        return (
-            <div>
-                <div
-                    onClick={this.displayForm.bind(this)}
-                    className={"add-yours " + (this.state.isFormVisible ? 'hide' : '')}>
-                    ADD YOURS
+    return (
+        <div>
+            <div
+                onClick={displayForm}
+                className={"add-yours " + (isFormVisible ? 'hide' : '')}>
+                ADD YOURS
                 </div>
-                <form
-                    onSubmit={this.addSuperstition.bind(this)}
-                    className={"add-superstition-form " + (this.state.isFormVisible ? "display-form" : "")}>
-                    <textarea
-                        className="new-superstition-text"
-                        style={{fontSize: this.state.textareaFontSize + 'rem'}}
-                        type="text"
-                        onChange={this.textareaChange.bind(this)}
-                        placeholder="What's your superstition about, is it personal, where is it from?"
-                        rows="6"
-                        value={this.state.text} />
+            <form
+                onSubmit={addSuperstition}
+                className={"add-superstition-form " + (isFormVisible ? "display-form" : "")}>
+                <textarea
+                    className="new-superstition-text"
+                    style={{ fontSize: textareaFontSize + 'rem' }}
+                    type="text"
+                    onChange={textareaChange}
+                    placeholder="What's your superstition about, is it personal, where is it from?"
+                    rows="6"
+                    value={text} />
 
-                    <div className="options-container">
-                        <div className="type-select">
+                <div className="options-container">
+                    <div className="type-select">
 
-                            <input
-                                onChange={this.selectType.bind(this)}
-                                type="radio"
-                                value="general"
-                                name="type"
-                                id="type-general"
-                                className='form-radio'
-                                checked={this.state.type==="general"}/>
-                            <label htmlFor="type-general">General</label>
+                        <input
+                            onChange={selectType}
+                            type="radio"
+                            value="general"
+                            name="type"
+                            id="type-general"
+                            className='form-radio'
+                            checked={type === "general"} />
+                        <label htmlFor="type-general">General</label>
 
-                            <input
-                                onChange={this.selectType.bind(this)}
-                                type="radio"
-                                value="personal"
-                                name="type"
-                                id="type-personal"
-                                className='form-radio'
-                                checked={this.state.type==="personal"}/>
-                            <label htmlFor="type-personal">Personal</label>
-
-                        </div>
-
-                        <div className="country-select">
-                            <label>Origin:</label>
-                            <CountryDropdown onChange={(val) => this.selectCountry(val)} value={country}/>
-                        </div>
+                        <input
+                            onChange={selectType}
+                            type="radio"
+                            value="personal"
+                            name="type"
+                            id="type-personal"
+                            className='form-radio'
+                            checked={type === "personal"} />
+                        <label htmlFor="type-personal">Personal</label>
                     </div>
 
-                    <button
-                        disabled={! this.state.formValid}
-                        type="submit"
-                        className="submit-superstition-btn">
-                        ADD
-                    </button>
-                </form>
-            </div>
-        );
-    }
+                    <div className="country-select">
+                        <label>Origin:</label>
+                        <CountryDropdown onChange={(val) => selectCountry(val)} value={country} />
+                    </div>
+                </div>
+
+                <button
+                    disabled={!formValid}
+                    type="submit"
+                    className="submit-superstition-btn">
+                    ADD
+                </button>
+            </form>
+        </div>
+    );
 }
 
 export default Form;

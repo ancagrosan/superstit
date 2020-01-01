@@ -1,213 +1,189 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import fire from './fire';
 import TimeAgo from 'react-time-ago/no-tooltip'
 import { Link } from 'react-router-dom';
 
 import Comment from './Comment';
 
-class Superstition extends Component {
-    constructor(props) {
-        super(props);
-        const item = this.props.item;
+const Superstition = (props) => {
+    const item = props.item;
 
-        this.state = {
-            message: item,
-            comments: item.comments || {},
-            voteCount: item.voteCount || 0,
-            commentText: '',
-            formValid: false,
-            standalone: item.standalone,
-            showComments: item.showComments,
-            popularityCount: 0
-        };
-    }
+    const [message, setMessage] = useState(item);
+    const [comments, setComments] = useState(item.comments || {});
+    const [voteCount, setVoteCount] = useState(item.voteCount || 0);
+    const [commentText, setCommentText] = useState('');
+    const [formValid, setFormValid] = useState(false);
+    const [showComments, setShowComments] = useState(item.showComments);
+    const [popularityCount, setPopularityCount] = useState(0);
 
-    componentWillMount() {
-        let messageRef = fire.database().ref('messages/' + this.props.item.id);
+    useEffect(() => {
+        let messageRef = fire.database().ref('messages/' + item.id);
         messageRef.on('value', snapshot => {
             let value = snapshot.val();
 
-            this.setState({
-                message: {
-                    ...value,
-                    id: this.props.item.id
-                },
-                comments: value.comments,
-                voteCount: value.voteCount
-            });
+            setMessage({ ...value, id: item.id });
+            setComments(value.comments);
+            setVoteCount(value.voteCount);
         });
-    }
+    }, []);
 
-    componentDidMount() {
-        const comments = this.state.comments ? Object.keys(this.state.comments).length : 0;
-        this.setState({popularityCount: this.state.voteCount + comments});
-    }
+    useEffect(() => {
+        const commentsLength = comments ? Object.keys(comments).length : 0;
+        setPopularityCount(voteCount + commentsLength);
+    }, [comments, voteCount]);
 
-    toggleVote() {
+    const toggleVote = () => {
         // update likes list
-        this.props.updateLikes(this.props.item.id);
+        props.updateLikes(item.id);
 
         // update likes count
-        let newVoteCount = this.props.userLiked
-            ? (this.state.voteCount - 1)
-            : (this.state.voteCount ? this.state.voteCount + 1 : 1)
+        let newVoteCount = props.userLiked
+            ? (voteCount - 1)
+            : (voteCount ? voteCount + 1 : 1)
 
         return fire.database()
-            .ref('messages/' + this.props.item.id)
-            .update({voteCount: newVoteCount});
+            .ref('messages/' + item.id)
+            .update({ voteCount: newVoteCount });
     }
 
-    textareaChange(e) {
-        let formValid = this.state.formValid;
-
-        if (e.target.value.trim().length > 0 && e.target.value.trim().length < 500){
-            formValid = true
+    const textareaChange = (e) => {
+        if (e.target.value.trim().length > 0 && e.target.value.trim().length < 500) {
+            setFormValid(true);
         } else {
-            formValid = false
+            setFormValid(false);
         }
-
-        this.setState({
-            commentText: e.target.value,
-            formValid: formValid
-        });
+        setCommentText(e.target.value);
     }
 
-    toggleCommentsSection(){
-        this.setState({showComments: !this.state.showComments});
+    const toggleCommentsSection = () => {
+        setShowComments(!showComments)
     }
 
-    addComment(e){
+    const addComment = (e) => {
         e.preventDefault();
-        this.props.updateComments(this.props.item.id);
+        props.updateComments(item.id);
 
-        fire.database().ref('messages/' + this.props.item.id + '/comments').push({
-            text: this.state.commentText,
+        fire.database().ref('messages/' + item.id + '/comments').push({
+            text: commentText,
             timestamp: Date.now()
         });
 
         // Reset comment form
-        this.setState({
-            commentText: '',
-            formValid: false
-        });
+        setCommentText("");
+        setFormValid(false);
     }
 
-    render() {
-        let message = this.state.message;
-        let userLiked = this.props.userLiked;
-        let userCommented = this.props.userCommented;
+    let userLiked = props.userLiked;
+    let userCommented = props.userCommented;
 
-        if (!message.timestamp) {
-            return (
-                <div className="loading-info">
-                    <i className="fas fa-spin fa-cat"></i> Loading
-                </div>
-            );
-        }
-
-        let supLink;
-        if (this.state.standalone) {
-            supLink = <TimeAgo>{message.timestamp}</TimeAgo>;
-        } else {
-            supLink = <Link to={'/superstition/' + message.id}><TimeAgo>{message.timestamp}</TimeAgo></Link>
-        }
-
+    if (!message.timestamp) {
         return (
-            <li
-                className={
-                        (
-                            this.state.popularityCount >= 9 ? "highlight very-popular" :
-                            this.state.popularityCount >= 7 ? "highlight popular" :
-                            this.state.popularityCount >= 5 ? "highlight pretty-popular" : ""
-                        )
-                    }
-                >
-
-                <div className="meta-info info">
-                    {message.timestamp &&
-                        <span className="info-box">
-                            <i className="far fa-clock"></i>
-                            {supLink}
-                        </span>
-                    }
-
-                    {message.type &&
-                        <span className="info-box">
-                            {message.type === 'personal'
-                                ?
-                                <i className="fas fa-user"></i>
-                                :
-                                <i className="fas fa-users"></i>
-                            }
-                            {message.type}
-                        </span>
-                    }
-
-                    {message.country &&
-                        <span className="info-box">
-                            <i className="fas fa-map-marker-alt"></i>
-                            <Link to={{pathname: '/from/' + encodeURIComponent(message.country)}}>{message.country}</Link>
-                        </span>
-                    }
-                </div>
-
-                <div className="superstition-text">
-                    {message.text}
-                </div>
-
-                <div className={"comments " + (this.state.showComments ? "open" : "")}>
-                    {this.state.comments &&
-                        <ul className="comment-list">
-                            {Object.keys(this.state.comments).map(key =>
-                                <Comment
-                                    item={this.state.comments[key]}
-                                    key={key}
-                                />
-                            )}
-                        </ul>
-                    }
-
-                    <form onSubmit={this.addComment.bind(this)} >
-                        <textarea
-                            className={"new-comment " + (this.state.formValid ? 'has-input' : '')}
-                            type="text"
-                            onChange={this.textareaChange.bind(this)}
-                            placeholder="got something to add?"
-                            rows="3"
-                            value={this.state.commentText} />
-
-                        <button
-                            disabled={! this.state.formValid}
-                            type="submit"
-                            className="add-comment-btn">
-                            COMMENT
-                        </button>
-                    </form>
-                </div>
-
-                <hr/>
-                <div className="actions">
-                    <span className="upvotes">
-                        <span className="empty-heart" onClick={this.toggleVote.bind(this)}>
-                            <i className={(userLiked ? 'fas' : 'far') + " fa-heart"}></i>
-                        </span>
-                        <span className="count">{this.state.voteCount}</span>
-                    </span>
-
-                    <span className="comments-icon">
-                        <i
-                            className={"fa-comment " + (userCommented ? 'fas' : 'far')}
-                            onClick={this.toggleCommentsSection.bind(this)}>
-                        </i>
-
-                        {this.state.comments &&
-                            <span className="count">{Object.keys(this.state.comments).length}</span>
-                        }
-                    </span>
-                </div>
-            </li>
+            <div className="loading-info">
+                <i className="fas fa-spin fa-cat"></i> Loading
+            </div>
         );
     }
+
+    let supLink;
+    if (item.standalone) {
+        supLink = <TimeAgo>{message.timestamp}</TimeAgo>;
+    } else {
+        supLink = <Link to={'/superstition/' + message.id}><TimeAgo>{message.timestamp}</TimeAgo></Link>
+    }
+
+    return (
+        <li
+            className={(
+                popularityCount >= 9 ? "highlight very-popular"
+                    : popularityCount >= 7 ? "highlight popular"
+                        : popularityCount >= 5 ? "highlight pretty-popular" : ""
+            )}
+        >
+
+            <div className="meta-info info">
+                {message.timestamp &&
+                    <span className="info-box">
+                        <i className="far fa-clock"></i>
+                        {supLink}
+                    </span>
+                }
+
+                {message.type &&
+                    <span className="info-box">
+                        {message.type === 'personal'
+                            ?
+                            <i className="fas fa-user"></i>
+                            :
+                            <i className="fas fa-users"></i>
+                        }
+                        {message.type}
+                    </span>
+                }
+
+                {message.country &&
+                    <span className="info-box">
+                        <i className="fas fa-map-marker-alt"></i>
+                        <Link to={{ pathname: '/from/' + encodeURIComponent(message.country) }}>{message.country}</Link>
+                    </span>
+                }
+            </div>
+
+            <div className="superstition-text">
+                {message.text}
+            </div>
+
+            <div className={"comments " + (showComments ? "open" : "")}>
+                {comments &&
+                    <ul className="comment-list">
+                        {Object.keys(comments).map(key =>
+                            <Comment
+                                item={comments[key]}
+                                key={key}
+                            />
+                        )}
+                    </ul>
+                }
+
+                <form onSubmit={addComment} >
+                    <textarea
+                        className={"new-comment " + (formValid ? 'has-input' : '')}
+                        type="text"
+                        onChange={textareaChange}
+                        placeholder="got something to add?"
+                        rows="3"
+                        value={commentText} />
+
+                    <button
+                        disabled={!formValid}
+                        type="submit"
+                        className="add-comment-btn">
+                        COMMENT
+                    </button>
+                </form>
+            </div>
+
+            <hr />
+            <div className="actions">
+                <span className="upvotes">
+                    <span className="empty-heart" onClick={toggleVote}>
+                        <i className={(userLiked ? 'fas' : 'far') + " fa-heart"}></i>
+                    </span>
+                    <span className="count">{voteCount}</span>
+                </span>
+
+                <span className="comments-icon">
+                    <i
+                        className={"fa-comment " + (userCommented ? 'fas' : 'far')}
+                        onClick={toggleCommentsSection}>
+                    </i>
+
+                    {comments &&
+                        <span className="count">{Object.keys(comments).length}</span>
+                    }
+                </span>
+            </div>
+        </li>
+    );
 }
 
 export default Superstition;

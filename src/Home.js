@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import fire from './fire';
 import JavascriptTimeAgo from 'javascript-time-ago';
@@ -13,18 +13,13 @@ JavascriptTimeAgo.locale(en)
 const IPP = 20;
 let referenceToOldestKey = "";
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      messages: [],
-      page: 1,
-      isLoading: true,
-      reachedEnd: false
-    };
-  }
+const Home = () => {
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [reachedEnd, setReachedEnd] = useState(false);
+  const containerRef = useRef(null);
 
-  componentWillMount() {
+  useEffect(() => {
     // first page load
     fire.database().ref("messages").orderByKey().limitToLast(IPP).once("value").then((snapshot) => {
       // change to reverse chronological order (latest first)
@@ -32,33 +27,38 @@ class Home extends Component {
 
       // transform to array
       let results = arrayOfKeys
-         .map((key) => ({
-           ...snapshot.val()[key],
-           id: key
-         }));
+        .map((key) => ({
+          ...snapshot.val()[key],
+          id: key
+        }));
 
       // store reference
-      referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
+      referenceToOldestKey = arrayOfKeys[arrayOfKeys.length - 1];
 
-      this.setState({ messages: results });
+      setMessages(results);
     });
+  }, []);
+
+  const handleScroll = () => {
+    if (containerRef.current.scrollTop + containerRef.current.clientHeight >= containerRef.current.scrollHeight) {
+      loadMoreItems();
+    }
   }
 
-  componentDidMount() {
-    // add listener on scroll event
-    this.refs.iScroll.addEventListener("scroll", () => {
-      if (this.refs.iScroll.scrollTop + this.refs.iScroll.clientHeight >=this.refs.iScroll.scrollHeight){
-        this.loadMoreItems();
-      }
-    });
-  }
+  useEffect(() => {
+    containerRef.current.addEventListener('scroll', handleScroll);
+    return () => containerRef.current.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
-  loadMoreItems(){
+  const loadMoreItems = () => {
     // know when to stop
-    if (this.state.messages.length && !referenceToOldestKey) {
-      this.setState({reachedEnd: true, isLoading: false});
+    if (messages.length && !referenceToOldestKey) {
+      setReachedEnd(true);
+      setIsLoading(false);
       return;
     }
+
+    setIsLoading(true);
 
     fire.database()
       .ref("messages")
@@ -67,61 +67,49 @@ class Home extends Component {
       .limitToLast(IPP)
       .once("value")
       .then((snapshot) => {
-
         let arrayOfKeys = Object.keys(snapshot.val()).sort().reverse().slice(1);
 
-        let results = arrayOfKeys
-          .map((key) => ({
-            ...snapshot.val()[key],
-            id: key
-          }));
+        let results = arrayOfKeys.map((key) => ({
+          ...snapshot.val()[key],
+          id: key
+        }));
 
-        referenceToOldestKey = arrayOfKeys[arrayOfKeys.length-1];
-        this.setState({
-          messages: this.state.messages.concat(results),
-          isLoading: false,
-          reachedEnd: arrayOfKeys.length > 0 ? false : true
-        });
+        referenceToOldestKey = arrayOfKeys[arrayOfKeys.length - 1];
+
+        setMessages([...messages, ...results]);
+        setIsLoading(false);
+        setReachedEnd(arrayOfKeys.length > 0 ? false : true);
       });
   }
 
   // when a user adds a new item, add it to the stack
-  userSubmittedItem(message) {
-    this.setState({
-      messages: [message].concat(this.state.messages)
-    });
+  const userSubmittedItem = (message) => {
+    setMessages([message, ...messages]);
   }
 
-  render() {
-    return (
-        <div
-          className="container"
-          ref="iScroll"
-        >
-          <Sidebar/>
-          <main className="feedContainer">
+  return (
+    <div className="container" ref={containerRef}>
+      <Sidebar />
+      <main className="feedContainer">
+        <Form userSubmittedItem={userSubmittedItem} />
 
-            <Form userSubmittedItem={this.userSubmittedItem.bind(this)}/>
+        <div>
+          <List items={messages} />
 
-            <div>
-
-              <List items={this.state.messages}/>
-
-              { this.state.isLoading &&
-                <div className="loading-info">
-                  <i className="fas fa-spin fa-cat"></i> Loading
-                </div>
-              }
-              { this.state.reachedEnd &&
-                <div className="loading-info">
-                  <i className="fas fa-cat"></i> That's that.
-                </div>
-              }
+          {isLoading &&
+            <div className="loading-info">
+              <i className="fas fa-spin fa-cat"></i> Loading
             </div>
-          </main>
+          }
+          {reachedEnd &&
+            <div className="loading-info">
+              <i className="fas fa-cat"></i> That's that.
+            </div>
+          }
         </div>
-    );
-  }
+      </main>
+    </div>
+  );
 }
 
 export default Home;
