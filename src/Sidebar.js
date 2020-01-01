@@ -18,7 +18,7 @@ const Sidebar = () => {
                     <i className="fas fa-envelope"></i>
                 </a>
             </div>
-            <div className="copy">&copy; 2019, Transylvania</div>
+            <div className="copy">&copy; {new Date().getFullYear()}, Transylvania</div>
         </header>
     );
 }
