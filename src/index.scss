@@ -10,6 +10,7 @@ $red: #ee726e;
 $red-dark: #b74243;
 $light-gray: #f1f1f1;
 $gray: #cbcbcb;
+$dark-gray: #273346;
 
 body {
   margin: 0;
@@ -19,7 +20,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: $dark-blue;
+  background: linear-gradient($dark-gray, $blue-gray);
   color: $main-color;
   font-size: 18px;
 }
@@ -491,12 +492,17 @@ label{
 }
 
 // map stuff
+#map-page-content{
+  position: relative;
+  top: -10rem;
+}
 #map-container{
   position: relative;
   height: 0;
   width: 100%;
   padding: 0;
   padding-bottom: 100%;
+  margin-bottom: -10%;
 }
 .world-map{
   position: absolute;
@@ -511,4 +517,17 @@ path:hover{
   stroke-linejoin: round;
   fill: $red-dark !important;
   cursor: pointer;
+}
+
+#tooltip {
+  position: absolute;   
+  display: none;
+  width: 100px;
+  background-color: $main-color;
+  color: white;
+  text-align: center;
+  padding: 7px;
+  border-radius: 10px;
+  font-size: 14px;
+  opacity: .9;
 }

@@ -54,26 +54,28 @@ const MapPage = (props) => {
 	if (!isLoading) {
 		content = (
 			<main className="feedContainer">
-				<div id="map-container">
-					<MapView country={country} countPerCountry={countPerCountry} />
-				</div>
-				<h2>
-					{sortedMessages.length
-						?
-						<span>
-							We have {sortedMessages.length}
-							&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {country}!
+				<div id="map-page-content">
+					<div id="map-container">
+						<MapView country={country} countPerCountry={countPerCountry} />
+					</div>
+					<h2>
+						{sortedMessages.length
+							?
+							<span>
+								We have {sortedMessages.length}
+								&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {country}!
+							</span>
+							:
+							<span>
+								Unfortunately there are no superstitions from {country} 😞
+								<br />
+								Please add some if you know any!
 						</span>
-						:
-						<span>
-							Unfortunately there are no superstitions from {country} 😞
-							<br />
-							Please add some if you know any!
-					</span>
-					}
+						}
 
-				</h2>
-				<List items={sortedMessages} />
+					</h2>
+					<List items={sortedMessages} />
+				</div>
 			</main>
 		);
 	}

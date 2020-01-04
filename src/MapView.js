@@ -56,10 +56,31 @@ const MapView = (props) => {
 		const targetCountryCode = e.target.getAttribute('id');
 		const countryName = codeToCountryName[targetCountryCode];
 
+		if (countryName) {
+			let tooltip = document.getElementById("tooltip");
+			tooltip.innerHTML = countryName;
+			tooltip.style.display = "block";
+
+			// todo: improve tooltip positioning
+			tooltip.style.left = e.pageX - 450 + 'px';
+			tooltip.style.top = e.pageY + 50 + 'px';
+		}
+	}
+
+	const hideTooltip = () => {
+		let tooltip = document.getElementById("tooltip");
+		tooltip.style.display = "none";
 	}
 
 	return (
-		<WorldMap onClick={selectCountry} onMouseOver={showCountryNameTooltip} />
+		<>
+			<WorldMap
+				onClick={selectCountry}
+				onMouseOver={showCountryNameTooltip}
+				onMouseOut={hideTooltip}
+			/>
+			<div id="tooltip" className="tooltip" display="none"></div>
+		</>
 	)
 }
 
