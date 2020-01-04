@@ -4,16 +4,6 @@ import { useHistory } from "react-router-dom";
 import WorldMap from './WorldMap';
 import { countries } from './constants';
 
-const objectFlip = (obj) => {
-	const ret = {};
-	Object.keys(obj).forEach(key => {
-		ret[obj[key]] = key;
-	});
-	return ret;
-}
-
-const codeToCountryName = objectFlip(countries);
-
 const MapView = (props) => {
 	const history = useHistory();
 
@@ -44,8 +34,7 @@ const MapView = (props) => {
 	}
 
 	const selectCountry = (e) => {
-		const targetCountryCode = e.target.getAttribute('id');
-		const countryName = codeToCountryName[targetCountryCode];
+		const countryName = e.target.getAttribute('title');
 
 		if (countryName) {
 			history.push(`/from/${countryName}`);
@@ -53,8 +42,7 @@ const MapView = (props) => {
 	}
 
 	const showCountryNameTooltip = (e) => {
-		const targetCountryCode = e.target.getAttribute('id');
-		const countryName = codeToCountryName[targetCountryCode];
+		const countryName = e.target.getAttribute('title');
 
 		if (countryName) {
 			let tooltip = document.getElementById("tooltip");
