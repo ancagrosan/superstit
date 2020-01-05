@@ -29,7 +29,7 @@ const MapView = (props) => {
 
 	const getCountryColor = (countryName, totalCount) => {
 		const countPerCountry = props.countPerCountry;
-		const countryPercentage = Math.round(countPerCountry[countryName] / totalCount * 100) / 5;
+		const countryPercentage = Math.ceil(countPerCountry[countryName] / totalCount * 100) / 5;
 		return "hsla(55,100%,50%," + countryPercentage + ")";
 	}
 
