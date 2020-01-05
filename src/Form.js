@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import fire from './fire';
-import { CountryDropdown } from 'react-country-region-selector';
+import { countries } from './constants';
 
 const Form = (props) => {
     const [text, setText] = useState('');
@@ -30,14 +30,6 @@ const Form = (props) => {
         setCountry('');
         setType('general');
         setFormValid(false);
-    }
-
-    const selectType = (e) => {
-        setType(e.target.value);
-    }
-
-    const selectCountry = (val) => {
-        setCountry(val);
     }
 
     const textareaChange = (e) => {
@@ -94,7 +86,7 @@ const Form = (props) => {
                     <div className="type-select">
 
                         <input
-                            onChange={selectType}
+                            onChange={(e) => setType(e.target.value)}
                             type="radio"
                             value="general"
                             name="type"
@@ -104,7 +96,7 @@ const Form = (props) => {
                         <label htmlFor="type-general">General</label>
 
                         <input
-                            onChange={selectType}
+                            onChange={(e) => setType(e.target.value)}
                             type="radio"
                             value="personal"
                             name="type"
@@ -116,7 +108,15 @@ const Form = (props) => {
 
                     <div className="country-select">
                         <label>Origin:</label>
-                        <CountryDropdown onChange={(val) => selectCountry(val)} value={country} />
+                        <select
+                            onChange={(e) => setCountry(e.target.value)}
+                            value={country}
+                        >
+                            {Object.keys(countries).map(country => (
+                                <option key={country} value={country}>{country}</option>
+                            )
+                            )}
+                        </select>
                     </div>
                 </div>
 
