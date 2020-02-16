@@ -70,7 +70,7 @@ h2{
 }
 .social i{
   color: $red;
-  margin-right: 1rem;
+  margin: 0.25rem 1.5rem 0.25rem 0;
   transition: all 0.1s ease-in-out;
   &:hover{
     color: $red-dark;
@@ -512,10 +512,10 @@ label{
   top: 0;
 }
 path:hover{
-  stroke: $red-dark !important;
+  stroke: url(#pattern-circles) !important;
   stroke-width: 2px;
   stroke-linejoin: round;
-  fill: $red-dark !important;
+  fill: url(#pattern-circles) !important;
   cursor: pointer;
 }
 

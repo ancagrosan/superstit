@@ -19,9 +19,9 @@ const MapView = (props) => {
 			if (countryCode) {
 				countryElement.style.fill = getCountryColor(countryName, totalCount);
 
-				// special not so special :( highlight for the current country
+				// highlight for the current country
 				if (countryName === props.country) {
-					countryElement.style.fill = "#b74243";
+					countryElement.style.fill = "url(#pattern-circles)"
 				}
 			}
 		}
@@ -29,8 +29,21 @@ const MapView = (props) => {
 
 	const getCountryColor = (countryName, totalCount) => {
 		const countPerCountry = props.countPerCountry;
-		const countryPercentage = Math.ceil(countPerCountry[countryName] / totalCount * 100) / 5;
-		return "hsla(55,100%,50%," + countryPercentage + ")";
+
+		if (countPerCountry[countryName] === 0) {
+			return;
+		}
+
+		// Color scheme in steps
+		if (countPerCountry[countryName] <= 4) {
+			return '#EFB881';
+		} else if (countPerCountry[countryName] <= 8) {
+			return '#BF9A76';
+		} else if (countPerCountry[countryName] <= 15) {
+			return '#8C6033';
+		} else {
+			return '#664D34';
+		}
 	}
 
 	const selectCountry = (e) => {
