@@ -180,7 +180,7 @@ const countries = {
 	'Reunion': 'RE',
 	'Romania': 'RO',
 	'Russian Federation': 'RU',
-	'RWANDA': 'RW',
+	'Rwanda': 'RW',
 	'Saint Helena': 'SH',
 	'Saint Kitts and Nevis': 'KN',
 	'Saint Lucia': 'LC',
