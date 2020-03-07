@@ -3,10 +3,15 @@ import React from 'react';
 const Sidebar = () => {
     return (
         <header className="nav">
-            <h1><a className="logo" href="/"><span>Superstitious</span> Network</a></h1>
+            <h1>
+                <a className="logo" href="/">
+                    <div className="text-gradient super">Superstitious</div>
+                    <div className="text-gradient">Network</div>
+                </a>
+            </h1>
             <h2>
                 The invisible network that holds our world together.
-                </h2>
+            </h2>
             <div className="social">
                 <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>
                     <i className="fab fa-facebook-f"></i>

@@ -27,15 +27,17 @@ body {
 
 .relative{ position: relative }
 
-.logo{
-  color: $yellow;
-  text-decoration: none;
-  &:hover{
-    transition: all 0.5s ease-in-out;
-    text-decoration: underline;
-    color: $yellow-darker;
-  }
+.text-gradient {
+  background-color: $yellow;
+  background-image: linear-gradient(45deg, $yellow, $red);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 }
+
 
 button:focus, textarea:focus, select:focus{
   outline: none;
@@ -48,28 +50,36 @@ button:focus, textarea:focus, select:focus{
   position: fixed;
   top: 0rem;
   margin: 1rem;
-  width: 15rem;
+  width: 16rem;
 }
 .copy{
   color: #FFF;
-  font: 500 0.75rem/1 "Open Sans", sans-serif;
+  font: 500 1rem/1 "Open Sans", sans-serif;
   margin-top: 1rem;
 }
-h1{
-  font: 300 2.25rem/0.85 'Roboto', sans-serif;
+h1 {
+  font: 500 2.75rem/0.85 'Roboto', sans-serif;
   color: $yellow;
   margin-bottom: 1rem;
-  span{
-    font-weight: 500;
+  .logo {
+    color: $yellow;
+    text-decoration: none;
+    .super {
+      font-weight: 100;
+    }
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 h2{
   color: white;
-  font: 500 1rem/1.25 "Open Sans", sans-serif;
+  font: 500 1.25rem/1 "Open Sans", sans-serif;
   margin-bottom: 1rem;
 }
 .social i{
   color: $red;
+  font-size: 1.5rem;
   margin: 0.25rem 1.5rem 0.25rem 0;
   transition: all 0.1s ease-in-out;
   &:hover{
@@ -436,9 +446,6 @@ label{
   .nav{
     position: static;
     width: auto;
-  }
-  h1{
-    width: 15rem;
   }
   .new-superstition-text{
     height: 230px;
