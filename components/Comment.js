@@ -1,14 +1,12 @@
 import React from 'react';
-import TimeAgo from 'react-time-ago/no-tooltip'
+import ReactTimeAgo from 'react-time-ago/no-tooltip'
 
 const Comment = (props) => {
   let comment = props.item;
 
   return (
     <li>
-      <TimeAgo className="info">
-        {comment.timestamp}
-      </TimeAgo>
+      <ReactTimeAgo children={comment.timestamp} className="info" />
       <div className="comment-text">
         {comment.text}
       </div>

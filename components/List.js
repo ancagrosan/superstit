@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import Superstition from './Superstition';
 
-import { addOrRemoveFromArray } from './utils/general';
-import { getCookieData, setCookieData } from './utils/cookie';
+import { addOrRemoveFromArray } from '../utils/general';
+import { getCookieData, setCookieData } from '../utils/cookie';
 
 const List = (props) => {
 	const [userLikes, setUserLikes] = useState([]);

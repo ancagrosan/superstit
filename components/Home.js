@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import fire from './fire';
+import fire from '../utils/fire';
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 

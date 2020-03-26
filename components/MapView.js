@@ -1,33 +1,28 @@
 import React, { useEffect } from 'react';
-import { useHistory } from "react-router-dom";
+import Router from 'next/router'
 
 import WorldMap from './WorldMap';
-import { countries } from './constants';
+import { countries } from '../utils/constants';
 
 const MapView = (props) => {
-	const history = useHistory();
 
 	useEffect(() => {
-		let totalCount = Object.values(props.countPerCountry)
-			.reduce((accumulator, countryCount) => accumulator + countryCount, 0);
-
-		// loop through the countries we have supersitions of
+		// loop through the countries we have superstitions of
 		for (var countryName in props.countPerCountry) {
 			let countryCode = countries[countryName];
 			let countryElement = document.getElementById(countryCode);
 
 			if (countryCode) {
-				countryElement.style.fill = getCountryColor(countryName, totalCount);
-
-				// highlight for the current country
-				if (countryName === props.country) {
-					countryElement.style.fill = "url(#pattern-circles)"
-				}
+				countryElement.style.fill = getCountryColor(countryName);
 			}
 		}
+
+		// highlight for the selected country
+		const countryEl = document.getElementById(countries[props.country]);
+		if (countryEl) countryEl.style.fill = "url(#pattern-circles)";
 	}, [props.countPerCountry, props.country]);
 
-	const getCountryColor = (countryName, totalCount) => {
+	const getCountryColor = (countryName) => {
 		const countPerCountry = props.countPerCountry;
 
 		if (countPerCountry[countryName] === 0) {
@@ -50,7 +45,9 @@ const MapView = (props) => {
 		const countryName = e.target.getAttribute('title');
 
 		if (countryName) {
-			history.push(`/from/${countryName}`);
+			Router.push({
+				pathname: `/from/${countryName}`,
+			})
 		}
 	}
 

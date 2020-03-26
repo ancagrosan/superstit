@@ -3,5 +3,9 @@ import 'firebase/database';
 
 import { firebaseConfig } from "./config.js";
 
-var fire = firebase.initializeApp(firebaseConfig);
+var fire;
+if (!firebase.apps.length) {
+  fire = firebase.initializeApp(firebaseConfig);
+}
+
 export default fire;

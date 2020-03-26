@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter, withRouter } from 'next/router';
 
-import fire from './fire';
-import Sidebar from './Sidebar';
-import List from './List';
-import MapView from './MapView';
+import fire from '../../utils/fire';
+import Sidebar from '../../components/Sidebar';
+import List from '../../components/List';
+import MapView from '../../components/MapView';
+import CustomHead from '../../components/CustomHead';
 
-const MapPage = (props) => {
-	const country = props.params.country;
+const MapPage = () => {
+	const router = useRouter();
+	const country = router.query.country;
 
 	const [messages, setMessages] = useState([]);
 	const [countPerCountry, setCountPerCountry] = useState({});
@@ -79,12 +82,14 @@ const MapPage = (props) => {
 	}
 
 	return (
-		<div className="container">
-			<Sidebar />
-			{content}
-		</div>
+		<>
+			<CustomHead />
+			<div className="container">
+				<Sidebar />
+				{content}
+			</div>
+		</>
 	);
-
 }
 
-export default MapPage;
+export default withRouter(MapPage);

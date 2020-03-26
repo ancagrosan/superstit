@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import fire from './fire';
-import { countries } from './constants';
+import fire from '../utils/fire';
+import { countries } from '../utils/constants';
 
 const Form = (props) => {
     const [text, setText] = useState('');

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import fire from './fire';
-import TimeAgo from 'react-time-ago/no-tooltip'
-import { Link } from 'react-router-dom';
+import fire from '../utils/fire';
+import ReactTimeAgo from 'react-time-ago/no-tooltip';
+
+import Link from 'next/link';
 
 import Comment from './Comment';
 
@@ -85,10 +86,11 @@ const Superstition = (props) => {
     }
 
     let supLink;
+
     if (item.standalone) {
-        supLink = <TimeAgo>{message.timestamp}</TimeAgo>;
+        supLink = <ReactTimeAgo children={message.timestamp} />;
     } else {
-        supLink = <Link to={'/superstition/' + message.id}><TimeAgo>{message.timestamp}</TimeAgo></Link>
+        supLink = <Link href="/superstition/[id]" as={`/superstition/${message.id}`}><a><ReactTimeAgo children={message.timestamp} /></a></Link>
     }
 
     return (
@@ -123,7 +125,7 @@ const Superstition = (props) => {
                 {message.country &&
                     <span className="info-box">
                         <i className="fas fa-map-marker-alt"></i>
-                        <Link to={{ pathname: '/from/' + encodeURIComponent(message.country) }}>{message.country}</Link>
+                        <Link href="/from/[country]" as={`/from/${encodeURIComponent(message.country)}`}><a>{message.country}</a></Link>
                     </span>
                 }
             </div>
