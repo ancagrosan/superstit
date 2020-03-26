@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import Router from 'next/router'
+import { useRouter } from 'next/router';
 
 import WorldMap from './WorldMap';
 import { countries } from '../utils/constants';
 
 const MapView = (props) => {
+	const router = useRouter();
 
 	useEffect(() => {
 		// loop through the countries we have superstitions of
@@ -45,9 +46,7 @@ const MapView = (props) => {
 		const countryName = e.target.getAttribute('title');
 
 		if (countryName) {
-			Router.push({
-				pathname: `/from/${countryName}`,
-			})
+			router.push(`/from/${countryName}`);
 		}
 	}
 
