@@ -18,13 +18,14 @@ const Superstition = (props) => {
     const [popularityCount, setPopularityCount] = useState(0);
 
     useEffect(() => {
-        let messageRef = fire.database().ref('messages/' + item.id);
+        const messageRef = fire.database().ref('messages/' + item.id);
         messageRef.on('value', snapshot => {
-            let value = snapshot.val();
-
-            setMessage({ ...value, id: item.id });
-            setComments(value.comments);
-            setVoteCount(value.voteCount);
+            const value = snapshot.val();
+            if (value) {
+                setMessage({ ...value, id: item.id });
+                setComments(value.comments);
+                setVoteCount(value.voteCount);
+            }
         });
     }, []);
 

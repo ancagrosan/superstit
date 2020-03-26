@@ -11,17 +11,19 @@ const SuperstitionPage = () => {
     const [nextId, setNextId] = useState(null);
     const [prevId, setPrevId] = useState(null);
 
-    const router2 = useRouter();
-    const superstitionId = router2.query.id;
+    const router = useRouter();
+    const superstitionId = router.query.id;
 
     // get the next/prev superstitions
     useEffect(() => {
-        fetchSupData()
+        fetchSupData(superstitionId)
     }, [superstitionId]);
 
-    const fetchSupData = () => {
-        let ref = fire.database().ref("messages").orderByKey();
-        let currentSupId = superstitionId;
+    const fetchSupData = (currentSupId) => {
+        if (!currentSupId) {
+            return;
+        }
+        const ref = fire.database().ref("messages").orderByKey();
 
         ref.endAt(currentSupId).limitToLast(2).once("value").then((snapshot) => {
             Object.keys(snapshot.val()).forEach((id) => {

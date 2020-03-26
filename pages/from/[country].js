@@ -16,6 +16,9 @@ const MapPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		if (!country) {
+			return;
+		}
 		setMessages([]);
 		let countryOrderedSups = fire.database().ref().child('messages').orderByChild('country');
 		let incomingMessages = [];
