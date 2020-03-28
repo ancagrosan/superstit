@@ -48,7 +48,6 @@ const CustomHead = (props) => {
       <script dangerouslySetInnerHTML={{
         __html: `window.dataLayer = window.dataLayer || [];function gtag() {dataLayer.push(arguments); }gtag('js', new Date());gtag('config', 'UA-131413870-1'); `
       }} />
-
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: `{ 
           "@context" : "http://schema.org",
@@ -60,19 +59,12 @@ const CustomHead = (props) => {
             "@type" : "Organization",
             "name" : "Superstitious Network"
           },
+          "sameAs" : ["https://twitter.com/superstitiousnw", "https://www.facebook.com/superstitiousnetwork"],
           "datePublished" : "2019-01-01",
           "image" : "https://superstitious.network/images/superstitious-network.png",
           "logo" : "https://superstitious.network/images/superstitious-network.png",
           "url" : "https://superstitious.network/"
         } `}} />
-
-      {/* <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-6423261211653562",
-        enable_page_level_ads: true
-        });
-      </script> */}
 
       {props.children}
     </Head>
