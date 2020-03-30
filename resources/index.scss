@@ -284,6 +284,8 @@ label{
     resize: none;
     border-color: $gray;
     box-shadow: 0 0 0 2px $gray;
+    -webkit-box-shadow: 0 0 0 2px $gray;
+    -moz-box-shadow: 0 0 0 2px $gray;
     border-radius: 10px;
     font-size: 1rem;
     padding: 0.5rem;
@@ -294,6 +296,8 @@ label{
     &.has-input{
       border-color: $red;
       box-shadow: 0 0 0 2px $red;
+      -webkit-box-shadow: 0 0 0 2px $red;
+      -moz-box-shadow: 0 0 0 2px $red;
     }
   }
 }
@@ -496,6 +500,11 @@ label{
     bottom: -33px;
     padding: 1rem;
   }
+  .comments{
+    textarea{
+      border-radius: 10px 10px 0 0;
+    }
+  }
 }
 
 // map stuff
@@ -532,5 +541,6 @@ path:hover{
   #map-container{
     width: 100%;
     margin-top: 12rem;
+    left: 0;
   }
 }

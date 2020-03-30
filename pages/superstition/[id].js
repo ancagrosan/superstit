@@ -6,6 +6,7 @@ import fire from '../../utils/fire';
 import Sidebar from '../../components/Sidebar';
 import List from '../../components/List';
 import CustomHead from '../../components/CustomHead';
+import '../../resources/index.scss';
 
 const SuperstitionPage = () => {
     const [nextId, setNextId] = useState(null);

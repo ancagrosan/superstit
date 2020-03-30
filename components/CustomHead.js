@@ -5,8 +5,6 @@ import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 JavascriptTimeAgo.locale(en);
 
-import '../resources/index.scss';
-
 const CustomHead = (props) => {
   return (
     <Head>
