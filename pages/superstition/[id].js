@@ -6,7 +6,6 @@ import fire from '../../utils/fire';
 import Sidebar from '../../components/Sidebar';
 import List from '../../components/List';
 import CustomHead from '../../components/CustomHead';
-import '../../resources/index.scss';
 
 const SuperstitionPage = () => {
     const [nextId, setNextId] = useState(null);
@@ -28,12 +27,7 @@ const SuperstitionPage = () => {
 
         ref.endAt(currentSupId).limitToLast(2).once("value").then((snapshot) => {
             Object.keys(snapshot.val()).forEach((id) => {
-                if (id === currentSupId) {
-                    // while we're here, update the page title
-                    setPageTitle(snapshot.val()[currentSupId].text);
-                } else {
-                    setNextId(id);
-                }
+                setNextId(id);
             });
         });
 
@@ -43,12 +37,6 @@ const SuperstitionPage = () => {
             });
             setPrevId(prevId)
         });
-    }
-
-    const setPageTitle = (supText) => {
-        document.title = supText.length > 30
-            ? supText.substring(0, 30) + '... | The Superstitious Network'
-            : supText + ' | The Superstitious Network';
     }
 
     let item = {

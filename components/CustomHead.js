@@ -6,18 +6,22 @@ import en from 'javascript-time-ago/locale/en';
 JavascriptTimeAgo.locale(en);
 
 const CustomHead = (props) => {
+  const title = props.title ? props.title : 'The Superstitious Network';
+
   return (
     <Head>
       <meta charSet="utf-8" />
 
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <meta name="theme-color" content="#ffffff" />
+
+      <title>The Superstitious Network</title>
       <meta name="description"
         content="Get your daily dose of superstition, from all around the world! Irrational, funny or perfectly logic, we have them all!" />
       <meta name="keywords"
         content="superstition, superstitions, personal superstition, general superstition, beliefs, irrational beliefs, worldwide beliefs, superstitious network" />
 
-      <meta property="og:title" content="The Superstitious Network" />
+      <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://superstitious.network/" />
       <meta property="og:image" content="https://superstitious.network/images/superstitious-network.png" />
@@ -27,7 +31,7 @@ const CustomHead = (props) => {
       <meta property="fb:app_id" content="355244101959044" />
       <meta property="fb:admins" content="1045891216" />
 
-      <meta name="twitter:title" content="The Superstitious Network" />
+      <meta name="twitter:title" content={title} />
       <meta name="twitter:description"
         content="Get your daily dose of superstition, from all around the world! Irrational, funny or perfectly logic, we have them all!" />
       <meta name="twitter:image" content="https://superstitious.network/images/superstitious-network.png" />
@@ -40,8 +44,7 @@ const CustomHead = (props) => {
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossOrigin="anonymous" />
       <link rel="manifest" href="/manifest.json" />
-      <title>The Superstitious Network</title>
-
+      
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131413870-1"></script>
       <script dangerouslySetInnerHTML={{
         __html: `window.dataLayer = window.dataLayer || [];function gtag() {dataLayer.push(arguments); }gtag('js', new Date());gtag('config', 'UA-131413870-1'); `

@@ -1,6 +1,7 @@
+import React from 'react';
+
 import CustomHead from '../components/CustomHead';
 import Home from '../components/Home';
-import '../resources/index.scss';
 
 const Index = () => (
   <div className="container">

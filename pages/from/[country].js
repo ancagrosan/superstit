@@ -6,7 +6,6 @@ import Sidebar from '../../components/Sidebar';
 import List from '../../components/List';
 import MapView from '../../components/MapView';
 import CustomHead from '../../components/CustomHead';
-import '../../resources/index.scss';
 
 const MapPage = () => {
 	const router = useRouter();
@@ -87,7 +86,9 @@ const MapPage = () => {
 
 	return (
 		<>
-			<CustomHead />
+			<CustomHead>
+				<title>{`Superstitions from ${country} | The Superstitious Network`}</title>
+			</CustomHead>
 			<div className="container">
 				<Sidebar />
 				{content}
