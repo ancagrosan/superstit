@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, withRouter } from 'next/router';
 
 import fire from '../../utils/fire';
+import { pluralize } from '../../utils/general';
 import Sidebar from '../../components/Sidebar';
 import List from '../../components/List';
 import MapView from '../../components/MapView';
@@ -59,37 +60,39 @@ const MapPage = () => {
 
 	if (!isLoading) {
 		content = (
-			<main className="feedContainer">
-				<div id="map-container">
-					<MapView country={country} countPerCountry={countPerCountry} />
-				</div>
+			<>
 				<h2>
 					{sortedMessages.length
 						?
 						<span>
-							We have {sortedMessages.length}
-							&nbsp;superstition{sortedMessages.length > 1 ? 's' : ''} from {country}!
-							</span>
+							We have {pluralize(sortedMessages.length, 'superstition')} from {country}!
+									</span>
 						:
 						<span>
-							Unfortunately there are no superstitions from {country} 😞
-								<br />
-							Please add some if you know any!
-						</span>
+							Unfortunately there are no superstitions from {country} 😞<br />
+										Please add some if you know any!
+									</span>
 					}
-
 				</h2>
 				<List items={sortedMessages} />
-			</main>
-		);
+			</>
+		)
 	}
 
 	return (
 		<>
 			<CustomHead title={`Superstitions from ${country} | The Superstitious Network`} />
+
 			<div className="container">
 				<Sidebar />
-				{content}
+
+				<main className="feedContainer">
+					<div id="map-container">
+						<MapView country={country} countPerCountry={countPerCountry} />
+					</div>
+
+					{content}
+				</main>
 			</div>
 		</>
 	);

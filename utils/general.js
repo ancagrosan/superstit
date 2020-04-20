@@ -1,18 +1,21 @@
 
-let addOrRemoveFromArray = function(arr, id){
+const addOrRemoveFromArray = (arr, id) => {
 	const isLiked = !!arr.find((value) => {
 		return value === id;
 	});
 	let likedIds = [];
 
-	if (isLiked){
+	if (isLiked) {
 		likedIds = arr.filter((value) => {
 			return value !== id;
 		});
 	} else {
-		likedIds = [ ...arr, id ];
+		likedIds = [...arr, id];
 	}
 	return likedIds
 };
 
-export { addOrRemoveFromArray };
+const pluralize = (count, noun, suffix = 's') =>
+	`${count} ${noun}${count !== 1 ? suffix : ''}`;
+
+export { addOrRemoveFromArray, pluralize };
