@@ -1,7 +1,7 @@
 // color vars
 $main-color: #3a3f2a;
 $dark-blue: #143569;
-$blue-gray: #6c7fa2;
+$blue-gray: #3e4958;
 $link-blue: #1B95E0;
 $yellow: #ffe277;
 $yellow-darker: #ead370;
@@ -10,7 +10,7 @@ $red: #ee726e;
 $red-dark: #b74243;
 $light-gray: #f1f1f1;
 $gray: #cbcbcb;
-$dark-gray: #273346;
+$dark-gray: #232938;
 
 body {
   margin: 0;
@@ -38,7 +38,6 @@ body {
   -moz-text-fill-color: transparent;
 }
 
-
 button:focus, textarea:focus, select:focus{
   outline: none;
 }
@@ -60,7 +59,7 @@ button:focus, textarea:focus, select:focus{
 h1 {
   font: 500 2.75rem/0.85 'Roboto', sans-serif;
   color: $yellow;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   .logo {
     color: $yellow;
     text-decoration: none;
@@ -79,8 +78,8 @@ h2{
 }
 .social i{
   color: $red;
-  font-size: 1.5rem;
-  margin: 0.25rem 1.5rem 0.25rem 0;
+  font-size: 1.75rem;
+  margin: 0.5rem 2rem 0.5rem 0;
   transition: all 0.1s ease-in-out;
   &:hover{
     color: $red-dark;
