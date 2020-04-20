@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Superstition from './Superstition';
 
 import { addOrRemoveFromArray } from '../utils/general';
-import { getCookieData, setCookieData } from '../utils/cookie';
+import { getStoredData, setLiked, setCommented } from '../utils/storage';
 
 const List = (props) => {
 	const [userLikes, setUserLikes] = useState([]);
@@ -11,34 +11,21 @@ const List = (props) => {
 
 	// get cookie data on first render
 	useEffect(() => {
-		let cookieData = getCookieData();
-		setUserLikes(cookieData.userLikes);
-		setUserComments(cookieData.userComments);
+		let storedData = getStoredData();
+		setUserLikes(storedData.userLikes);
+		setUserComments(storedData.userComments);
 	}, []);
 
 	const updateLikes = (id) => {
 		let likedIds = addOrRemoveFromArray(userLikes, id);
 		setUserLikes(likedIds);
-
-		let cookieData = getCookieData();
-		let newCookieData = {
-			...cookieData,
-			userLikes: likedIds
-		};
-		setCookieData(newCookieData);
+		setLiked(likedIds);
 	}
 
 	const updateComments = (id) => {
 		let commentedIds = [...userComments, id];
 		setUserComments(commentedIds);
-
-		let cookieData = getCookieData();
-		let newCookieData = {
-			...cookieData,
-			userComments: commentedIds
-		};
-
-		setCookieData(newCookieData);
+		setCommented(commentedIds);
 	}
 
 	const userLiked = (id) => {
