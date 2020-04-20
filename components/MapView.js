@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 import WorldMap from './WorldMap';
@@ -6,21 +6,24 @@ import { countries } from '../utils/constants';
 
 const MapView = (props) => {
 	const router = useRouter();
+	const tooltipRef = useRef(null);
 
 	useEffect(() => {
 		// loop through the countries we have superstitions of
-		for (var countryName in props.countPerCountry) {
+		for (let countryName in props.countPerCountry) {
 			let countryCode = countries[countryName];
 			let countryElement = document.getElementById(countryCode);
 
-			if (countryCode) {
+			if (countryCode && countryElement) {
 				countryElement.style.fill = getCountryColor(countryName);
 			}
 		}
 
 		// highlight for the selected country
 		const countryEl = document.getElementById(countries[props.country]);
-		if (countryEl) countryEl.style.fill = "url(#pattern-circles)";
+		if (countryEl) {
+			countryEl.style.fill = "url(#pattern-circles)";
+		}
 	}, [props.countPerCountry, props.country]);
 
 	const getCountryColor = (countryName) => {
@@ -54,19 +57,17 @@ const MapView = (props) => {
 		const countryName = e.target.getAttribute('title');
 
 		if (countryName) {
-			let tooltip = document.getElementById("tooltip");
-			tooltip.innerHTML = countryName;
-			tooltip.style.display = "block";
+			tooltipRef.current.innerHTML = countryName;
+			tooltipRef.current.style.display = "block";
 
 			// todo: improve tooltip positioning
-			tooltip.style.left = e.pageX - 450 + 'px';
-			tooltip.style.top = e.pageY + 50 + 'px';
+			tooltipRef.current.style.left = e.pageX - 450 + 'px';
+			tooltipRef.current.style.top = e.pageY + 50 + 'px';
 		}
 	}
 
 	const hideTooltip = () => {
-		let tooltip = document.getElementById("tooltip");
-		tooltip.style.display = "none";
+		tooltipRef.current.style.display = "none";
 	}
 
 	return (
@@ -76,7 +77,7 @@ const MapView = (props) => {
 				onMouseOver={showCountryNameTooltip}
 				onMouseOut={hideTooltip}
 			/>
-			<div id="tooltip" className="tooltip" display="none"></div>
+			<div className="tooltip" display="none" ref={tooltipRef}></div>
 		</>
 	)
 }
