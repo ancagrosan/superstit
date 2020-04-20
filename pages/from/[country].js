@@ -86,9 +86,7 @@ const MapPage = () => {
 
 	return (
 		<>
-			<CustomHead>
-				<title>{`Superstitions from ${country} | The Superstitious Network`}</title>
-			</CustomHead>
+			<CustomHead title={`Superstitions from ${country} | The Superstitious Network`} />
 			<div className="container">
 				<Sidebar />
 				{content}

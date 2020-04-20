@@ -15,7 +15,7 @@ const CustomHead = (props) => {
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <meta name="theme-color" content="#ffffff" />
 
-      <title>The Superstitious Network</title>
+      <title>{title}</title>
       <meta name="description"
         content="Get your daily dose of superstition, from all around the world! Irrational, funny or perfectly logic, we have them all!" />
       <meta name="keywords"
@@ -44,7 +44,7 @@ const CustomHead = (props) => {
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossOrigin="anonymous" />
       <link rel="manifest" href="/manifest.json" />
-      
+
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131413870-1"></script>
       <script dangerouslySetInnerHTML={{
         __html: `window.dataLayer = window.dataLayer || [];function gtag() {dataLayer.push(arguments); }gtag('js', new Date());gtag('config', 'UA-131413870-1'); `

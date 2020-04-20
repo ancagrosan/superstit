@@ -10,6 +10,7 @@ import CustomHead from '../../components/CustomHead';
 const SuperstitionPage = () => {
     const [nextId, setNextId] = useState(null);
     const [prevId, setPrevId] = useState(null);
+    const [title, setPageTitle] = useState('The Superstitious Network');
 
     const router = useRouter();
     const superstitionId = router.query.id;
@@ -27,7 +28,17 @@ const SuperstitionPage = () => {
 
         ref.endAt(currentSupId).limitToLast(2).once("value").then((snapshot) => {
             Object.keys(snapshot.val()).forEach((id) => {
-                setNextId(id);
+                if (id === currentSupId) {
+
+                    // update the page title
+                    const supText = snapshot.val()[currentSupId].text;
+                    setPageTitle(supText.length > 30
+                        ? `${supText.replace(/^(.{30}[^\s]*).*/, "$1")}... | The Superstitious Network`
+                        : `${supText} | The Superstitious Network`
+                    );
+                } else {
+                    setNextId(id);
+                }
             });
         });
 
@@ -47,7 +58,8 @@ const SuperstitionPage = () => {
 
     return (
         <>
-            <CustomHead />
+            <CustomHead title={title} />
+
             <div className="container superstition-page">
                 <Sidebar />
                 <main className="feedContainer">
