@@ -54,8 +54,8 @@ const List = (props) => {
 			{ /* Render the list of superstitions */
 				props.items.map(message =>
 					<Superstition
-						item={message}
 						key={message.id}
+						item={message}
 						userLiked={userLiked(message.id)}
 						userCommented={userCommented(message.id)}
 						updateLikes={updateLikes}
