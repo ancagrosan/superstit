@@ -1,3 +1,10 @@
 // next.config.js
-const withImages = require('next-images')
-module.exports = withImages()
+const withReactSvg = require('next-react-svg')
+const path = require('path');
+
+module.exports = withReactSvg({
+	include: path.resolve(__dirname, 'public/images'),
+	webpack(config, options) {
+		return config
+	}
+})

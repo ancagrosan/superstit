@@ -18,6 +18,6 @@
     "react-time-ago": "^3.0.4"
   },
   "devDependencies": {
-    "next-images": "^1.4.0"
+    "next-react-svg": "^1.1.1"
   }
 }

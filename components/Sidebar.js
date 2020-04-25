@@ -1,9 +1,9 @@
 import React from 'react';
 
-import fbImg from '../public/images/facebook.svg';
-import twitterImg from '../public/images/twitter.svg';
-import instaImg from '../public/images/instagram.svg';
-import envelopeImg from '../public/images/envelope.svg';
+import FBIcon from '../public/images/facebook.svg';
+import TwitterIcon from '../public/images/twitter.svg';
+import InstagramIcon from '../public/images/instagram.svg';
+import EnvelopeIcon from '../public/images/envelope.svg';
 
 const Sidebar = () => {
     return (
@@ -19,16 +19,16 @@ const Sidebar = () => {
             </h2>
             <div className="social">
                 <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>
-                    <img src={fbImg} />
+                    <FBIcon />
                 </a>
                 <a href="https://twitter.com/superstitiousnw" target="_blank" rel='noreferrer noopener'>
-                    <img src={twitterImg} />
+                    <TwitterIcon />
                 </a>
                 <a href="https://www.instagram.com/superstitious.network" target="_blank" rel='noreferrer noopener'>
-                    <img src={instaImg} />
+                    <InstagramIcon />
                 </a>
                 <a href="mailto:contact@superstitious.network">
-                    <img src={envelopeImg} />
+                    <EnvelopeIcon />
                 </a>
             </div>
             <div className="copy">&copy; {new Date().getFullYear()}, Transylvania</div>
