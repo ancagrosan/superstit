@@ -60,7 +60,7 @@ const CustomHead = (props) => {
             "@type" : "Organization",
             "name" : "Superstitious Network"
           },
-          "sameAs" : ["https://twitter.com/superstitiousnw", "https://www.facebook.com/superstitiousnetwork"],
+          "sameAs" : ["https://twitter.com/superstitiousnw", "https://www.facebook.com/superstitiousnetwork", "https://www.instagram.com/superstitious.network"],
           "datePublished" : "2019-01-01",
           "image" : "https://superstitious.network/images/superstitious-network.png",
           "logo" : "https://superstitious.network/images/superstitious-network.png",

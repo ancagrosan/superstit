@@ -1,5 +1,10 @@
 import React from 'react';
 
+import fbImg from '../public/images/facebook.svg';
+import twitterImg from '../public/images/twitter.svg';
+import instaImg from '../public/images/instagram.svg';
+import envelopeImg from '../public/images/envelope.svg';
+
 const Sidebar = () => {
     return (
         <header className="nav">
@@ -14,13 +19,16 @@ const Sidebar = () => {
             </h2>
             <div className="social">
                 <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>
-                    <i className="fab fa-facebook-f"></i>
+                    <img src={fbImg} />
                 </a>
                 <a href="https://twitter.com/superstitiousnw" target="_blank" rel='noreferrer noopener'>
-                    <i className="fab fa-twitter"></i>
+                    <img src={twitterImg} />
+                </a>
+                <a href="https://www.instagram.com/superstitious.network" target="_blank" rel='noreferrer noopener'>
+                    <img src={instaImg} />
                 </a>
                 <a href="mailto:contact@superstitious.network">
-                    <i className="fas fa-envelope"></i>
+                    <img src={envelopeImg} />
                 </a>
             </div>
             <div className="copy">&copy; {new Date().getFullYear()}, Transylvania</div>
