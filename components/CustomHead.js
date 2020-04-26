@@ -41,8 +41,6 @@ const CustomHead = (props) => {
 
       <link rel="shortcut icon" href="/favicon.ico" />
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossOrigin="anonymous" />
       <link rel="manifest" href="/manifest.json" />
 
       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131413870-1"></script>

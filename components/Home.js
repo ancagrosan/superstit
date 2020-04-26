@@ -8,6 +8,8 @@ import Sidebar from './Sidebar';
 import Form from './Form';
 import List from './List';
 
+import CatIcon from '../public/images/cat.svg';
+
 JavascriptTimeAgo.locale(en)
 
 const IPP = 20;
@@ -98,12 +100,12 @@ const Home = () => {
 
           {isLoading &&
             <div className="loading-info">
-              <i className="fas fa-spin fa-cat"></i> Loading
+              <CatIcon className="spinning"/> Loading
             </div>
           }
           {reachedEnd &&
             <div className="loading-info">
-              <i className="fas fa-cat"></i> That's that.
+              <CatIcon /> That's that.
             </div>
           }
         </div>

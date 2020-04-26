@@ -7,6 +7,9 @@ import Sidebar from '../../components/Sidebar';
 import List from '../../components/List';
 import CustomHead from '../../components/CustomHead';
 
+import ArrowRight from '../../public/images/arrow-right.svg';
+import ArrowLeft from '../../public/images/arrow-left.svg';
+
 const SuperstitionPage = () => {
     const [nextId, setNextId] = useState(null);
     const [prevId, setPrevId] = useState(null);
@@ -70,7 +73,7 @@ const SuperstitionPage = () => {
                                 href="/superstition/[id]"
                                 as={`/superstition/${prevId}`}
                             >
-                                <a><i className="fas fa-long-arrow-alt-left"></i></a>
+                                <a><ArrowLeft /></a>
                             </Link>
                         }
                         {nextId &&
@@ -78,7 +81,7 @@ const SuperstitionPage = () => {
                                 href="/superstition/[id]"
                                 as={`/superstition/${nextId}`}
                             >
-                                <a><i className="fas fa-long-arrow-alt-right"></i></a>
+                                <a><ArrowRight /></a>
                             </Link>
                         }
                     </nav>
