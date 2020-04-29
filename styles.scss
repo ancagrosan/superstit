@@ -76,13 +76,14 @@ h2{
   font: 500 1.25rem/1 "Open Sans", sans-serif;
   margin-bottom: 1rem;
 }
-.social i{
-  color: $red;
-  font-size: 1.75rem;
+.social svg {
+  fill: $red;
+  height: 2rem;
+  width: 2rem;
   margin: 0.5rem 2rem 0.5rem 0;
   transition: all 0.1s ease-in-out;
   &:hover{
-    color: $red-dark;
+    fill: $red-dark;
     transform: scale(1.2,1.2);
   }
 }
@@ -103,7 +104,10 @@ hr{
   text-align: center;
   font: 500 1rem/1 "Open Sans", sans-serif;
   margin-top: 2rem;
-  i{
+  svg{
+    fill: #fff;
+    height: 1rem;
+    width: 1rem;
     margin-right: 0.5rem;
   }
 }
@@ -253,13 +257,14 @@ label{
     &:only-child {
       margin-left: auto;
     }
-    i{
-      color: $red;
-      font-size: 2rem;
+    svg {
+      fill: $red;
+      width: 2rem;
+      height: 2rem;
       transition: all 0.1s ease-in-out;
     }
-    &:hover i{
-      color: $red-dark;
+    &:hover svg{
+      fill: $red-dark;
       transform: scale(1.2,1.2);
     }
   }
@@ -328,6 +333,7 @@ label{
   }
 }
 .actions{
+  display: flex;
   padding: 0.5rem 1rem;
   .count{
     font: 400 0.875rem/1.5 'Open Sans', sans-serif;
@@ -337,22 +343,26 @@ label{
 }
 .comments-icon, .upvotes{
   width: 4rem;
-  display: inline-block;
+  display: flex;
 }
-.upvotes i, .comments-icon i{
-  color: $red;
+.upvotes svg, .comments-icon svg{
+  height: 1.3rem;
+  width: 1.3rem;
+  fill: $red;
   margin-right: 0.5rem;
 }
 .empty-heart{
   transition: all 0.1s ease-in-out;
 }
-.empty-heart:hover i, .comments-icon:hover i{
-  color: $red-dark;
+.empty-heart:hover svg, .comments-icon:hover svg{
+  fill: $red-dark;
   transform: scale(1.2,1.2);
   cursor: pointer;
 }
-.info i{
-  font-size: 1rem;
+.info svg{
+  height: 1.2rem;
+  width: 1.2rem;
+  fill: $blue-gray;
   margin-right: 0.5rem;
   vertical-align: middle;
 }
@@ -394,15 +404,35 @@ label{
   a{
     color: #FFF;
   }
-  i{
-    font-size: 3rem;
+  svg{
+    height: 3rem;
+    width: 3rem;
     margin: 2rem 0;
     transition: all 0.1s ease-in-out;
+    fill: #fff;
     &:hover{
-      color: #000;
+      fill: #000;
       transform: scale(1.2,1.2);
     }
   }
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.spinning {
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
 }
 
 .sn-icons{
@@ -414,14 +444,7 @@ label{
   color: #000;
   opacity: 0.2;
 }
-.slow-spin {
-  -webkit-animation: fa-spin 6s infinite linear;
-  animation: fa-spin 6s infinite linear;
-}
-.slower-spin {
-  -webkit-animation: fa-spin 10s infinite linear;
-  animation: fa-spin 10s infinite linear;
-}
+
 .sn-icons i:nth-of-type(1){
   position: absolute;
   bottom: 2.2rem;
@@ -515,7 +538,7 @@ label{
   padding: 0;
   margin-bottom: -10rem;
 }
-path:hover{
+#map-container path:hover{
   stroke: url(#pattern-circles) !important;
   stroke-width: 2px;
   stroke-linejoin: round;

@@ -8,6 +8,8 @@ import List from '../../components/List';
 import MapView from '../../components/MapView';
 import CustomHead from '../../components/CustomHead';
 
+import CatIcon from '../../public/images/cat.svg';
+
 const MapPage = () => {
 	const router = useRouter();
 	const country = router.query.country;
@@ -54,7 +56,7 @@ const MapPage = () => {
 
 	let content = (
 		<div className="loading-info">
-			<i className="fas fa-spin fa-cat"></i> Loading
+			<CatIcon className="spinning"/> Loading
 		</div>
 	);
 

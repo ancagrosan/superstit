@@ -5,6 +5,15 @@ import ReactTimeAgo from 'react-time-ago/no-tooltip';
 import Link from 'next/link';
 
 import Comment from './Comment';
+import CatIcon from '../public/images/cat.svg';
+import ClockIcon from '../public/images/clock.svg';
+import HeartIcon from '../public/images/heart.svg';
+import HeartFullIcon from '../public/images/heart-full.svg';
+import MapIcon from '../public/images/map.svg';
+import CommentIcon from '../public/images/comment.svg';
+import CommentFullIcon from '../public/images/comment-full.svg';
+import UserIcon from '../public/images/user.svg';
+import UsersIcon from '../public/images/users.svg';
 
 const Superstition = (props) => {
     const item = props.item;
@@ -81,7 +90,7 @@ const Superstition = (props) => {
     if (!message.timestamp) {
         return (
             <div className="loading-info">
-                <i className="fas fa-spin fa-cat"></i> Loading
+                <CatIcon className="spinning" /> Loading
             </div>
         );
     }
@@ -106,7 +115,7 @@ const Superstition = (props) => {
             <div className="meta-info info">
                 {message.timestamp &&
                     <span className="info-box">
-                        <i className="far fa-clock"></i>
+                        <ClockIcon />
                         {supLink}
                     </span>
                 }
@@ -114,10 +123,8 @@ const Superstition = (props) => {
                 {message.type &&
                     <span className="info-box">
                         {message.type === 'personal'
-                            ?
-                            <i className="fas fa-user"></i>
-                            :
-                            <i className="fas fa-users"></i>
+                            ? <UserIcon />
+                            : <UsersIcon />
                         }
                         {message.type}
                     </span>
@@ -125,7 +132,7 @@ const Superstition = (props) => {
 
                 {message.country &&
                     <span className="info-box">
-                        <i className="fas fa-map-marker-alt"></i>
+                        <MapIcon />
                         <Link href="/from/[country]" as={`/from/${encodeURIComponent(message.country)}`}><a>{message.country}</a></Link>
                     </span>
                 }
@@ -169,17 +176,21 @@ const Superstition = (props) => {
             <div className="actions">
                 <span className="upvotes">
                     <span className="empty-heart" onClick={toggleVote}>
-                        <i className={(userLiked ? 'fas' : 'far') + " fa-heart"}></i>
+                        {userLiked 
+                            ? <HeartFullIcon />
+                            : <HeartIcon />
+                        }
                     </span>
                     <span className="count">{voteCount}</span>
                 </span>
 
                 <span className="comments-icon">
-                    <i
-                        className={"fa-comment " + (userCommented ? 'fas' : 'far')}
-                        onClick={toggleCommentsSection}>
-                    </i>
-
+                    {userCommented 
+                        ? <CommentFullIcon
+                            onClick={toggleCommentsSection} />
+                        : <CommentIcon 
+                            onClick={toggleCommentsSection} />
+                    }
                     {comments &&
                         <span className="count">{Object.keys(comments).length}</span>
                     }

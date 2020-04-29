@@ -16,5 +16,8 @@
     "react": "16.13.0",
     "react-dom": "^16.12.0",
     "react-time-ago": "^3.0.4"
+  },
+  "devDependencies": {
+    "next-react-svg": "^1.1.1"
   }
 }
