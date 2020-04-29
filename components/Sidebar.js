@@ -18,13 +18,13 @@ const Sidebar = () => {
                 The invisible network that holds our world together.
             </h2>
             <div className="social">
-                <a href="https://www.facebook.com/superstitiousnetwork/" target="_blank" rel='noreferrer noopener'>
+                <a href="https://www.facebook.com/superstitiousnetwork/" title="facebook" target="_blank" rel='noreferrer noopener'>
                     <FBIcon />
                 </a>
-                <a href="https://twitter.com/superstitiousnw" target="_blank" rel='noreferrer noopener'>
+                <a href="https://twitter.com/superstitiousnw" title="twitter" target="_blank" rel='noreferrer noopener'>
                     <TwitterIcon />
                 </a>
-                <a href="https://www.instagram.com/superstitious.network" target="_blank" rel='noreferrer noopener'>
+                <a href="https://www.instagram.com/superstitious.network" title="instagram" target="_blank" rel='noreferrer noopener'>
                     <InstagramIcon />
                 </a>
                 <a href="mailto:contact@superstitious.network">
