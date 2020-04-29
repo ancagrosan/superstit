@@ -12,7 +12,7 @@ const Error = () => {
                 <div className="content">
                     <div>Having found a not found page is always a good sign!</div>
                     <Link href="/">
-                        <a><CatIcon className="cat__icon" /></a>
+                        <a><CatIcon /></a>
                     </Link>
                     <div>Click on the cat to go home.</div>
                 </div>
