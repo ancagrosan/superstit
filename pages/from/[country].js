@@ -56,27 +56,22 @@ const MapPage = () => {
 
 	let content = (
 		<div className="loading-info">
-			<CatIcon className="spinning"/> Loading
+			<CatIcon className="spinning" /> Loading
 		</div>
 	);
 
 	if (!isLoading) {
 		content = (
 			<>
-				<h2>
-					{sortedMessages.length
-						?
-						<span>
-							We have {pluralize(sortedMessages.length, 'superstition')} from {country}!
-									</span>
-						:
-						<span>
-							Unfortunately there are no superstitions from {country} 😞<br />
-										Please add some if you know any!
-									</span>
-					}
-				</h2>
-				<List items={sortedMessages} />
+				{sortedMessages.length
+					?
+					<>
+						<h2>We have {pluralize(sortedMessages.length, 'superstition')} from {country}!</h2>
+						<List items={sortedMessages} />
+					</>
+					:
+					<h2>Unfortunately there are no superstitions from {country} 😞<br />Please add some if you know any!</h2>
+				}
 			</>
 		)
 	}
