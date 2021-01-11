@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactTimeAgo from 'react-time-ago/no-tooltip'
 
 const Comment = (props) => {
