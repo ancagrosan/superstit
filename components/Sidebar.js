@@ -1,5 +1,3 @@
-import React from 'react';
-
 import FBIcon from '../public/images/facebook.svg';
 import TwitterIcon from '../public/images/twitter.svg';
 import InstagramIcon from '../public/images/instagram.svg';

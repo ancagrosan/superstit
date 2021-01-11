@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, withRouter } from 'next/router';
 
 import fire from '../../utils/fire';

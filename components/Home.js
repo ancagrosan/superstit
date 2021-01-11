@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import fire from '../utils/fire';
 import JavascriptTimeAgo from 'javascript-time-ago';
@@ -48,8 +48,8 @@ const Home = () => {
   }
 
   useEffect(() => {
-    containerRef.current.addEventListener('scroll', handleScroll);
-    return () => containerRef.current.removeEventListener('scroll', handleScroll);
+    containerRef?.current?.addEventListener('scroll', handleScroll);
+    return () => containerRef?.current?.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
   const loadMoreItems = () => {
@@ -100,7 +100,7 @@ const Home = () => {
 
           {isLoading &&
             <div className="loading-info">
-              <CatIcon className="spinning"/> Loading
+              <CatIcon className="spinning" /> Loading
             </div>
           }
           {reachedEnd &&

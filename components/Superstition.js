@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import fire from '../utils/fire';
 import ReactTimeAgo from 'react-time-ago/no-tooltip';
 
