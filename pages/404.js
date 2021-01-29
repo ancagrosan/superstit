@@ -3,13 +3,13 @@ import Link from 'next/link'
 import CustomHead from '../components/CustomHead';
 import CatIcon from '../public/images/cat.svg';
 
-const Error = () => {
+const NotFound = () => {
   return (
     <>
       <CustomHead />
       <div className="not-found">
         <div className="content">
-          <div>We're sorry, something went wrong :(</div>
+          <div>Having found a not found page is always a good sign!</div>
           <Link href="/">
             <a><CatIcon /></a>
           </Link>
@@ -20,4 +20,4 @@ const Error = () => {
   );
 }
 
-export default Error;
+export default NotFound;

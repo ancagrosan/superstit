@@ -28,3 +28,5 @@ yarn-error.log*
 # Firebase cache
 .firebase/
 
+# Instagram post generator 
+/pages/insta.js
