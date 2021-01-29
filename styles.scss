@@ -229,6 +229,7 @@ label{
 }
 .superstition-text{
   padding: 1rem;
+  white-space: pre-wrap;
 }
 .info{
   padding: 0.5rem 1rem 0;
@@ -312,6 +313,7 @@ label{
     margin-bottom: 1rem;
     .comment-text{
       padding: 0 1rem;
+      white-space: pre-wrap;
     }
   }
 }
