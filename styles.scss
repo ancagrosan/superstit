@@ -26,6 +26,7 @@ body {
 }
 
 .relative{ position: relative }
+.hide{ display: none}
 
 .text-gradient {
   background-color: $yellow;
@@ -343,20 +344,52 @@ label{
     color: $blue-gray;
   }
 }
-.comments-icon, .upvotes{
+.comments-icon, .upvotes, .share-icon{
   width: 4rem;
   display: flex;
 }
-.upvotes svg, .comments-icon svg{
+.share-container{
+  position: relative;
+  margin-left: auto;
+}
+.share-icon{
+  justify-content: flex-end;
+}
+.upvotes svg, .comments-icon svg, .share-icon svg{
   height: 1.3rem;
   width: 1.3rem;
   fill: $red;
   margin-right: 0.5rem;
 }
+.sharing-popup{
+  position: absolute;
+  left: 74px;
+  top: -2rem;
+  background-color: $yellow-darker;
+  border-radius: 0.25rem;
+}
+.sharing-arrow {
+  position: absolute;
+  left: 64px;
+  top: 2px;
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid $yellow-darker; 
+}
+.social-sharing-list{
+  list-style-type: none;
+  padding: 0.25rem;
+}
+.superstition-list .social-sharing-list li{
+  margin: 0.75rem;
+  background: $yellow-darker;
+}
 .empty-heart{
   transition: all 0.1s ease-in-out;
 }
-.empty-heart:hover svg, .comments-icon:hover svg{
+.empty-heart:hover svg, .comments-icon:hover svg, .share-icon:hover svg{
   fill: $red-dark;
   transform: scale(1.2,1.2);
   cursor: pointer;

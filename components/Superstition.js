@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import fire from '../utils/fire';
 import ReactTimeAgo from 'react-time-ago/no-tooltip';
-
+import OutsideClickHandler from 'react-outside-click-handler';
 import Link from 'next/link';
 
+import fire from '../utils/fire';
 import Comment from './Comment';
+import SocialSharing from './SocialSharing';
+
 import CatIcon from '../public/images/cat.svg';
 import ClockIcon from '../public/images/clock.svg';
 import HeartIcon from '../public/images/heart.svg';
@@ -14,6 +16,7 @@ import CommentIcon from '../public/images/comment.svg';
 import CommentFullIcon from '../public/images/comment-full.svg';
 import UserIcon from '../public/images/user.svg';
 import UsersIcon from '../public/images/users.svg';
+import ShareIcon from '../public/images/share.svg';
 
 const Superstition = (props) => {
   const item = props.item;
@@ -24,6 +27,7 @@ const Superstition = (props) => {
   const [commentText, setCommentText] = useState('');
   const [formValid, setFormValid] = useState(false);
   const [showComments, setShowComments] = useState(item.showComments);
+  const [showShare, setShowShare] = useState(false);
   const [popularityCount, setPopularityCount] = useState(0);
 
   useEffect(() => {
@@ -69,6 +73,10 @@ const Superstition = (props) => {
   const toggleCommentsSection = () => {
     setShowComments(!showComments)
   }
+
+  const toggleShareOptions = () => {
+    setShowShare(!showShare);
+  };
 
   const addComment = (e) => {
     e.preventDefault();
@@ -154,7 +162,7 @@ const Superstition = (props) => {
           </ul>
         }
 
-        <form onSubmit={addComment} >
+        <form onSubmit={addComment}>
           <textarea
             className={"new-comment " + (formValid ? 'has-input' : '')}
             type="text"
@@ -168,7 +176,7 @@ const Superstition = (props) => {
             type="submit"
             className="add-comment-btn">
             COMMENT
-	 	 	 	 	 </button>
+          </button>
         </form>
       </div>
 
@@ -186,15 +194,25 @@ const Superstition = (props) => {
 
         <span className="comments-icon">
           {userCommented
-            ? <CommentFullIcon
-              onClick={toggleCommentsSection} />
-            : <CommentIcon
-              onClick={toggleCommentsSection} />
+            ? <CommentFullIcon onClick={toggleCommentsSection} />
+            : <CommentIcon onClick={toggleCommentsSection} />
           }
           {comments &&
             <span className="count">{Object.keys(comments).length}</span>
           }
         </span>
+
+        <div className="share-container">
+          <OutsideClickHandler onOutsideClick={() => setShowShare(false)}>
+            <div className="share-icon">
+              <ShareIcon onClick={toggleShareOptions} />
+            </div>
+            <div className={`sharing-arrow ${showShare ? '' : 'hide'}`} />
+            <div className={`sharing-popup ${showShare ? '' : 'hide'}`}>
+              <SocialSharing title={`${message.text}`} shareURL={`${window.location.host}/superstition/${message.id}`} />
+            </div>
+          </OutsideClickHandler>
+        </div>
       </div>
     </li>
   );
