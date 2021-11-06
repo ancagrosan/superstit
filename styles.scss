@@ -562,6 +562,15 @@ label{
       border-radius: 10px 10px 0 0;
     }
   }
+  .sharing-popup{
+    left: -58px;
+    top: -2rem;
+  }
+  .sharing-arrow {
+    left: 3px;
+    border-left: 10px solid $yellow-darker;
+    border-right: none;
+  }
 }
 
 // map stuff
