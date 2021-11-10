@@ -6,10 +6,10 @@ import fire from '../../utils/fire';
 import Sidebar from '../../components/Sidebar';
 import List from '../../components/List';
 import CustomHead from '../../components/CustomHead';
+import AddNewButton from '../../components/AddNewButton';
 
 import ArrowRight from '../../public/images/arrow-right.svg';
 import ArrowLeft from '../../public/images/arrow-left.svg';
-import PenIcon from '../../public/images/pen.svg';
 
 const SuperstitionPage = () => {
   const [nextId, setNextId] = useState(null);
@@ -66,9 +66,7 @@ const SuperstitionPage = () => {
 
       <div className="container superstition-page">
         <Sidebar />
-        <aside className="add-new-sup-container">
-          <PenIcon onClick={() => router.push('/new')} />
-        </aside>
+        <AddNewButton />
         <main className="feedContainer">
           <List items={[item]} />
           <nav className="sup-nav">

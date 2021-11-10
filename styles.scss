@@ -114,7 +114,7 @@ hr{
 }
 
 .add-new-superstition-page{
-  height: 100vh;
+  min-height: -webkit-fill-available;
   background-color: $yellow-lighter;
 }
 .add-new-superstition-page .add-superstition-form{
@@ -543,6 +543,7 @@ label{
     padding: 1rem;
     border-radius: 50%;
     background-color: $yellow-darker;
+    border: none;
     cursor: pointer;
     z-index: 10;
   }
