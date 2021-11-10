@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
-
-import fire from '../utils/fire';
+import router from 'next/router';
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
+import fire from '../utils/fire';
 import Sidebar from './Sidebar';
 import Form from './Form';
 import List from './List';
 
 import CatIcon from '../public/images/cat.svg';
+import PenIcon from '../public/images/pen.svg';
 
 JavascriptTimeAgo.locale(en)
 
@@ -94,7 +95,9 @@ const Home = () => {
       <Sidebar />
       <main className="feedContainer">
         <Form userSubmittedItem={userSubmittedItem} />
-
+        <aside className="add-new-sup-container">
+          <PenIcon onClick={() => router.push('/new')} />
+        </aside>
         <div>
           <List items={messages} />
 

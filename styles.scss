@@ -112,16 +112,23 @@ hr{
     margin-right: 0.5rem;
   }
 }
-.add-yours{
-  display: none;
-  width: 7rem;
-  font: 700 1rem/1 "Open Sans", sans-serif;
-  text-align: center;
-  padding: 0.75rem 2rem;
-  margin: 2rem auto 0;
-  border-radius: 50px;
-  color: $yellow;
-  background: $red;
+
+.add-new-superstition-page{
+  height: 100vh;
+  background-color: $yellow-lighter;
+}
+.add-new-superstition-page .add-superstition-form{
+  background-color: $yellow-lighter;
+}
+.add-new-superstition-page .go-back-arrow{
+  fill: $link-blue;
+  width: 24px;
+  margin: 1rem;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+.add-new-superstition-page .new-superstition-text{
+  height: 300px;
 }
 
 /* add new superstition form */
@@ -412,6 +419,9 @@ label{
     }
   }
 }
+.add-new-sup-container { 
+  display: none;
+}
 
 /* popularity highlights */
 .highlight{
@@ -525,30 +535,22 @@ label{
     min-width: auto;
     display: inline;
   }
-  .add-superstition-form{
-    height: 0;
-    opacity: 0;
+  .add-new-sup-container {
+    display: flex;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: $yellow-darker;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .feedContainer .add-superstition-form {
     display: none;
-    &.display-form{
-      display: block;
-      height: 100%;
-      opacity: 1;
-      transition: all 1s ease-out;
-    }
-    &:not(.display-form) textarea{
-      height: 0;
-    }
   }
   .submit-superstition-btn{
     margin: 2rem auto 1rem;
-  }
-  .add-yours{
-    display: block;
-    &.hide{
-      opacity: 0;
-      height: 0;
-      transition: all 0.1s ease-out;
-    }
   }
   .add-comment-btn{
     width: calc(100% + 4px);

@@ -9,6 +9,7 @@ import MapView from '../../components/MapView';
 import CustomHead from '../../components/CustomHead';
 
 import CatIcon from '../../public/images/cat.svg';
+import PenIcon from '../../public/images/pen.svg';
 
 const MapPage = () => {
 	const router = useRouter();
@@ -66,7 +67,7 @@ const MapPage = () => {
 				{sortedMessages.length
 					?
 					<>
-						<h2>We have {pluralize(sortedMessages.length, 'superstition')} from {country}!</h2>
+						<h2>We have {pluralize(sortedMessages.length, 'superstition')} from {country}.</h2>
 						<List items={sortedMessages} />
 					</>
 					:
@@ -79,15 +80,15 @@ const MapPage = () => {
 	return (
 		<>
 			<CustomHead title={`Superstitions from ${country} | The Superstitious Network`} />
-
 			<div className="container">
 				<Sidebar />
-
+				<aside className="add-new-sup-container">
+					<PenIcon onClick={() => router.push('/new')} />
+				</aside>
 				<main className="feedContainer">
 					<div id="map-container">
 						<MapView country={country} countPerCountry={countPerCountry} />
 					</div>
-
 					{content}
 				</main>
 			</div>

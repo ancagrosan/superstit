@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import router from 'next/router';
+
 import fire from '../utils/fire';
 import { countries } from '../utils/constants';
 
@@ -8,7 +10,6 @@ const Form = (props) => {
   const [type, setType] = useState('general');
   const [textareaFontSize, setTextareaFontSize] = useState(2);
   const [formValid, setFormValid] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
 
   const addSuperstition = (e) => {
     e.preventDefault();
@@ -20,10 +21,14 @@ const Form = (props) => {
     };
 
     fire.database().ref('messages').push(newSup).then((snapshot) => {
-      props.userSubmittedItem({
-        ...newSup,
-        id: snapshot.key
-      });
+      if (props.userSubmittedItem) {
+        props.userSubmittedItem({
+          ...newSup,
+          id: snapshot.key
+        });
+      } else {
+        router.push(`/superstition/${snapshot.key}`)
+      }
     });
 
     setText('');
@@ -58,76 +63,58 @@ const Form = (props) => {
     setTextareaFontSize(fontSize);
   }
 
-  const displayForm = () => {
-    // on mobile, we don't show the add superstition form from the beginning
-    setIsFormVisible(true);
-  }
-
   return (
-    <div>
-      <div
-        onClick={displayForm}
-        className={"add-yours " + (isFormVisible ? 'hide' : '')}>
-        ADD YOURS
-        </div>
-      <form
-        onSubmit={addSuperstition}
-        className={"add-superstition-form " + (isFormVisible ? "display-form" : "")}>
-        <textarea
-          className="new-superstition-text"
-          style={{ fontSize: textareaFontSize + 'rem' }}
-          type="text"
-          onChange={textareaChange}
-          placeholder="What's your superstition about, is it personal, where is it from?"
-          rows="6"
-          value={text} />
+    <form onSubmit={addSuperstition} className="add-superstition-form">
+      <textarea
+        className="new-superstition-text"
+        style={{ fontSize: textareaFontSize + 'rem' }}
+        type="text"
+        onChange={textareaChange}
+        placeholder="What's your superstition about, is it personal, where is it from?"
+        rows="6"
+        value={text} />
 
-        <div className="options-container">
-          <div className="type-select">
+      <div className="options-container">
+        <div className="type-select">
 
-            <input
-              onChange={(e) => setType(e.target.value)}
-              type="radio"
-              value="general"
-              name="type"
-              id="type-general"
-              className='form-radio'
-              checked={type === "general"} />
-            <label htmlFor="type-general">General</label>
+          <input
+            onChange={(e) => setType(e.target.value)}
+            type="radio"
+            value="general"
+            name="type"
+            id="type-general"
+            className='form-radio'
+            checked={type === "general"} />
+          <label htmlFor="type-general">General</label>
 
-            <input
-              onChange={(e) => setType(e.target.value)}
-              type="radio"
-              value="personal"
-              name="type"
-              id="type-personal"
-              className='form-radio'
-              checked={type === "personal"} />
-            <label htmlFor="type-personal">Personal</label>
-          </div>
-
-          <div className="country-select">
-            <label>Origin:</label>
-            <select
-              onChange={(e) => setCountry(e.target.value)}
-              value={country}
-            >
-              {Object.keys(countries).map(country => (
-                <option key={country} value={country}>{country}</option>
-              )
-              )}
-            </select>
-          </div>
+          <input
+            onChange={(e) => setType(e.target.value)}
+            type="radio"
+            value="personal"
+            name="type"
+            id="type-personal"
+            className='form-radio'
+            checked={type === "personal"} />
+          <label htmlFor="type-personal">Personal</label>
         </div>
 
-        <button
-          disabled={!formValid}
-          type="submit"
-          className="submit-superstition-btn">
-          ADD
-        </button>
-      </form>
-    </div>
+        <div className="country-select">
+          <label>Origin:</label>
+          <select onChange={(e) => setCountry(e.target.value)} value={country}>
+            {Object.keys(countries).map(country => (
+              <option key={country} value={country}>{country}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <button
+        disabled={!formValid}
+        type="submit"
+        className="submit-superstition-btn">
+        ADD
+      </button>
+    </form>
   );
 }
 

@@ -9,6 +9,7 @@ import CustomHead from '../../components/CustomHead';
 
 import ArrowRight from '../../public/images/arrow-right.svg';
 import ArrowLeft from '../../public/images/arrow-left.svg';
+import PenIcon from '../../public/images/pen.svg';
 
 const SuperstitionPage = () => {
   const [nextId, setNextId] = useState(null);
@@ -65,6 +66,9 @@ const SuperstitionPage = () => {
 
       <div className="container superstition-page">
         <Sidebar />
+        <aside className="add-new-sup-container">
+          <PenIcon onClick={() => router.push('/new')} />
+        </aside>
         <main className="feedContainer">
           <List items={[item]} />
           <nav className="sup-nav">
