@@ -26,7 +26,8 @@ body {
 }
 
 .relative{ position: relative }
-.hide{ display: none}
+.hide{ display: none }
+.scrollLock{ overflow: hidden }
 
 .text-gradient {
   background-color: $yellow;
@@ -611,8 +612,8 @@ label{
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
 }
 .modal-close {
@@ -639,6 +640,9 @@ label{
   }
   .modal-form-container{
     height: 100vh;
+  }
+  .modal-content {
+    height: auto;
   }
   .modal-wrapper{
     height: 100vh;

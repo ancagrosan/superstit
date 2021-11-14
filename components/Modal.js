@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import FocusTrap from "focus-trap-react";
 
@@ -14,6 +15,13 @@ const defaultProps = {
 };
 
 const Modal = ({ onClose, children }) => {
+  useEffect(() => {
+    document.body.classList.add('scrollLock');
+    return () => {
+      document.body.classList.remove('scrollLock');
+    }
+  }, []);
+
   return (
     <Portal selector="body">
       <div id="modal" className="modal-root">
