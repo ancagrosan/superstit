@@ -113,29 +113,11 @@ hr{
   }
 }
 
-.add-new-superstition-page{
-  min-height: -webkit-fill-available;
-  background-color: $yellow-lighter;
-}
-.add-new-superstition-page .add-superstition-form{
-  background-color: $yellow-lighter;
-}
-.add-new-superstition-page .go-back-arrow{
-  fill: $link-blue;
-  width: 24px;
-  margin: 1rem;
-  margin-bottom: 0;
-  cursor: pointer;
-}
-.add-new-superstition-page .new-superstition-text{
-  height: 300px;
-}
-
 /* add new superstition form */
 .add-superstition-form{
   background-color: $yellow;
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   border-radius: 0.25rem;
 }
 .new-superstition-text{
@@ -165,7 +147,7 @@ select{
 }
 .submit-superstition-btn{
   padding: 0.75rem 2.5rem;
-  margin: 1rem auto 0;
+  margin: 1.5rem auto 0;
   display: block;
   background-color: $red;
   border: none;
@@ -419,8 +401,18 @@ label{
     }
   }
 }
-.add-new-sup-container { 
-  display: none;
+.add-new-sup-container {
+  display: flex;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 1rem;
+  border-radius: 50%;
+  background: $yellow-darker;
+  border: none;
+  outline: inherit;
+  cursor: pointer;
+  z-index: 10;
 }
 
 /* popularity highlights */
@@ -535,18 +527,6 @@ label{
     min-width: auto;
     display: inline;
   }
-  .add-new-sup-container {
-    display: flex;
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    padding: 1rem;
-    border-radius: 50%;
-    background-color: $yellow-darker;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-  }
   .feedContainer .add-superstition-form {
     display: none;
   }
@@ -606,10 +586,64 @@ label{
   opacity: .9;
 }
 
+// modal
+.modal-root{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  z-index: 999;
+}
+.modal-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.modal-wrapper {
+  position: relative;
+  width: 38rem;
+}
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.5rem;
+  padding: 0.25rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.modal-form-container {
+  padding: 1.5rem 0 0.25rem;
+  background-color: $yellow;
+  border-radius: 0.25rem;
+}
+
 @media (max-width: 767px) {
   #map-container{
     width: 100%;
     margin-top: 12rem;
     left: 0;
+  }
+  .modal-form-container{
+    height: 100vh;
+  }
+  .modal-wrapper{
+    height: 100vh;
+  }
+  .modal-form-container{
+    border-radius: 0;
   }
 }

@@ -85,7 +85,7 @@ const Home = () => {
   }
 
   // when a user adds a new item, add it to the stack
-  const userSubmittedItem = (message) => {
+  const afterSubmit = (message) => {
     setMessages([message, ...messages]);
   }
 
@@ -93,7 +93,7 @@ const Home = () => {
     <div className="container" ref={containerRef}>
       <Sidebar />
       <main className="feedContainer">
-        <Form userSubmittedItem={userSubmittedItem} />
+        <Form afterSubmit={afterSubmit} />
         <AddNewButton />
         <div>
           <List items={messages} />

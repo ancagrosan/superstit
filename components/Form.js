@@ -21,8 +21,8 @@ const Form = (props) => {
     };
 
     fire.database().ref('messages').push(newSup).then((snapshot) => {
-      if (props.userSubmittedItem) {
-        props.userSubmittedItem({
+      if (props.afterSubmit) {
+        props.afterSubmit({
           ...newSup,
           id: snapshot.key
         });
